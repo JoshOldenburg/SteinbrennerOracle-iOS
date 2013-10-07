@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Joshua Oldenburg. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@class JOMasterViewController;
 
 @interface JOAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) UIWindow *window;
 
 @end

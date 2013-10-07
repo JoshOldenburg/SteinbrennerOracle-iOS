@@ -24,6 +24,7 @@
 		033F749C18034877001681AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 033F749A18034877001681AF /* InfoPlist.strings */; };
 		033F749E18034877001681AF /* OracleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033F749D18034877001681AF /* OracleTests.m */; };
 		034183371803505000A2FA11 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 034183361803505000A2FA11 /* Podfile */; };
+		0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6918035ABD0065A400 /* JOConstants.m */; };
 		45EB94C780D5476F98ABD04C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 516294EDE2A54BEBBE2CBAF9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,8 @@
 		033F749B18034877001681AF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		033F749D18034877001681AF /* OracleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OracleTests.m; sourceTree = "<group>"; };
 		034183361803505000A2FA11 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		0367FB6818035ABD0065A400 /* JOConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOConstants.h; sourceTree = "<group>"; };
+		0367FB6918035ABD0065A400 /* JOConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOConstants.m; sourceTree = "<group>"; };
 		516294EDE2A54BEBBE2CBAF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A0E488504504805800DA812 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,6 +129,7 @@
 		033F747218034877001681AF /* Oracle */ = {
 			isa = PBXGroup;
 			children = (
+				0367FB6718035AA70065A400 /* Model */,
 				0367FB66180354280065A400 /* View & View Controller */,
 				033F747318034877001681AF /* Supporting Files */,
 			);
@@ -164,8 +168,6 @@
 		0367FB66180354280065A400 /* View & View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				033F747B18034877001681AF /* JOAppDelegate.h */,
-				033F747C18034877001681AF /* JOAppDelegate.m */,
 				033F747E18034877001681AF /* Main_iPhone.storyboard */,
 				033F748118034877001681AF /* Main_iPad.storyboard */,
 				033F748418034877001681AF /* JOMasterViewController.h */,
@@ -173,8 +175,19 @@
 				033F748718034877001681AF /* JODetailViewController.h */,
 				033F748818034877001681AF /* JODetailViewController.m */,
 				033F748A18034877001681AF /* Images.xcassets */,
+				033F747B18034877001681AF /* JOAppDelegate.h */,
+				033F747C18034877001681AF /* JOAppDelegate.m */,
 			);
 			name = "View & View Controller";
+			sourceTree = "<group>";
+		};
+		0367FB6718035AA70065A400 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0367FB6818035ABD0065A400 /* JOConstants.h */,
+				0367FB6918035ABD0065A400 /* JOConstants.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,6 +327,7 @@
 			files = (
 				033F747918034877001681AF /* main.m in Sources */,
 				033F747D18034877001681AF /* JOAppDelegate.m in Sources */,
+				0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */,
 				033F748918034877001681AF /* JODetailViewController.m in Sources */,
 				033F748618034877001681AF /* JOMasterViewController.m in Sources */,
 			);
@@ -457,7 +471,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Oracle/Oracle-Prefix.pch";
 				INFOPLIST_FILE = "Oracle/Oracle-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -475,7 +489,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Oracle/Oracle-Prefix.pch";
 				INFOPLIST_FILE = "Oracle/Oracle-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
