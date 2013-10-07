@@ -23,6 +23,8 @@
 		033F749418034877001681AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F747018034877001681AF /* UIKit.framework */; };
 		033F749C18034877001681AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 033F749A18034877001681AF /* InfoPlist.strings */; };
 		033F749E18034877001681AF /* OracleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033F749D18034877001681AF /* OracleTests.m */; };
+		034183371803505000A2FA11 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 034183361803505000A2FA11 /* Podfile */; };
+		45EB94C780D5476F98ABD04C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 516294EDE2A54BEBBE2CBAF9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,9 @@
 		033F749918034877001681AF /* OracleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OracleTests-Info.plist"; sourceTree = "<group>"; };
 		033F749B18034877001681AF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		033F749D18034877001681AF /* OracleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OracleTests.m; sourceTree = "<group>"; };
+		034183361803505000A2FA11 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		516294EDE2A54BEBBE2CBAF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A0E488504504805800DA812 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +73,7 @@
 				033F746F18034877001681AF /* CoreGraphics.framework in Frameworks */,
 				033F747118034877001681AF /* UIKit.framework in Frameworks */,
 				033F746D18034877001681AF /* Foundation.framework in Frameworks */,
+				45EB94C780D5476F98ABD04C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +97,8 @@
 				033F749718034877001681AF /* OracleTests */,
 				033F746B18034877001681AF /* Frameworks */,
 				033F746A18034877001681AF /* Products */,
+				7A0E488504504805800DA812 /* Pods.xcconfig */,
+				034183361803505000A2FA11 /* Podfile */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +118,7 @@
 				033F746E18034877001681AF /* CoreGraphics.framework */,
 				033F747018034877001681AF /* UIKit.framework */,
 				033F749118034877001681AF /* XCTest.framework */,
+				516294EDE2A54BEBBE2CBAF9 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,15 +126,7 @@
 		033F747218034877001681AF /* Oracle */ = {
 			isa = PBXGroup;
 			children = (
-				033F747B18034877001681AF /* JOAppDelegate.h */,
-				033F747C18034877001681AF /* JOAppDelegate.m */,
-				033F747E18034877001681AF /* Main_iPhone.storyboard */,
-				033F748118034877001681AF /* Main_iPad.storyboard */,
-				033F748418034877001681AF /* JOMasterViewController.h */,
-				033F748518034877001681AF /* JOMasterViewController.m */,
-				033F748718034877001681AF /* JODetailViewController.h */,
-				033F748818034877001681AF /* JODetailViewController.m */,
-				033F748A18034877001681AF /* Images.xcassets */,
+				0367FB66180354280065A400 /* View & View Controller */,
 				033F747318034877001681AF /* Supporting Files */,
 			);
 			path = Oracle;
@@ -160,6 +161,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0367FB66180354280065A400 /* View & View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				033F747B18034877001681AF /* JOAppDelegate.h */,
+				033F747C18034877001681AF /* JOAppDelegate.m */,
+				033F747E18034877001681AF /* Main_iPhone.storyboard */,
+				033F748118034877001681AF /* Main_iPad.storyboard */,
+				033F748418034877001681AF /* JOMasterViewController.h */,
+				033F748518034877001681AF /* JOMasterViewController.m */,
+				033F748718034877001681AF /* JODetailViewController.h */,
+				033F748818034877001681AF /* JODetailViewController.m */,
+				033F748A18034877001681AF /* Images.xcassets */,
+			);
+			name = "View & View Controller";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -167,9 +184,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 033F74A118034877001681AF /* Build configuration list for PBXNativeTarget "Oracle" */;
 			buildPhases = (
+				FC144B4D7FC14DC787AF7F0D /* Check Pods Manifest.lock */,
 				033F746518034877001681AF /* Sources */,
 				033F746618034877001681AF /* Frameworks */,
 				033F746718034877001681AF /* Resources */,
+				F11EB0A8D57741A4822F577A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -237,6 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034183371803505000A2FA11 /* Podfile in Resources */,
 				033F748318034877001681AF /* Main_iPad.storyboard in Resources */,
 				033F748B18034877001681AF /* Images.xcassets in Resources */,
 				033F748018034877001681AF /* Main_iPhone.storyboard in Resources */,
@@ -253,6 +273,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F11EB0A8D57741A4822F577A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FC144B4D7FC14DC787AF7F0D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		033F746518034877001681AF /* Sources */ = {
@@ -396,26 +449,36 @@
 		};
 		033F74A218034877001681AF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A0E488504504805800DA812 /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Oracle/Oracle-Prefix.pch";
 				INFOPLIST_FILE = "Oracle/Oracle-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s";
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		033F74A318034877001681AF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A0E488504504805800DA812 /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Oracle/Oracle-Prefix.pch";
 				INFOPLIST_FILE = "Oracle/Oracle-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s";
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -481,6 +544,7 @@
 				033F74A318034877001681AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		033F74A418034877001681AF /* Build configuration list for PBXNativeTarget "OracleTests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +553,7 @@
 				033F74A618034877001681AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
