@@ -25,6 +25,8 @@
 		033F749E18034877001681AF /* OracleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033F749D18034877001681AF /* OracleTests.m */; };
 		034183371803505000A2FA11 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 034183361803505000A2FA11 /* Podfile */; };
 		0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6918035ABD0065A400 /* JOConstants.m */; };
+		0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6F1803750D0065A400 /* JOImageDetailCell.m */; };
+		03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03900FA718037C7600ED6619 /* JOImageDetailCell.xib */; };
 		45EB94C780D5476F98ABD04C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 516294EDE2A54BEBBE2CBAF9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,9 @@
 		034183361803505000A2FA11 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		0367FB6818035ABD0065A400 /* JOConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOConstants.h; sourceTree = "<group>"; };
 		0367FB6918035ABD0065A400 /* JOConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOConstants.m; sourceTree = "<group>"; };
+		0367FB6E1803750D0065A400 /* JOImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOImageDetailCell.h; sourceTree = "<group>"; };
+		0367FB6F1803750D0065A400 /* JOImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOImageDetailCell.m; sourceTree = "<group>"; };
+		03900FA718037C7600ED6619 /* JOImageDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JOImageDetailCell.xib; sourceTree = "<group>"; };
 		516294EDE2A54BEBBE2CBAF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A0E488504504805800DA812 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +179,9 @@
 				033F748518034877001681AF /* JOMasterViewController.m */,
 				033F748718034877001681AF /* JODetailViewController.h */,
 				033F748818034877001681AF /* JODetailViewController.m */,
+				0367FB6E1803750D0065A400 /* JOImageDetailCell.h */,
+				0367FB6F1803750D0065A400 /* JOImageDetailCell.m */,
+				03900FA718037C7600ED6619 /* JOImageDetailCell.xib */,
 				033F748A18034877001681AF /* Images.xcassets */,
 				033F747B18034877001681AF /* JOAppDelegate.h */,
 				033F747C18034877001681AF /* JOAppDelegate.m */,
@@ -272,6 +280,7 @@
 				034183371803505000A2FA11 /* Podfile in Resources */,
 				033F748318034877001681AF /* Main_iPad.storyboard in Resources */,
 				033F748B18034877001681AF /* Images.xcassets in Resources */,
+				03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */,
 				033F748018034877001681AF /* Main_iPhone.storyboard in Resources */,
 				033F747718034877001681AF /* InfoPlist.strings in Resources */,
 			);
@@ -326,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				033F747918034877001681AF /* main.m in Sources */,
+				0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */,
 				033F747D18034877001681AF /* JOAppDelegate.m in Sources */,
 				0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */,
 				033F748918034877001681AF /* JODetailViewController.m in Sources */,

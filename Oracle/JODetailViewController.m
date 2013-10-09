@@ -7,6 +7,8 @@
 //
 
 #import "JODetailViewController.h"
+#import "MWFeedItem.h"
+#import "NSString+HTML.h"
 
 @interface JODetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -15,11 +17,10 @@
 @implementation JODetailViewController
 
 #pragma mark - Managing the detail item
-- (void)setDetailItem:(id)newDetailItem {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+- (void)setFeedItem:(MWFeedItem *)feedItem {
+    if (_feedItem != feedItem) {
+        _feedItem = feedItem;
         
-        // Update the view.
         [self configureView];
     }
 
@@ -31,8 +32,9 @@
 - (void)configureView {
     // Update the user interface for the detail item.
 
-	if (self.detailItem) {
-	    self.detailDescriptionLabel.text = [self.detailItem description];
+	if (self.feedItem) {
+	    [self.webView loadHTMLString:[self.feedItem.summary stringByAppendingString:self.feedItem.content] baseURL:nil];
+		self.navigationItem.title = self.feedItem.title.stringByConvertingHTMLToPlainText;
 	}
 }
 

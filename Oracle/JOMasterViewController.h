@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Joshua Oldenburg. All rights reserved.
 //
 
-#import "QuickDialog.h"
 @class JODetailViewController;
 
-@interface JOMasterViewController : QuickDialogController
+@interface JOMasterViewController : UITableViewController
 
-@property (nonatomic, strong) JODetailViewController *detailViewController;
+@property (nonatomic, strong) IBOutlet JODetailViewController *detailViewController;
+@property (nonatomic, strong) NSURL *feedURL;
 
 @end
