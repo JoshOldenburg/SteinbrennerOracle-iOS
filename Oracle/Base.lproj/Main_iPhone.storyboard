@@ -71,12 +71,20 @@
                             <outlet property="delegate" destination="pGg-6v-bdr" id="Y6K-Cp-Qkv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Steinbrenner Oracle" id="tQt-TN-PWz"/>
+                    <navigationItem key="navigationItem" title="Steinbrenner Oracle" id="tQt-TN-PWz">
+                        <connections>
+                            <outlet property="titleView" destination="Y3y-aX-yEy" id="WM8-cG-0gH"/>
+                        </connections>
+                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="AuI-9A-qVy">
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OracleLogoText" id="Y3y-aX-yEy">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
             </objects>
             <point key="canvasLocation" x="459" y="64"/>
         </scene>
@@ -133,6 +141,7 @@
     </scenes>
     <resources>
         <image name="Favicon" width="44" height="44"/>
+        <image name="OracleLogoText" width="388" height="47"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
