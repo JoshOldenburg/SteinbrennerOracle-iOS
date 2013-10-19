@@ -13,9 +13,9 @@
 #import "JONewsFeed.h"
 #import "JONewsFeedInfo.h"
 #import "JONewsItem.h"
+#import "NSString+HTML.h"
 
 @interface JONewsFeedTests : XCTestCase <JONewsFeedDelegate>
-@property (nonatomic, assign) BOOL hasParsedInfo;
 @property (nonatomic, assign) BOOL hasFinishedParsing;
 @property (nonatomic, assign) BOOL parseFailed;
 @end
@@ -27,14 +27,13 @@
 	[OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
 		return [request.URL.host isEqualToString:@"JONewsFeedTest.localhost"];
 	} withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
-		return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFileInBundle(@"ExampleAtomFeed.xml", nil) statusCode:200 headers:@{
+		return [OHHTTPStubsResponse responseWithFileAtPath:OHPathForFileInBundle(request.URL.path, nil) statusCode:200 headers:@{
 			@"Content-Type": @"text/xml"
 		}];
 	}];
 	
-	self.hasParsedInfo = NO;
 	self.hasFinishedParsing = NO;
-	self.continueAfterFailure = NO;
+	self.continueAfterFailure = YES;
 	self.parseFailed = NO;
 }
 - (void)tearDown {
@@ -53,16 +52,19 @@
 	[feed start];
 	JOWaitForTrueWithExpiration(&_hasFinishedParsing, [NSDate dateWithTimeIntervalSinceNow:5]);
 	XCTAssertFalse(self.parseFailed, @"Parse failed");
-	XCTAssertTrue(self.hasParsedInfo, @"Took >5 seconds to parse info");
+	XCTAssertTrue(self.hasFinishedParsing, @"Took >5 seconds to parse");
 	XCTAssertNotNil(feed.feedInfo);
 	XCTAssertEqualObjects(feed.feedInfo.title, @"The Steinbrenner High School Oracle");
 	XCTAssertEqualObjects(feed.feedInfo.link, @"http://www.oraclenewspaper.com");
+	
+	XCTAssertNotNil(feed.newsItems);
+	XCTAssertEqual(feed.newsItems.count, (NSUInteger)2, @"Did not completely parse");
+	XCTAssertTrue([feed.newsItems[0] isKindOfClass:[JONewsItem class]], @"Item is of incorrect class type");
+	XCTAssertTrue([feed.newsItems[1] isKindOfClass:[JONewsItem class]], @"Item is of incorrect class type");
+	XCTAssertEqualObjects(((JONewsItem *)feed.newsItems[0]).title.stringByConvertingHTMLToPlainText, @"Swim falls to Plant in season’s conclusion"); // Fancy quote (’), not straight quote (')
 }
 
 #pragma mark - JONewsFeedDelegate
-- (void)newsFeed:(JONewsFeed *)newsFeed didParseInfo:(JONewsFeedInfo *)feedInfo {
-	self.hasParsedInfo = YES;
-}
 - (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed {
 	self.hasFinishedParsing = YES;
 }
