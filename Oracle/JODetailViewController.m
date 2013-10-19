@@ -33,7 +33,7 @@
     // Update the user interface for the detail item.
 
 	if (self.feedItem) {
-	    [self.webView loadHTMLString:[self.feedItem.summary stringByAppendingString:self.feedItem.content] baseURL:nil];
+	    [self.webView loadHTMLString:self.feedItem.content baseURL:nil];
 		self.navigationItem.title = self.feedItem.title.stringByConvertingHTMLToPlainText;
 	}
 }
@@ -51,7 +51,7 @@
 
 #pragma mark - Split view
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController {
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
+    barButtonItem.title = @"Articles";
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
     self.masterPopoverController = popoverController;
 }
