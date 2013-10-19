@@ -10,6 +10,8 @@
 		03006E88180ACD2E0032F6B1 /* JONewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E87180ACD2D0032F6B1 /* JONewsFeed.m */; };
 		03006E8C180AFBBA0032F6B1 /* JONewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E8B180AFBBA0032F6B1 /* JONewsItem.m */; };
 		03006E8F1811FBE70032F6B1 /* JONewsFeedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E8E1811FBE70032F6B1 /* JONewsFeedInfo.m */; };
+		031D6B251812108300D1C2B6 /* JONewsFeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031D6B241812108300D1C2B6 /* JONewsFeedTests.m */; };
+		031D6B271812116700D1C2B6 /* ExampleAtomFeed.xml in Resources */ = {isa = PBXBuildFile; fileRef = 031D6B261812116700D1C2B6 /* ExampleAtomFeed.xml */; };
 		033F746D18034877001681AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746C18034877001681AF /* Foundation.framework */; };
 		033F746F18034877001681AF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746E18034877001681AF /* CoreGraphics.framework */; };
 		033F747118034877001681AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F747018034877001681AF /* UIKit.framework */; };
@@ -31,6 +33,7 @@
 		0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6F1803750D0065A400 /* JOImageDetailCell.m */; };
 		03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03900FA718037C7600ED6619 /* JOImageDetailCell.xib */; };
 		45EB94C780D5476F98ABD04C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 516294EDE2A54BEBBE2CBAF9 /* libPods.a */; };
+		85AF9B163C69433DB763AF98 /* libPods-OracleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C22E8D32FD43129ACDE4C8 /* libPods-OracleTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		03006E8B180AFBBA0032F6B1 /* JONewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsItem.m; sourceTree = "<group>"; };
 		03006E8D1811FBE70032F6B1 /* JONewsFeedInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JONewsFeedInfo.h; sourceTree = "<group>"; };
 		03006E8E1811FBE70032F6B1 /* JONewsFeedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsFeedInfo.m; sourceTree = "<group>"; };
+		031D6B241812108300D1C2B6 /* JONewsFeedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsFeedTests.m; sourceTree = "<group>"; };
+		031D6B261812116700D1C2B6 /* ExampleAtomFeed.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ExampleAtomFeed.xml; sourceTree = "<group>"; };
+		031D6B28181215A500D1C2B6 /* OracleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OracleTests.h; sourceTree = "<group>"; };
 		033F746918034877001681AF /* Oracle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oracle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033F746C18034877001681AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		033F746E18034877001681AF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -78,8 +84,10 @@
 		0367FB6E1803750D0065A400 /* JOImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOImageDetailCell.h; sourceTree = "<group>"; };
 		0367FB6F1803750D0065A400 /* JOImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOImageDetailCell.m; sourceTree = "<group>"; };
 		03900FA718037C7600ED6619 /* JOImageDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JOImageDetailCell.xib; sourceTree = "<group>"; };
+		27C22E8D32FD43129ACDE4C8 /* libPods-OracleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OracleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		516294EDE2A54BEBBE2CBAF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7A0E488504504805800DA812 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		7A0E488504504805800DA812 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		94131D6CD8C7441589832183 /* Pods-OracleTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OracleTests.xcconfig"; path = "../Pods/Pods-OracleTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,7 @@
 				033F749218034877001681AF /* XCTest.framework in Frameworks */,
 				033F749418034877001681AF /* UIKit.framework in Frameworks */,
 				033F749318034877001681AF /* Foundation.framework in Frameworks */,
+				85AF9B163C69433DB763AF98 /* libPods-OracleTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +136,6 @@
 				033F749718034877001681AF /* OracleTests */,
 				033F746B18034877001681AF /* Frameworks */,
 				033F746A18034877001681AF /* Products */,
-				7A0E488504504805800DA812 /* Pods.xcconfig */,
 				034183361803505000A2FA11 /* Podfile */,
 			);
 			sourceTree = "<group>";
@@ -149,6 +157,7 @@
 				033F747018034877001681AF /* UIKit.framework */,
 				033F749118034877001681AF /* XCTest.framework */,
 				516294EDE2A54BEBBE2CBAF9 /* libPods.a */,
+				27C22E8D32FD43129ACDE4C8 /* libPods-OracleTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -170,6 +179,7 @@
 				033F747518034877001681AF /* InfoPlist.strings */,
 				033F747818034877001681AF /* main.m */,
 				033F747A18034877001681AF /* Oracle-Prefix.pch */,
+				7A0E488504504805800DA812 /* Pods.xcconfig */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -177,7 +187,9 @@
 		033F749718034877001681AF /* OracleTests */ = {
 			isa = PBXGroup;
 			children = (
+				031D6B28181215A500D1C2B6 /* OracleTests.h */,
 				033F749D18034877001681AF /* OracleTests.m */,
+				031D6B241812108300D1C2B6 /* JONewsFeedTests.m */,
 				033F749818034877001681AF /* Supporting Files */,
 			);
 			path = OracleTests;
@@ -186,8 +198,10 @@
 		033F749818034877001681AF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				031D6B261812116700D1C2B6 /* ExampleAtomFeed.xml */,
 				033F749918034877001681AF /* OracleTests-Info.plist */,
 				033F749A18034877001681AF /* InfoPlist.strings */,
+				94131D6CD8C7441589832183 /* Pods-OracleTests.xcconfig */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -247,9 +261,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 033F74A418034877001681AF /* Build configuration list for PBXNativeTarget "OracleTests" */;
 			buildPhases = (
+				E7619A85DB084C7FBE166962 /* Check Pods Manifest.lock */,
 				033F748C18034877001681AF /* Sources */,
 				033F748D18034877001681AF /* Frameworks */,
 				033F748E18034877001681AF /* Resources */,
+				8AA7D687F5C3457993B53CF3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -314,12 +330,43 @@
 			buildActionMask = 2147483647;
 			files = (
 				033F749C18034877001681AF /* InfoPlist.strings in Resources */,
+				031D6B271812116700D1C2B6 /* ExampleAtomFeed.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8AA7D687F5C3457993B53CF3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-OracleTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7619A85DB084C7FBE166962 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		F11EB0A8D57741A4822F577A /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -374,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				033F749E18034877001681AF /* OracleTests.m in Sources */,
+				031D6B251812108300D1C2B6 /* JONewsFeedTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +583,7 @@
 		};
 		033F74A518034877001681AF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94131D6CD8C7441589832183 /* Pods-OracleTests.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Oracle.app/Oracle";
@@ -558,6 +607,7 @@
 		};
 		033F74A618034877001681AF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94131D6CD8C7441589832183 /* Pods-OracleTests.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Oracle.app/Oracle";

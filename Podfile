@@ -9,5 +9,5 @@ pod 'CXFeedParser/NSDate+InternetDateTime', '~>0.1.1'
 pod 'CXFeedParser', '~>0.1.1'
 
 target :OracleTests, :exclusive => true do
-	pod 'OHHTTPStubs', '~>0.3.2'
+	pod 'OHHTTPStubs', '~>3.0.2'
 end

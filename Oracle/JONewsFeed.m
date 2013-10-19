@@ -72,6 +72,8 @@
 			[this jo_finishWithError:error];
 		}];
 	}
+	request.responseSerializer = [AFHTTPResponseSerializer serializer];
+	request.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/xml", @"application/atom+xml", nil];
 	[self.queue addOperation:request];
 	
 	if ([self.delegate respondsToSelector:@selector(newsFeedDidStartDownload:)]) [self.delegate newsFeedDidStartDownload:self];
@@ -127,6 +129,8 @@
 		if (linkItem) [self jo_parseAtomLink:linkItem intoFeedInfo:feedInfo];
 		
 		self.feedInfo = feedInfo;
+		
+		if ([self.delegate respondsToSelector:@selector(newsFeed:didParseInfo:)]) [self.delegate newsFeed:self didParseInfo:self.feedInfo];
 	}
 	
 	{

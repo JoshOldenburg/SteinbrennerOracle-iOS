@@ -15,11 +15,17 @@
 @interface JOMasterViewController () <MWFeedParserDelegate>
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, strong) MWFeedParser *feedParser;
+@property (nonatomic, assign) BOOL shouldDoNothing; // Always NO unless testing
 @end
 
 @implementation JOMasterViewController
 
 - (void)awakeFromNib {
+	if (NSClassFromString(@"JONewsFeedTests")) {
+		self.shouldDoNothing = YES;
+		return;
+	}
+	
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 	    self.preferredContentSize = CGSizeMake(320.0, 600.0);
 		self.clearsSelectionOnViewWillAppear = NO;
@@ -53,7 +59,7 @@
 }
 
 - (void)jo_setUpFeedParser {
-	if (!self.feedURL) return;
+	if (!self.feedURL || self.shouldDoNothing) return;
 	
 	self.feedParser = [[MWFeedParser alloc] initWithFeedURL:self.feedURL];
 	self.feedParser.delegate = self;
@@ -62,6 +68,7 @@
 }
 
 - (void)refreshData {
+	if (self.shouldDoNothing) return;
 	[self.items removeAllObjects];
 	[self.tableView reloadData];
 	[self.feedParser parse];
