@@ -8,6 +8,9 @@
 
 #import "JOConstants.h"
 
+NSString *const JOExceptionInvalid = @"JOExceptionInvalid";
+NSString *const JOErrorDomain = @"JOErrorDomain";
+
 @implementation JOUtil
 
 @end

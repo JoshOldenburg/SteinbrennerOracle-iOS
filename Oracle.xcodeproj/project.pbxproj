@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03006E88180ACD2E0032F6B1 /* JONewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E87180ACD2D0032F6B1 /* JONewsFeed.m */; };
+		03006E8C180AFBBA0032F6B1 /* JONewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E8B180AFBBA0032F6B1 /* JONewsItem.m */; };
+		03006E8F1811FBE70032F6B1 /* JONewsFeedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E8E1811FBE70032F6B1 /* JONewsFeedInfo.m */; };
 		033F746D18034877001681AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746C18034877001681AF /* Foundation.framework */; };
 		033F746F18034877001681AF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746E18034877001681AF /* CoreGraphics.framework */; };
 		033F747118034877001681AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F747018034877001681AF /* UIKit.framework */; };
@@ -41,6 +44,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03006E86180ACD2D0032F6B1 /* JONewsFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JONewsFeed.h; sourceTree = "<group>"; };
+		03006E87180ACD2D0032F6B1 /* JONewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsFeed.m; sourceTree = "<group>"; };
+		03006E8A180AFBBA0032F6B1 /* JONewsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JONewsItem.h; sourceTree = "<group>"; };
+		03006E8B180AFBBA0032F6B1 /* JONewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsItem.m; sourceTree = "<group>"; };
+		03006E8D1811FBE70032F6B1 /* JONewsFeedInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JONewsFeedInfo.h; sourceTree = "<group>"; };
+		03006E8E1811FBE70032F6B1 /* JONewsFeedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsFeedInfo.m; sourceTree = "<group>"; };
 		033F746918034877001681AF /* Oracle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oracle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033F746C18034877001681AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		033F746E18034877001681AF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -98,6 +107,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03006E89180AFBA50032F6B1 /* News Feed */ = {
+			isa = PBXGroup;
+			children = (
+				03006E86180ACD2D0032F6B1 /* JONewsFeed.h */,
+				03006E87180ACD2D0032F6B1 /* JONewsFeed.m */,
+				03006E8D1811FBE70032F6B1 /* JONewsFeedInfo.h */,
+				03006E8E1811FBE70032F6B1 /* JONewsFeedInfo.m */,
+				03006E8A180AFBBA0032F6B1 /* JONewsItem.h */,
+				03006E8B180AFBBA0032F6B1 /* JONewsItem.m */,
+			);
+			name = "News Feed";
+			sourceTree = "<group>";
+		};
 		033F746018034877001681AF = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +216,7 @@
 			children = (
 				0367FB6818035ABD0065A400 /* JOConstants.h */,
 				0367FB6918035ABD0065A400 /* JOConstants.m */,
+				03006E89180AFBA50032F6B1 /* News Feed */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -338,8 +361,11 @@
 				0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */,
 				033F747D18034877001681AF /* JOAppDelegate.m in Sources */,
 				0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */,
+				03006E8F1811FBE70032F6B1 /* JONewsFeedInfo.m in Sources */,
+				03006E8C180AFBBA0032F6B1 /* JONewsItem.m in Sources */,
 				033F748918034877001681AF /* JODetailViewController.m in Sources */,
 				033F748618034877001681AF /* JOMasterViewController.m in Sources */,
+				03006E88180ACD2E0032F6B1 /* JONewsFeed.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
