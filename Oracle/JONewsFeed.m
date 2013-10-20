@@ -134,6 +134,7 @@
 	}
 	
 	{
+		__block JONewsFeed *_self = self;
 		[TBXML iterateElementsForQuery:@"entry" fromElement:XML.rootXMLElement withBlock:^(TBXMLElement *element) {
 			JONewsItem *newsItem = [[JONewsItem alloc] init];
 			
@@ -158,8 +159,8 @@
 			TBXMLElement *updateDateElement = [TBXML childElementNamed:@"updated" parentElement:element];
 			if (updateDateElement) newsItem.updateDate = [NSDate dateFromRFC3339String:[TBXML textForElement:updateDateElement]];
 			
-			self.newsItems = [self.newsItems arrayByAddingObject:newsItem];
-			if ([self.delegate respondsToSelector:@selector(newsFeed:didParseItems:)]) [self.delegate newsFeed:self didParseItems:self.newsItems];
+			_self.newsItems = [_self.newsItems arrayByAddingObject:newsItem];
+			if ([_self.delegate respondsToSelector:@selector(newsFeed:didParseItems:)]) [_self.delegate newsFeed:_self didParseItems:_self.newsItems];
 		}];
 	}
 }

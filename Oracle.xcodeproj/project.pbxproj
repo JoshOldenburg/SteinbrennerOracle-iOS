@@ -32,6 +32,7 @@
 		0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6918035ABD0065A400 /* JOConstants.m */; };
 		0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6F1803750D0065A400 /* JOImageDetailCell.m */; };
 		03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03900FA718037C7600ED6619 /* JOImageDetailCell.xib */; };
+		03FE5EB1181300AF00A61921 /* libtidy.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FE5EB0181300AF00A61921 /* libtidy.dylib */; };
 		45EB94C780D5476F98ABD04C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 516294EDE2A54BEBBE2CBAF9 /* libPods.a */; };
 		85AF9B163C69433DB763AF98 /* libPods-OracleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C22E8D32FD43129ACDE4C8 /* libPods-OracleTests.a */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		0367FB6E1803750D0065A400 /* JOImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOImageDetailCell.h; sourceTree = "<group>"; };
 		0367FB6F1803750D0065A400 /* JOImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOImageDetailCell.m; sourceTree = "<group>"; };
 		03900FA718037C7600ED6619 /* JOImageDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JOImageDetailCell.xib; sourceTree = "<group>"; };
+		03FE5EB0181300AF00A61921 /* libtidy.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtidy.dylib; path = usr/lib/libtidy.dylib; sourceTree = SDKROOT; };
 		27C22E8D32FD43129ACDE4C8 /* libPods-OracleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OracleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		516294EDE2A54BEBBE2CBAF9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A0E488504504805800DA812 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03FE5EB1181300AF00A61921 /* libtidy.dylib in Frameworks */,
 				033F746F18034877001681AF /* CoreGraphics.framework in Frameworks */,
 				033F747118034877001681AF /* UIKit.framework in Frameworks */,
 				033F746D18034877001681AF /* Foundation.framework in Frameworks */,
@@ -152,6 +155,7 @@
 		033F746B18034877001681AF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03FE5EB0181300AF00A61921 /* libtidy.dylib */,
 				033F746C18034877001681AF /* Foundation.framework */,
 				033F746E18034877001681AF /* CoreGraphics.framework */,
 				033F747018034877001681AF /* UIKit.framework */,

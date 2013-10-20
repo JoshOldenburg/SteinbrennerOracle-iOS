@@ -45,6 +45,7 @@
 	return [[NSURL alloc] initWithScheme:@"http" host:@"JONewsFeedTest.localhost" path:@"/ExampleAtomFeed.xml"];
 }
 
+#pragma mark - Tests
 - (void)testLoad {
 	JONewsFeed *feed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
 	XCTAssertNotNil(feed);
@@ -62,6 +63,30 @@
 	XCTAssertTrue([feed.newsItems[0] isKindOfClass:[JONewsItem class]], @"Item is of incorrect class type");
 	XCTAssertTrue([feed.newsItems[1] isKindOfClass:[JONewsItem class]], @"Item is of incorrect class type");
 	XCTAssertEqualObjects(((JONewsItem *)feed.newsItems[0]).title.stringByConvertingHTMLToPlainText, @"Swim falls to Plant in season’s conclusion"); // Fancy quote (’), not straight quote (')
+	XCTAssertEqualObjects(((JONewsItem *)feed.newsItems[0]).identifier, @"http://www.oraclenewspaper.com/?p=8117");
+}
+
+- (void)testImageURLs {
+	JONewsFeed *feed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
+	XCTAssertNotNil(feed);
+	
+	[feed start];
+	JOWaitForTrueWithExpiration(&_hasFinishedParsing, [NSDate dateWithTimeIntervalSinceNow:5]);
+	XCTAssertFalse(self.parseFailed, @"Parse failed");
+	XCTAssertTrue(self.hasFinishedParsing, @"Took >5 seconds to parse");
+	
+	XCTAssertEqual(feed.newsItems.count, (NSUInteger)2, @"Did not completely parse");
+	JONewsItem *firstItem = feed.newsItems[1];
+	XCTAssertNotNil(firstItem);
+	__block BOOL isComplete = NO;
+	[firstItem getImageURLsWithCallback:^(NSArray *imageURLs) {
+		isComplete = YES;
+	}];
+	JOWaitForTrueWithExpiration(&isComplete, [NSDate dateWithTimeIntervalSinceNow:5]);
+	XCTAssertTrue(isComplete, @"Took >5 seconds to load image URLs");
+	XCTAssertNotNil(firstItem.imageURLs, @"Failed to load image URLs");
+	XCTAssertEqual(firstItem.imageURLs.count, (NSUInteger)1, @"Did not completely parse image URLs");
+	XCTAssertEqualObjects(firstItem.imageURLs[0], @"http://www.oraclenewspaper.com/wp-content/uploads/2013/10/American-Horror-Story-Coven-Jessica-Lange-Kathy-Bates-300x153.png");
 }
 
 #pragma mark - JONewsFeedDelegate
