@@ -45,15 +45,30 @@
 	return [[NSURL alloc] initWithScheme:@"http" host:@"JONewsFeedTest.localhost" path:@"/ExampleAtomFeed.xml"];
 }
 
-#pragma mark - Tests
-- (void)testLoad {
+- (JONewsFeed *)createFeedAndLoadWithURL:(NSURL *)feedURL {
+	XCTAssertNotNil(feedURL);
 	JONewsFeed *feed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
 	XCTAssertNotNil(feed);
+	
+	[self loadFeed:feed];
+	return feed;
+}
+- (void)loadFeed:(JONewsFeed *)feed {
+	XCTAssertNotNil(feed);
+	
+	self.hasFinishedParsing = NO;
+	self.parseFailed = NO;
 	
 	[feed start];
 	JOWaitForTrueWithExpiration(&_hasFinishedParsing, [NSDate dateWithTimeIntervalSinceNow:5]);
 	XCTAssertFalse(self.parseFailed, @"Parse failed");
 	XCTAssertTrue(self.hasFinishedParsing, @"Took >5 seconds to parse");
+}
+
+#pragma mark - Tests
+- (void)testLoad {
+	JONewsFeed *feed = [self createFeedAndLoadWithURL:self.feedURL];
+	
 	XCTAssertNotNil(feed.feedInfo);
 	XCTAssertEqualObjects(feed.feedInfo.title, @"The Steinbrenner High School Oracle");
 	XCTAssertEqualObjects(feed.feedInfo.link, @"http://www.oraclenewspaper.com");
@@ -67,13 +82,7 @@
 }
 
 - (void)testImageURLs {
-	JONewsFeed *feed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
-	XCTAssertNotNil(feed);
-	
-	[feed start];
-	JOWaitForTrueWithExpiration(&_hasFinishedParsing, [NSDate dateWithTimeIntervalSinceNow:5]);
-	XCTAssertFalse(self.parseFailed, @"Parse failed");
-	XCTAssertTrue(self.hasFinishedParsing, @"Took >5 seconds to parse");
+	JONewsFeed *feed = [self createFeedAndLoadWithURL:self.feedURL];
 	
 	XCTAssertEqual(feed.newsItems.count, (NSUInteger)2, @"Did not completely parse");
 	JONewsItem *firstItem = feed.newsItems[1];
@@ -87,6 +96,22 @@
 	XCTAssertNotNil(firstItem.imageURLs, @"Failed to load image URLs");
 	XCTAssertEqual(firstItem.imageURLs.count, (NSUInteger)1, @"Did not completely parse image URLs");
 	XCTAssertEqualObjects(firstItem.imageURLs[0], @"http://www.oraclenewspaper.com/wp-content/uploads/2013/10/American-Horror-Story-Coven-Jessica-Lange-Kathy-Bates-300x153.png");
+}
+
+- (void)testMultipleLoads {
+	JONewsFeed *feed = [self createFeedAndLoadWithURL:self.feedURL];
+	XCTAssertNotNil(feed.feedInfo);
+	XCTAssertEqual(feed.newsItems.count, (NSUInteger)2, @"Did not completely parse");
+	
+	[self loadFeed:feed];
+	XCTAssertNotNil(feed.feedInfo);
+	XCTAssertEqual(feed.newsItems.count, (NSUInteger)2, @"Did not completely reparse");
+}
+
+- (void)testInitParamaterChecking {
+	XCTAssertThrowsSpecificNamed([[JONewsFeed alloc] init], NSException, JOExceptionInvalid);
+	XCTAssertNil([[JONewsFeed alloc] initWithFeedURL:nil delegate:self]);
+	XCTAssertNotNil([[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:nil]);
 }
 
 #pragma mark - JONewsFeedDelegate

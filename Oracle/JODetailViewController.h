@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Joshua Oldenburg. All rights reserved.
 //
 
-@class MWFeedItem;
+@class JONewsItem;
 
 @interface JODetailViewController : UIViewController <UISplitViewControllerDelegate>
 
-@property (nonatomic, strong) MWFeedItem *feedItem;
+@property (nonatomic, strong) JONewsItem *newsItem;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end

@@ -9,7 +9,7 @@
 #import "JONewsItem.h"
 #import <tidy/tidy.h>
 #import <tidy/buffio.h>
-#import "NSString+HTML.h"
+#import "NSString+JOUtilAdditions.h"
 
 @interface JONewsItem () <NSXMLParserDelegate>
 @property (nonatomic, strong) NSMutableArray *tempImageURLs;

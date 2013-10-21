@@ -12,7 +12,7 @@
 #import "AFNetworking.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFURLResponseSerialization.h"
-#import "NSString+HTML.h"
+#import "NSString+JOUtilAdditions.h"
 #import "NSDate+InternetDateTime.h"
 #import "TBXML.h"
 
@@ -62,6 +62,7 @@
 	self.working = YES;
 	self.latestParseDidFail = NO;
 	[self jo_createRequestIfNecessary];
+	self.newsItems = @[];
 	
 	AFHTTPRequestOperation *request = [[AFHTTPRequestOperation alloc] initWithRequest:self.URLRequest];
 	{
@@ -111,6 +112,7 @@
 	else if ([rootElementName isEqualToString:@"rdf:RDF"]) [self jo_parseRDFFeedWithXML:XML];
 	else [self jo_finishWithErrorDescription:@"Invalid feed type" code:JONewsFeedErrorInvalidFeed];
 	
+	self.working = NO;
 	if (!self.latestParseDidFail && [self.delegate respondsToSelector:@selector(newsFeedDidFinishParsing:)]) [self.delegate newsFeedDidFinishParsing:self];
 }
 - (void)jo_parseAtomFeedWithXML:(TBXML *)XML {
@@ -217,6 +219,7 @@
 
 - (void)jo_finishWithError:(NSError *)error {
 	self.working = NO;
+	
 	if ([self.delegate respondsToSelector:@selector(newsFeed:didFailWithError:)]) [self.delegate newsFeed:self didFailWithError:error];
 }
 - (void)jo_finishWithErrorDescription:(NSString *)errorDescription code:(JONewsFeedError)errorCode {

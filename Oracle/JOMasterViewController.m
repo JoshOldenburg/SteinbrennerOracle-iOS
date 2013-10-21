@@ -9,12 +9,14 @@
 #import "JOMasterViewController.h"
 #import "JODetailViewController.h"
 #import "JOImageDetailCell.h"
-#import "MWFeedParser.h"
-#import "NSString+HTML.h"
+#import "JONewsFeed.h"
+#import "JONewsItem.h"
+#import "JONewsFeedInfo.h"
+#import "NSString+JOUtilAdditions.h"
 
-@interface JOMasterViewController () <MWFeedParserDelegate>
+@interface JOMasterViewController () <JONewsFeedDelegate>
 @property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic, strong) MWFeedParser *feedParser;
+@property (nonatomic, strong) JONewsFeed *feedParser;
 @property (nonatomic, assign) BOOL shouldDoNothing; // Always NO unless testing
 @end
 
@@ -61,22 +63,19 @@
 - (void)jo_setUpFeedParser {
 	if (!self.feedURL || self.shouldDoNothing) return;
 	
-	self.feedParser = [[MWFeedParser alloc] initWithFeedURL:self.feedURL];
-	self.feedParser.delegate = self;
-	self.feedParser.feedParseType = ParseTypeItemsOnly;
-	self.feedParser.connectionType = ConnectionTypeAsynchronously;
+	self.feedParser = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
 }
 
 - (void)refreshData {
 	if (self.shouldDoNothing) return;
 	[self.items removeAllObjects];
 	[self.tableView reloadData];
-	[self.feedParser parse];
+	[self.feedParser start];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	self.detailViewController = segue.destinationViewController;
-	self.detailViewController.feedItem = self.items[self.tableView.indexPathForSelectedRow.row];
+	self.detailViewController.newsItem = self.items[self.tableView.indexPathForSelectedRow.row];
 }
 
 #pragma mark - NSTableViewDataSource
@@ -93,13 +92,15 @@
         cell = [[JOImageDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"NewsEntry"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    MWFeedItem *item = self.items[indexPath.row];
+    JONewsItem *item = self.items[indexPath.row];
 	cell.titleLabel.text = item.title.stringByDecodingHTMLEntities;
 	cell.textView.text = item.summary.stringByDecodingHTMLEntities;
-	if (item.images.count > 0) {
+#warning TODO: make async
+	if (item.imageURLs.count > 0) {
 		cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
-		cell.largeImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.images[0]]]];
+		cell.largeImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.imageURLs[0]]]];
 	} else {
+		cell.largeImageView.contentMode = UIViewContentModeCenter;
 		cell.largeImageView.image = [UIImage imageNamed:@"Favicon"];
 	}
 //    cell.detailTextLabel.text = item.summary;
@@ -115,7 +116,7 @@
 //- table
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		self.detailViewController.feedItem = self.items[indexPath.row];
+		self.detailViewController.newsItem = self.items[indexPath.row];
 	} /*else {
 //		JODetailViewController *newViewController = [[JODetailViewController alloc] initWithNibName:@" bundle:<#(NSBundle *)#>
 		self.detailViewController.feedItem = self.items[indexPath.row];
@@ -124,7 +125,23 @@
 }
 
 #pragma mark - MWFeedParserDelegate
-- (void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item {
+- (void)newsFeed:(JONewsFeed *)newsFeed didParseItems:(NSArray *)newsItems {
+	[self.items setArray:newsItems];
+	[self.tableView reloadData];
+}
+
+- (void)newsFeedDidStartDownload:(JONewsFeed *)newsFeed {
+	[self.refreshControl beginRefreshing];
+}
+- (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed {
+	[self.refreshControl endRefreshing];
+}
+- (void)newsFeed:(JONewsFeed *)newsFeed didFailWithError:(NSError *)error {
+	[self.refreshControl endRefreshing];
+	NSLog(@"Failed with error: %@", error);
+}
+
+/*- (void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item {
 	NSLog(@"Parsed item %@", item);
 	
 	if ([self.items indexOfObjectPassingTest:^BOOL(MWFeedItem *obj, NSUInteger idx, BOOL *stop) {
@@ -132,7 +149,7 @@
 	}] != NSNotFound) {
 		NSLog(@"Finished parsing item %@ twice?", item);
 		return;
-	} //*/
+	} // * /
 	[self.items addObject:item];
 	[self.items sortUsingComparator:^NSComparisonResult(MWFeedItem *obj1, MWFeedItem *obj2) {
 		return [obj1.date compare:obj2.date] * -1;
@@ -150,6 +167,6 @@
 - (void)feedParserDidFinish:(MWFeedParser *)parser {
 	NSLog(@"Finished");
 	[self.refreshControl endRefreshing];
-}
+} //*/
 
 @end
