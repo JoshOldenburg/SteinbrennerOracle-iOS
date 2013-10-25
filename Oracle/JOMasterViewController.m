@@ -16,9 +16,8 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface JOMasterViewController () <JONewsFeedDelegate>
-@property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic, strong) NSArray *previousItems;
-@property (nonatomic, strong) JONewsFeed *feedParser;
+@property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong) JONewsFeed *newsFeed;
 @property (nonatomic, assign) BOOL shouldDoNothing; // Always NO unless testing
 @end
 
@@ -57,22 +56,22 @@
 
 - (void)setFeedURL:(NSURL *)feedURL {
 	_feedURL = feedURL;
+	if (![_feedURL isEqual:feedURL]) self.newsFeed = nil;
 	[self jo_setUpFeedParser];
 	[self refreshData];
 }
 
 - (void)jo_setUpFeedParser {
-	if (!self.feedURL || self.shouldDoNothing) return;
+	if (!self.feedURL || self.shouldDoNothing || self.newsFeed) return;
 	
-	self.feedParser = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
+	self.newsFeed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
 }
 
 - (void)refreshData {
 	if (self.shouldDoNothing) return;
-	self.previousItems = self.items.copy;
-	[self.items removeAllObjects];
+	self.items = nil;
 	[self.tableView reloadData];
-	[self.feedParser start];
+	[self.newsFeed start];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -116,11 +115,24 @@
 	cell.titleLabel.text = item.title.stringByDecodingHTMLEntities;
 	cell.textView.text = item.summary.stringByDecodingHTMLEntities;
 	cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
-	JOMasterViewController *_self = self;
+	__block JOMasterViewController *_self = self;
+	__weak JOImageDetailCell *_cell = cell;
 	[item getImageURLsWithCallback:^(NSArray *imageURLs) {
-		JOImageDetailCell *_cell = (JOImageDetailCell *)[_self.tableView cellForRowAtIndexPath:indexPath];
-		if (!_cell || !imageURLs || imageURLs.count == 0) return;
-		[_cell.largeImageView setImageWithURL:[NSURL URLWithString:[(NSString *)imageURLs[0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:_self.class.jo_faviconImage]; // This caches for us, and jo_faviconImage is lazy loading and caching
+		if (!_cell) return;
+//		JOImageDetailCell *_cell = (JOImageDetailCell *)[_self.tableView cellForRowAtIndexPath:indexPath];
+		if (!imageURLs || imageURLs.count == 0) {
+			_cell.largeImageView.image = _self.class.jo_faviconImage;
+			_cell.largeImageView.contentMode = UIViewContentModeCenter;
+			return;
+		}
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[(NSString *)imageURLs[0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+		[_cell.largeImageView setImageWithURLRequest:request placeholderImage:_self.class.jo_faviconImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+			_cell.largeImageView.image = image;
+			_cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
+		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+			
+		}]; // Caches for us
 	}];
     return cell;
 }
@@ -139,19 +151,23 @@
 
 - (void)newsFeedDidStartDownload:(JONewsFeed *)newsFeed {
 	[self.refreshControl beginRefreshing];
-	[self.tableView beginUpdates];
+//	[self.tableView beginUpdates];
 }
 - (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed {
 	[self.refreshControl endRefreshing];
 	
-	[self.items setArray:self.feedParser.newsItems];
+	NSAssert(newsFeed == self.newsFeed, @"Copied feed parser?");
+	NSAssert(newsFeed.newsItems == self.newsFeed.newsItems, @"Copied feed parser (news item array)?");
+	
+	[self.tableView beginUpdates];
+	self.items = newsFeed.newsItems.copy;
 	for (JONewsItem *newsItem in self.items) {
-		if (self.previousItems.count == 0) {
+		if (self.items[0] == newsItem) {
 			[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 		} else {
 			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 		}
-	}
+	} //*/
 	
 	[self.tableView endUpdates];
 }
