@@ -13,7 +13,7 @@
 #import "JONewsFeed.h"
 #import "JONewsFeedInfo.h"
 #import "JONewsItem.h"
-#import "NSString+HTML.h"
+#import "NSString+JOUtilAdditions.h"
 
 @interface JONewsFeedTests : XCTestCase <JONewsFeedDelegate>
 @property (nonatomic, assign) BOOL hasFinishedParsing;
