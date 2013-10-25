@@ -35,7 +35,6 @@
 	
 	self.items = [NSMutableArray array];
 	self.tableView.rowHeight = 88.0;
-//	[self.tableView registerNib:[UINib nibWithNibName:@"JOImageDetailCell" bundle:[NSBundle bundleForClass:[self class]]] forCellReuseIdentifier:@"NewsEntry"];
 	[self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
 	self.navigationItem.title = @"Steinbrenner Oracle";
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -103,31 +102,23 @@
 		cell.largeImageView.contentMode = UIViewContentModeCenter;
 		cell.largeImageView.image = [UIImage imageNamed:@"Favicon"];
 	}
-//    cell.detailTextLabel.text = item.summary;
-//    UIImage *theImage = [UIImage imageWithContentsOfFile:path];
-//    cell.imageView.image = theImage;
     return cell;
 }
 
 #pragma mark - NSTableViewDelegate
-/*- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
- return 88;
- } //*/
-//- table
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		self.detailViewController.newsItem = self.items[indexPath.row];
-	} /*else {
-//		JODetailViewController *newViewController = [[JODetailViewController alloc] initWithNibName:@" bundle:<#(NSBundle *)#>
-		self.detailViewController.feedItem = self.items[indexPath.row];
-		[self.navigationController pushViewController:self.detailViewController animated:YES];
-	} //*/
+	}
 }
 
 #pragma mark - MWFeedParserDelegate
 - (void)newsFeed:(JONewsFeed *)newsFeed didParseItems:(NSArray *)newsItems {
-	[self.items setArray:newsItems];
-	[self.tableView reloadData];
+	JOMasterViewController *_self = self;
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[_self.items setArray:newsItems];
+		[self.tableView reloadData];
+	});
 }
 
 - (void)newsFeedDidStartDownload:(JONewsFeed *)newsFeed {
@@ -140,33 +131,5 @@
 	[self.refreshControl endRefreshing];
 	NSLog(@"Failed with error: %@", error);
 }
-
-/*- (void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item {
-	NSLog(@"Parsed item %@", item);
-	
-	if ([self.items indexOfObjectPassingTest:^BOOL(MWFeedItem *obj, NSUInteger idx, BOOL *stop) {
-		return [obj.date isEqualToDate:item.date] && [obj.title isEqualToString:item.title];
-	}] != NSNotFound) {
-		NSLog(@"Finished parsing item %@ twice?", item);
-		return;
-	} // * /
-	[self.items addObject:item];
-	[self.items sortUsingComparator:^NSComparisonResult(MWFeedItem *obj1, MWFeedItem *obj2) {
-		return [obj1.date compare:obj2.date] * -1;
-	}];
-	NSUInteger newIdx = [self.items indexOfObjectIdenticalTo:item];
-	[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIdx inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-- (void)feedParser:(MWFeedParser *)parser didFailWithError:(NSError *)error {
-	NSLog(@"Failed with error %@", error);
-	[[[UIAlertView alloc] initWithTitle:@"Error" message:@"Error parsing feed" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-}
-- (void)feedParserDidStart:(MWFeedParser *)parser {
-	NSLog(@"Started");
-}
-- (void)feedParserDidFinish:(MWFeedParser *)parser {
-	NSLog(@"Finished");
-	[self.refreshControl endRefreshing];
-} //*/
 
 @end

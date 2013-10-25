@@ -18,7 +18,8 @@
 @end
 
 @implementation JONewsItem
-@synthesize tidiedContent = _tidiedContent, imageURLs = _imageURLs;
+@synthesize tidiedContent = _tidiedContent;
+@synthesize imageURLs = _imageURLs;
 
 - (id)init {
 	self = [super init];

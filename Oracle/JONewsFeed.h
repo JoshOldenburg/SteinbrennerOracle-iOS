@@ -31,7 +31,7 @@ typedef enum {
 
 - (void)newsFeed:(JONewsFeed *)newsFeed didFailWithError:(NSError *)error; // Called when download finishes unsuccessfully or when parse fails
 
-- (void)newsFeed:(JONewsFeed *)newsFeed didParseItems:(NSArray *)newsItems; // Called after parsing every item and when the feed is done
+- (void)newsFeed:(JONewsFeed *)newsFeed didParseItems:(NSArray *)newsItems; // Called after parsing every item and when the feed is done. Currently the only difference in the array is another object appended
 - (void)newsFeed:(JONewsFeed *)newsFeed didParseInfo:(JONewsFeedInfo *)feedInfo; // Called after parsing feed info
 - (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed; // Called when all items & the info are parsed (if present)
 
