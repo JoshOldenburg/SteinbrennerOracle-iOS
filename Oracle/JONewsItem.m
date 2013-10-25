@@ -77,8 +77,9 @@
 	}
 	
 	if (callback) [self.callbacks addObject:callback];
+	if (self.parser) return;
 	
-	self.parser = [[NSXMLParser alloc] initWithData:[self.tidiedContent.stringByDecodingHTMLEntities dataUsingEncoding:NSUTF8StringEncoding]];
+	self.parser = [[NSXMLParser alloc] initWithData:[[self.tidiedContent stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "] dataUsingEncoding:NSUTF8StringEncoding]];
 	self.parser.delegate = self;
 	[self.parser parse];
 }
@@ -95,7 +96,9 @@
 	self.imageURLs = self.tempImageURLs;
 	for (void (^callback)(NSArray *imageURLs) in callbacks) {
 		callback(_imageURLs);
+		[self.callbacks removeObject:callback];
 	}
+	self.parser = nil;
 }
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
 	self.tempImageURLs = nil;

@@ -137,7 +137,8 @@
 	
 	{
 		__block JONewsFeed *_self = self;
-		[TBXML iterateElementsForQuery:@"entry" fromElement:XML.rootXMLElement withBlock:^(TBXMLElement *element) {
+		TBXMLElement *element = [TBXML childElementNamed:@"entry" parentElement:XML.rootXMLElement];
+		do {
 			JONewsItem *newsItem = [[JONewsItem alloc] init];
 			
 			TBXMLElement *titleElement = [TBXML childElementNamed:@"title" parentElement:element];
@@ -157,13 +158,13 @@
 			
 			TBXMLElement *publicationDateElement = [TBXML childElementNamed:@"published" parentElement:element];
 			if (publicationDateElement) newsItem.publicationDate = [NSDate dateFromRFC3339String:[TBXML textForElement:publicationDateElement]];
-												
+			
 			TBXMLElement *updateDateElement = [TBXML childElementNamed:@"updated" parentElement:element];
 			if (updateDateElement) newsItem.updateDate = [NSDate dateFromRFC3339String:[TBXML textForElement:updateDateElement]];
 			
 			_self.newsItems = [_self.newsItems arrayByAddingObject:newsItem];
-			if ([_self.delegate respondsToSelector:@selector(newsFeed:didParseItems:)]) [_self.delegate newsFeed:_self didParseItems:_self.newsItems];
-		}];
+			if ([_self.delegate respondsToSelector:@selector(newsFeed:didParseItem:)]) [_self.delegate newsFeed:_self didParseItem:newsItem];
+		} while ((element = [TBXML nextSiblingNamed:@"entry" searchFromElement:element]));
 	}
 }
 - (void)jo_parseAtomLink:(TBXMLElement *)link intoFeedInfo:(JONewsFeedInfo *)feedInfo {

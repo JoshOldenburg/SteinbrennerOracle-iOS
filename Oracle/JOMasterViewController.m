@@ -13,9 +13,11 @@
 #import "JONewsItem.h"
 #import "JONewsFeedInfo.h"
 #import "NSString+JOUtilAdditions.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface JOMasterViewController () <JONewsFeedDelegate>
 @property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSArray *previousItems;
 @property (nonatomic, strong) JONewsFeed *feedParser;
 @property (nonatomic, assign) BOOL shouldDoNothing; // Always NO unless testing
 @end
@@ -67,6 +69,7 @@
 
 - (void)refreshData {
 	if (self.shouldDoNothing) return;
+	self.previousItems = self.items.copy;
 	[self.items removeAllObjects];
 	[self.tableView reloadData];
 	[self.feedParser start];
@@ -77,12 +80,22 @@
 	self.detailViewController.newsItem = self.items[self.tableView.indexPathForSelectedRow.row];
 }
 
+#pragma mark - Util
++ (UIImage *)jo_faviconImage {
+	static UIImage *faviconImage;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		faviconImage = [UIImage imageNamed:@"Favicon"];
+	});
+	return faviconImage;
+}
+
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return self.items.count;
+	return self.items.count > 0 ? self.items.count : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -91,17 +104,24 @@
         cell = [[JOImageDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"NewsEntry"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+	
+	if (self.items.count == 0) {
+		cell.titleLabel.text = @"Loading...";
+		cell.textView.text = @"";
+		cell.largeImageView.image = self.class.jo_faviconImage;
+		return cell;
+	}
+	
     JONewsItem *item = self.items[indexPath.row];
 	cell.titleLabel.text = item.title.stringByDecodingHTMLEntities;
 	cell.textView.text = item.summary.stringByDecodingHTMLEntities;
-#warning TODO: make async
-	if (item.imageURLs.count > 0) {
-		cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
-		cell.largeImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.imageURLs[0]]]];
-	} else {
-		cell.largeImageView.contentMode = UIViewContentModeCenter;
-		cell.largeImageView.image = [UIImage imageNamed:@"Favicon"];
-	}
+	cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
+	JOMasterViewController *_self = self;
+	[item getImageURLsWithCallback:^(NSArray *imageURLs) {
+		JOImageDetailCell *_cell = (JOImageDetailCell *)[_self.tableView cellForRowAtIndexPath:indexPath];
+		if (!_cell || !imageURLs || imageURLs.count == 0) return;
+		[_cell.largeImageView setImageWithURL:[NSURL URLWithString:[(NSString *)imageURLs[0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] placeholderImage:_self.class.jo_faviconImage]; // This caches for us, and jo_faviconImage is lazy loading and caching
+	}];
     return cell;
 }
 
@@ -113,22 +133,31 @@
 }
 
 #pragma mark - MWFeedParserDelegate
-- (void)newsFeed:(JONewsFeed *)newsFeed didParseItems:(NSArray *)newsItems {
-	JOMasterViewController *_self = self;
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[_self.items setArray:newsItems];
-		[self.tableView reloadData];
-	});
+- (void)newsFeed:(JONewsFeed *)newsFeed didParseItem:(JONewsItem *)newsItem {
+	// No-op, heavy lifting with animations and such is done in newsFeedDidFinishParsing:
 }
 
 - (void)newsFeedDidStartDownload:(JONewsFeed *)newsFeed {
 	[self.refreshControl beginRefreshing];
+	[self.tableView beginUpdates];
 }
 - (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed {
 	[self.refreshControl endRefreshing];
+	
+	[self.items setArray:self.feedParser.newsItems];
+	for (JONewsItem *newsItem in self.items) {
+		if (self.previousItems.count == 0) {
+			[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+		} else {
+			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+		}
+	}
+	
+	[self.tableView endUpdates];
 }
 - (void)newsFeed:(JONewsFeed *)newsFeed didFailWithError:(NSError *)error {
 	[self.refreshControl endRefreshing];
+	[self.tableView endUpdates];
 	NSLog(@"Failed with error: %@", error);
 }
 
