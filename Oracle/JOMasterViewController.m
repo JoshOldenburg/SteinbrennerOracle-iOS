@@ -37,8 +37,15 @@
 	self.items = [NSMutableArray array];
 	self.tableView.rowHeight = 88.0;
 	[self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
-	self.navigationItem.title = @"Steinbrenner Oracle";
+	
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+	
+	self.navigationItem.title = @"Steinbrenner Oracle";
+	self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OracleLogoText"]];
+	((UIImageView *)self.navigationItem.titleView).contentMode = UIViewContentModeScaleAspectFit;
+	
+	self.navigationController.navigationBar.translucent = NO;
+	
 	[super awakeFromNib];
 }
 
@@ -76,7 +83,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	self.detailViewController = segue.destinationViewController;
-	self.detailViewController.newsItem = self.items[self.tableView.indexPathForSelectedRow.row];
+	self.detailViewController.newsItem = self.items.count == 0 ? nil : self.items[self.tableView.indexPathForSelectedRow.row];
 }
 
 #pragma mark - Util
@@ -106,14 +113,14 @@
 	
 	if (self.items.count == 0) {
 		cell.titleLabel.text = @"Loading...";
-		cell.textView.text = @"";
+		cell.blurbLabel.text = @"";
 		cell.largeImageView.image = self.class.jo_faviconImage;
 		return cell;
 	}
 	
     JONewsItem *item = self.items[indexPath.row];
 	cell.titleLabel.text = item.title.stringByDecodingHTMLEntities;
-	cell.textView.text = item.summary.stringByDecodingHTMLEntities;
+	cell.blurbLabel.text = item.summary.stringByDecodingHTMLEntities;
 	cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
 	__block JOMasterViewController *_self = self;
 	__weak JOImageDetailCell *_cell = cell;
@@ -121,17 +128,20 @@
 		if (!_cell) return;
 //		JOImageDetailCell *_cell = (JOImageDetailCell *)[_self.tableView cellForRowAtIndexPath:indexPath];
 		if (!imageURLs || imageURLs.count == 0) {
-			_cell.largeImageView.image = _self.class.jo_faviconImage;
 			_cell.largeImageView.contentMode = UIViewContentModeCenter;
+			_cell.largeImageView.image = _self.class.jo_faviconImage;
 			return;
 		}
+		
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[(NSString *)imageURLs[0] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 		[request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+		
+		_cell.largeImageView.contentMode = UIViewContentModeCenter;
 		[_cell.largeImageView setImageWithURLRequest:request placeholderImage:_self.class.jo_faviconImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-			_cell.largeImageView.image = image;
 			_cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
+			_cell.largeImageView.image = image;
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-			
+			// Will leave placeholder image by default, so do nothing here
 		}]; // Caches for us
 	}];
     return cell;
@@ -142,6 +152,11 @@
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		self.detailViewController.newsItem = self.items[indexPath.row];
 	}
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (self.items.count == 0) return NO;
+	return YES;
 }
 
 #pragma mark - MWFeedParserDelegate

@@ -29,8 +29,18 @@
 - (void)configureView {
 	if (self.newsItem) {
 		[self.webView loadHTMLString:self.newsItem.content baseURL:nil];
+		[self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)] animated:YES];
 		self.navigationItem.title = self.newsItem.title.stringByConvertingHTMLToPlainText;
+	} else {
+		[self.navigationItem setRightBarButtonItem:nil animated:YES];
+		self.navigationItem.title = @"Select an Article";
 	}
+}
+
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	
+	self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)viewDidLoad {
@@ -40,6 +50,11 @@
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
+}
+
+#pragma mark - Actions
+- (void)shareButtonPressed:(id)sender {
+	
 }
 
 #pragma mark - Split view
