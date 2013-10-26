@@ -81,8 +81,14 @@
 	[self.newsFeed start];
 }
 
+- (void)clearSelection {
+	for (NSIndexPath *selection in self.tableView.indexPathsForSelectedRows) {
+		[self.tableView deselectRowAtIndexPath:selection animated:YES];
+	}
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	self.detailViewController = segue.destinationViewController;
+	self.detailViewController = [segue.destinationViewController isKindOfClass:[JODetailViewController class]] ? segue.destinationViewController : nil;
 	self.detailViewController.newsItem = self.items.count == 0 ? nil : self.items[self.tableView.indexPathForSelectedRow.row];
 }
 
@@ -98,16 +104,38 @@
 
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+	return self.items.count > 0 && JOInfoSectionEnabled ? 2 : 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return self.items.count > 0 ? self.items.count : 1;
+	if (section == 1) return 1;
+	return self.items.count > 0 ? self.items.count + ((NSUInteger)JOWebsiteLinkEnabled) : 1;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	switch (section) {
+		case 0:
+			return nil;
+		case 1:
+			return @"Information";
+		default:
+			return nil;
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.section == 1) {
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AboutCell"];
+		if (!cell) {
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AboutCell"];
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		}
+		
+		cell.textLabel.text = [NSString stringWithFormat:@"About %@", [[NSProcessInfo processInfo] processName]];
+		return cell;
+	}
+	
 	JOImageDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsEntry"];
-    if (cell == nil) {
-        cell = [[JOImageDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"NewsEntry"];
+    if (!cell) {
+        cell = [[JOImageDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NewsEntry"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 	
@@ -116,6 +144,8 @@
 		cell.blurbLabel.text = @"";
 		cell.largeImageView.image = self.class.jo_faviconImage;
 		return cell;
+	} else if (indexPath.row == self.items.count) { // Is more link item
+		cell.titleLabel.text = @"Open in Browser";
 	}
 	
     JONewsItem *item = self.items[indexPath.row];
@@ -183,6 +213,11 @@
 			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 		}
 	} //*/
+	
+	if (JOInfoSectionEnabled) {
+		[self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+	}
 	
 	[self.tableView endUpdates];
 }
