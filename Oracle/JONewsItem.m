@@ -7,8 +7,8 @@
 //
 
 #import "JONewsItem.h"
-#import <tidy/tidy.h>
-#import <tidy/buffio.h>
+#import "tidy.h"
+#import "buffio.h"
 #import "NSString+JOUtilAdditions.h"
 
 @interface JONewsItem () <NSXMLParserDelegate>

@@ -87,6 +87,10 @@
 		0367FB6E1803750D0065A400 /* JOImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOImageDetailCell.h; sourceTree = "<group>"; };
 		0367FB6F1803750D0065A400 /* JOImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOImageDetailCell.m; sourceTree = "<group>"; };
 		03900FA718037C7600ED6619 /* JOImageDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JOImageDetailCell.xib; sourceTree = "<group>"; };
+		03ECFB3E181BF7EC0004C08B /* tidy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tidy.h; sourceTree = "<group>"; };
+		03ECFB3F181BF8130004C08B /* buffio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffio.h; sourceTree = "<group>"; };
+		03ECFB40181BF8610004C08B /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
+		03ECFB41181BF8720004C08B /* tidyenum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tidyenum.h; sourceTree = "<group>"; };
 		03FE5EB0181300AF00A61921 /* libtidy.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtidy.dylib; path = usr/lib/libtidy.dylib; sourceTree = SDKROOT; };
 		03FE5EB21814342F00A61921 /* NSString+JOUtilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JOUtilAdditions.h"; sourceTree = "<group>"; };
 		03FE5EB31814342F00A61921 /* NSString+JOUtilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JOUtilAdditions.m"; sourceTree = "<group>"; };
@@ -244,9 +248,21 @@
 				03FE5EB31814342F00A61921 /* NSString+JOUtilAdditions.m */,
 				03FE5EB51814B4E700A61921 /* NSString+GTMNSStringHTMLAdditions.h */,
 				03FE5EB61814B4E700A61921 /* NSString+GTMNSStringHTMLAdditions.m */,
+				03ECFB3D181BF7DA0004C08B /* Tidy Headers */,
 				03006E89180AFBA50032F6B1 /* News Feed */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		03ECFB3D181BF7DA0004C08B /* Tidy Headers */ = {
+			isa = PBXGroup;
+			children = (
+				03ECFB3E181BF7EC0004C08B /* tidy.h */,
+				03ECFB3F181BF8130004C08B /* buffio.h */,
+				03ECFB40181BF8610004C08B /* platform.h */,
+				03ECFB41181BF8720004C08B /* tidyenum.h */,
+			);
+			name = "Tidy Headers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
