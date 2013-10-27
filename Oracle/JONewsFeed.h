@@ -53,5 +53,6 @@ typedef enum {
 
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy; // These cannot be changed after calling -start
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
+@property (nonatomic, copy) NSDictionary *customRequestHeaders;
 
 @end

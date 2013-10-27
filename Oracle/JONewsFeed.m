@@ -93,6 +93,11 @@
 - (void)jo_createRequestIfNecessary {
 	if (self.URLRequest) return;
 	NSMutableURLRequest *URLRequest = [[NSMutableURLRequest alloc] initWithURL:self.feedURL cachePolicy:self.cachePolicy timeoutInterval:self.timeoutInterval];
+	if (self.customRequestHeaders.count > 0) {
+		[self.customRequestHeaders enumerateKeysAndObjectsUsingBlock:^(NSString *header, NSString *value, BOOL *stop) {
+			[URLRequest setValue:value forHTTPHeaderField:header];
+		}];
+	}
 	self.URLRequest = URLRequest;
 }
 
