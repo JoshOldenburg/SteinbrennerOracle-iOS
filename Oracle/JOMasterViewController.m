@@ -114,6 +114,9 @@
 			title = @"About the Steinbrenner Oracle";
 			break;
 		case 1:
+			textFileName = @"AboutApp";
+			textFileExtension = @"rtf";
+			title = @"About the App";
 			break;
 		default:
 			break;
@@ -130,8 +133,8 @@
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		if (indexPath.section == 0) {
 			self.detailViewController.usesTextView = NO;
-			self.detailViewController.newsItem = self.items[indexPath.row];
-			return;
+			if (indexPath.row < self.items.count) self.detailViewController.newsItem = self.items[indexPath.row];
+			else self.detailViewController.newsItem = nil;
 		} else {
 			[self prepareDetailForInfoSectionItem:indexPath];
 		}
@@ -181,14 +184,20 @@
 			switch (indexPath.row) {
 				case 0:
 					cell.textLabel.text = @"About the Steinbrenner Oracle";
+					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 					break;
 				case 1:
 					cell.textLabel.text = @"About the App";
+					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+					break;
 				default:
+					cell.textLabel.text = @"Error";
+					cell.accessoryType = UITableViewCellAccessoryNone;
 					break;
 			}
 		} else if (indexPath.row == self.items.count) {
 			cell.textLabel.text = @"Open in Browser";
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 		return cell;
 	}
@@ -203,6 +212,7 @@
 		cell.titleLabel.text = @"Loading...";
 		cell.blurbLabel.text = @"";
 		cell.largeImageView.image = self.class.jo_faviconImage;
+		cell.accessoryType = UITableViewCellAccessoryNone;
 		return cell;
 	}
 	
@@ -210,6 +220,7 @@
 	cell.titleLabel.text = item.title.stringByDecodingHTMLEntities;
 	cell.blurbLabel.text = item.summary.stringByDecodingHTMLEntities;
 	cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	__block JOMasterViewController *_self = self;
 	__weak JOImageDetailCell *_cell = cell;
 	[item getImageURLsWithCallback:^(NSArray *imageURLs) {
