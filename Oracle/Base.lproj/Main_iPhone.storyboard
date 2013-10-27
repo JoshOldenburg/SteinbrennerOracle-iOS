@@ -29,39 +29,58 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsEntry" rowHeight="88" id="8nZ-I5-FnV" customClass="JOImageDetailCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsEntry" rowHeight="88" id="J4b-js-Qzt" customClass="JOImageDetailCell">
                                 <rect key="frame" x="0.0" y="119" width="320" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8nZ-I5-FnV" id="ecY-ws-Wac">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J4b-js-Qzt" id="Vi8-Fd-o1U">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="87"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Favicon" translatesAutoresizingMaskIntoConstraints="NO" id="QbG-j6-jDs">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favicon" translatesAutoresizingMaskIntoConstraints="NO" id="Age-nf-iVH">
                                             <rect key="frame" x="0.0" y="0.0" width="88" height="88"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="88" id="mEm-dW-UAl"/>
+                                                <constraint firstAttribute="width" constant="88" id="qWh-u3-ktT"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Long title long title second line now" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="191" translatesAutoresizingMaskIntoConstraints="NO" id="1Jt-X7-ef1">
-                                            <rect key="frame" x="96" y="0.0" width="191" height="35"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long title long title second line now" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="184" translatesAutoresizingMaskIntoConstraints="NO" id="0Up-h3-WFc">
+                                            <rect key="frame" x="103" y="0.0" width="184" height="35"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="4Xb-is-5Uj"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Blurbs can be rather long too, I mean look at this one. It just goes on and on and on..." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="191" translatesAutoresizingMaskIntoConstraints="NO" id="rrl-m7-L7k">
-                                            <rect key="frame" x="96" y="33" width="191" height="54"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blurbs can be rather long too, I mean look at this one. It just goes on and on and on..." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="184" translatesAutoresizingMaskIntoConstraints="NO" id="ob0-6c-o1C">
+                                            <rect key="frame" x="103" y="33" width="184" height="54"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="54" id="z8T-4Y-4aO"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="0Up-h3-WFc" firstAttribute="leading" secondItem="ob0-6c-o1C" secondAttribute="leading" id="1j7-zI-vtb"/>
+                                        <constraint firstAttribute="bottom" secondItem="ob0-6c-o1C" secondAttribute="bottom" id="ahP-sB-bhw"/>
+                                        <constraint firstAttribute="trailing" secondItem="ob0-6c-o1C" secondAttribute="trailing" id="cCv-qn-U14"/>
+                                        <constraint firstItem="Age-nf-iVH" firstAttribute="leading" secondItem="Vi8-Fd-o1U" secondAttribute="leading" id="cUe-mV-fzv"/>
+                                        <constraint firstAttribute="trailing" secondItem="0Up-h3-WFc" secondAttribute="trailing" id="gGN-65-NWh"/>
+                                        <constraint firstItem="ob0-6c-o1C" firstAttribute="leading" secondItem="Age-nf-iVH" secondAttribute="trailing" constant="15" id="mD9-1G-dic"/>
+                                        <constraint firstItem="0Up-h3-WFc" firstAttribute="top" secondItem="Vi8-Fd-o1U" secondAttribute="top" id="p68-Rh-a4b"/>
+                                        <constraint firstItem="Age-nf-iVH" firstAttribute="top" secondItem="Vi8-Fd-o1U" secondAttribute="top" id="vhr-9m-LSt"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="blurbLabel" destination="rrl-m7-L7k" id="Yw6-WW-vFG"/>
-                                    <outlet property="largeImageView" destination="QbG-j6-jDs" id="DVK-bs-SKN"/>
-                                    <outlet property="titleLabel" destination="1Jt-X7-ef1" id="PGd-Xo-u0i"/>
-                                    <segue destination="Ah7-4n-0Wa" kind="push" id="6GL-1o-SlV"/>
+                                    <outlet property="blurbLabel" destination="ob0-6c-o1C" id="dyP-rc-l0i"/>
+                                    <outlet property="largeImageView" destination="Age-nf-iVH" id="MNg-VO-NZw"/>
+                                    <outlet property="titleLabel" destination="0Up-h3-WFc" id="2pg-dZ-uvW"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AboutNewspaperCell" textLabel="NtB-MP-Lk4" style="IBUITableViewCellStyleDefault" id="ZHt-dg-PCD">

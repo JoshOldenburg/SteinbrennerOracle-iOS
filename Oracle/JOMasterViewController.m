@@ -63,6 +63,10 @@
 	self.feedURL = [NSURL URLWithString:@"http://oraclenewspaper.com/feed/atom/"];
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	[self jo_updateTitleBarForOrientation:self.interfaceOrientation];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

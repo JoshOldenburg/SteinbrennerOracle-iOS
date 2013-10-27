@@ -106,25 +106,45 @@
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="87"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Favicon" translatesAutoresizingMaskIntoConstraints="NO" id="EHx-mQ-XuG">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favicon" translatesAutoresizingMaskIntoConstraints="NO" id="EHx-mQ-XuG">
                                             <rect key="frame" x="0.0" y="0.0" width="88" height="88"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="88" id="Kt6-qO-YE6"/>
+                                                <constraint firstAttribute="width" constant="88" id="OK1-sg-RZq"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Long title long title second line now" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="191" translatesAutoresizingMaskIntoConstraints="NO" id="o4u-Y9-Qg2">
-                                            <rect key="frame" x="96" y="0.0" width="191" height="35"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long title long title second line now" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="184" translatesAutoresizingMaskIntoConstraints="NO" id="o4u-Y9-Qg2">
+                                            <rect key="frame" x="103" y="0.0" width="184" height="35"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="MFG-7S-Ez0"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Blurbs can be rather long too, I mean look at this one. It just goes on and on and on..." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="191" translatesAutoresizingMaskIntoConstraints="NO" id="6VM-jQ-Y8k">
-                                            <rect key="frame" x="96" y="33" width="191" height="54"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blurbs can be rather long too, I mean look at this one. It just goes on and on and on..." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="184" translatesAutoresizingMaskIntoConstraints="NO" id="6VM-jQ-Y8k">
+                                            <rect key="frame" x="103" y="33" width="184" height="54"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="54" id="Dup-dx-bBP"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="6VM-jQ-Y8k" secondAttribute="bottom" id="B86-On-Lg1"/>
+                                        <constraint firstItem="o4u-Y9-Qg2" firstAttribute="top" secondItem="21e-wk-zyK" secondAttribute="top" id="EMA-m5-z0G"/>
+                                        <constraint firstAttribute="trailing" secondItem="6VM-jQ-Y8k" secondAttribute="trailing" id="Hxh-Tm-kWs"/>
+                                        <constraint firstAttribute="trailing" secondItem="o4u-Y9-Qg2" secondAttribute="trailing" id="IR3-wv-qKV"/>
+                                        <constraint firstItem="EHx-mQ-XuG" firstAttribute="top" secondItem="21e-wk-zyK" secondAttribute="top" id="X65-nn-hSy"/>
+                                        <constraint firstItem="EHx-mQ-XuG" firstAttribute="leading" secondItem="21e-wk-zyK" secondAttribute="leading" id="fKR-0M-0yK"/>
+                                        <constraint firstItem="6VM-jQ-Y8k" firstAttribute="leading" secondItem="EHx-mQ-XuG" secondAttribute="trailing" constant="15" id="pao-oe-lao"/>
+                                        <constraint firstItem="o4u-Y9-Qg2" firstAttribute="leading" secondItem="6VM-jQ-Y8k" secondAttribute="leading" id="qkv-LS-56c"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
