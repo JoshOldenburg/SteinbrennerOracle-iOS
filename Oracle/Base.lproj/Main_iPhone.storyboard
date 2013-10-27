@@ -24,13 +24,13 @@
         <scene sceneID="VgW-fR-Quf">
             <objects>
                 <tableViewController title="Steinbrenner Oracle" id="pGg-6v-bdr" customClass="JOMasterViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mLL-gJ-YKr">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="mLL-gJ-YKr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsEntry" rowHeight="88" id="8nZ-I5-FnV" customClass="JOImageDetailCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="88"/>
+                                <rect key="frame" x="0.0" y="119" width="320" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8nZ-I5-FnV" id="ecY-ws-Wac">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="87"/>
@@ -64,14 +64,14 @@
                                     <segue destination="Ah7-4n-0Wa" kind="push" id="6GL-1o-SlV"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AboutCell" textLabel="Cfn-Aj-OUS" style="IBUITableViewCellStyleDefault" id="XM9-LJ-ofN">
-                                <rect key="frame" x="0.0" y="174" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AboutNewspaperCell" textLabel="NtB-MP-Lk4" style="IBUITableViewCellStyleDefault" id="ZHt-dg-PCD">
+                                <rect key="frame" x="0.0" y="207" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XM9-LJ-ofN" id="Ngu-ab-oqa">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZHt-dg-PCD" id="uRf-A5-yKe">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cfn-Aj-OUS">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="About the Steinbrenner Oracle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NtB-MP-Lk4">
                                             <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -81,6 +81,30 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="Ah7-4n-0Wa" kind="push" id="Is7-Tr-vkN"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AboutCell" textLabel="Cfn-Aj-OUS" style="IBUITableViewCellStyleDefault" id="XM9-LJ-ofN">
+                                <rect key="frame" x="0.0" y="251" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XM9-LJ-ofN" id="Ngu-ab-oqa">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="About the App" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Cfn-Aj-OUS">
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="Ah7-4n-0Wa" kind="push" id="VVp-my-Oej"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -110,37 +134,43 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Mh-pu-dKv">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEh-Jc-uJV">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEh-Jc-uJV">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </webView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="VEh-Jc-uJV" firstAttribute="centerY" secondItem="6Mh-pu-dKv" secondAttribute="centerY" id="0fi-cZ-YFb"/>
-                                    <constraint firstAttribute="trailing" secondItem="VEh-Jc-uJV" secondAttribute="trailing" id="1zO-pY-VX9"/>
-                                    <constraint firstAttribute="bottom" secondItem="VEh-Jc-uJV" secondAttribute="bottom" id="G5E-sW-5qY"/>
-                                    <constraint firstItem="VEh-Jc-uJV" firstAttribute="top" secondItem="6Mh-pu-dKv" secondAttribute="top" id="OHV-Or-P5I"/>
-                                    <constraint firstItem="VEh-Jc-uJV" firstAttribute="centerX" secondItem="6Mh-pu-dKv" secondAttribute="centerX" id="b6h-5L-VRW"/>
-                                    <constraint firstItem="VEh-Jc-uJV" firstAttribute="leading" secondItem="6Mh-pu-dKv" secondAttribute="leading" id="di0-17-Si1"/>
-                                </constraints>
-                            </scrollView>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kuw-XA-B16">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="6Mh-pu-dKv" secondAttribute="bottom" id="4xz-5x-xJP"/>
-                            <constraint firstItem="6Mh-pu-dKv" firstAttribute="top" secondItem="MMQ-IT-qOo" secondAttribute="top" id="7Iy-rI-haV"/>
-                            <constraint firstAttribute="trailing" secondItem="6Mh-pu-dKv" secondAttribute="trailing" id="Mff-mU-Knc"/>
-                            <constraint firstItem="6Mh-pu-dKv" firstAttribute="leading" secondItem="MMQ-IT-qOo" secondAttribute="leading" id="Z4A-Zv-851"/>
+                            <constraint firstItem="Kuw-XA-B16" firstAttribute="top" secondItem="VEh-Jc-uJV" secondAttribute="top" id="2fC-eX-3Og"/>
+                            <constraint firstItem="Kuw-XA-B16" firstAttribute="top" secondItem="MMQ-IT-qOo" secondAttribute="top" id="7CC-kU-HcM"/>
+                            <constraint firstItem="Kuw-XA-B16" firstAttribute="leading" secondItem="VEh-Jc-uJV" secondAttribute="leading" id="8fl-GR-cZL"/>
+                            <constraint firstItem="Kuw-XA-B16" firstAttribute="leading" secondItem="MMQ-IT-qOo" secondAttribute="leading" id="HBy-jo-oML"/>
+                            <constraint firstAttribute="trailing" secondItem="Kuw-XA-B16" secondAttribute="trailing" id="ITx-qG-MhB"/>
+                            <constraint firstItem="Kuw-XA-B16" firstAttribute="bottom" secondItem="VEh-Jc-uJV" secondAttribute="bottom" id="KDY-qZ-Cbg"/>
+                            <constraint firstItem="Kuw-XA-B16" firstAttribute="trailing" secondItem="VEh-Jc-uJV" secondAttribute="trailing" id="LbD-HQ-4JF"/>
+                            <constraint firstAttribute="bottom" secondItem="Kuw-XA-B16" secondAttribute="bottom" id="fyV-bx-K2i"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Article" id="cra-N8-TIN"/>
                     <connections>
+                        <outlet property="textView" destination="Kuw-XA-B16" id="noS-Zt-ZHf"/>
                         <outlet property="webView" destination="VEh-Jc-uJV" id="4ZO-Dn-Buw"/>
                     </connections>
                 </viewController>
@@ -157,4 +187,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="VVp-my-Oej"/>
+    </inferredMetricsTieBreakers>
 </document>

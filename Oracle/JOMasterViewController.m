@@ -89,7 +89,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	self.detailViewController = [segue.destinationViewController isKindOfClass:[JODetailViewController class]] ? segue.destinationViewController : nil;
-	self.detailViewController.newsItem = self.items.count == 0 ? nil : self.items[self.tableView.indexPathForSelectedRow.row];
+	self.detailViewController.newsItem = (self.items.count == 0 || self.tableView.indexPathForSelectedRow.section == 1) ? nil : self.items[self.tableView.indexPathForSelectedRow.row];
+	if (self.tableView.indexPathForSelectedRow.section == 1) [self prepareDetailForInfoSectionItem:self.tableView.indexPathForSelectedRow];
 }
 
 #pragma mark - Util
@@ -102,34 +103,93 @@
 	return faviconImage;
 }
 
+- (void)prepareDetailForInfoSectionItem:(NSIndexPath *)indexPath {
+	NSString *textFileName = nil;
+	NSString *textFileExtension = nil;
+	NSString *title = nil;
+	switch (indexPath.row) {
+		case 0:
+			textFileName = @"AboutSteinbrennerOracle";
+			textFileExtension = @"rtf";
+			title = @"About the Steinbrenner Oracle";
+			break;
+		case 1:
+			break;
+		default:
+			break;
+	}
+	NSURL *textFileURL = [[NSBundle bundleForClass:self.class] URLForResource:textFileName withExtension:textFileExtension];
+	NSAttributedString *text = [[NSAttributedString alloc] initWithFileURL:textFileURL options:[textFileExtension isEqualToString:@"rtf"] ? @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType} : nil documentAttributes:nil error:nil];
+	self.detailViewController.usesTextView = YES;
+	self.detailViewController.navigationItem.title = title;
+	self.detailViewController.textView.attributedText = text ?: [[NSAttributedString alloc] initWithString:@"An error occurred attempting to load the info"];
+}
+
+#pragma mark - NSTableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+		if (indexPath.section == 0) {
+			self.detailViewController.usesTextView = NO;
+			self.detailViewController.newsItem = self.items[indexPath.row];
+			return;
+		} else {
+			[self prepareDetailForInfoSectionItem:indexPath];
+		}
+	}
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (self.items.count == 0) return NO;
+	return YES;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.section == 0) return self.tableView.rowHeight;
+	return 44;
+}
+
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return self.items.count > 0 && JOInfoSectionEnabled ? 2 : 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (section == 1) return 1;
+	if (section == 1) return 2;
 	return self.items.count > 0 ? self.items.count + ((NSUInteger)JOWebsiteLinkEnabled) : 1;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	switch (section) {
 		case 0:
-			return nil;
+			return JOInfoSectionEnabled ? @"Latest Articles" : nil;
+			break;
 		case 1:
-			return @"Information";
+			return @"Info";
+			break;
 		default:
 			return nil;
 	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 1) {
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AboutCell"];
+	if (indexPath.section == 1 || (indexPath.section == 0 && indexPath.row == self.items.count && indexPath.row != 0)) {
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:(indexPath.section == 1 && indexPath.row == 0) ? @"AboutNewspaperCell" : @"AboutCell"];
 		if (!cell) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AboutCell"];
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:(indexPath.section == 1 && indexPath.row == 0) ? @"AboutNewspaperCell" : @"AboutCell"];
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		}
 		
-		cell.textLabel.text = [NSString stringWithFormat:@"About %@", [[NSProcessInfo processInfo] processName]];
+		if (indexPath.section == 1) {
+			switch (indexPath.row) {
+				case 0:
+					cell.textLabel.text = @"About the Steinbrenner Oracle";
+					break;
+				case 1:
+					cell.textLabel.text = @"About the App";
+				default:
+					break;
+			}
+		} else if (indexPath.row == self.items.count) {
+			cell.textLabel.text = @"Open in Browser";
+		}
 		return cell;
 	}
 	
@@ -144,8 +204,6 @@
 		cell.blurbLabel.text = @"";
 		cell.largeImageView.image = self.class.jo_faviconImage;
 		return cell;
-	} else if (indexPath.row == self.items.count) { // Is more link item
-		cell.titleLabel.text = @"Open in Browser";
 	}
 	
     JONewsItem *item = self.items[indexPath.row];
@@ -177,19 +235,7 @@
     return cell;
 }
 
-#pragma mark - NSTableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		self.detailViewController.newsItem = self.items[indexPath.row];
-	}
-}
-
-- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (self.items.count == 0) return NO;
-	return YES;
-}
-
-#pragma mark - MWFeedParserDelegate
+#pragma mark - JONewsFeedDelegate
 - (void)newsFeed:(JONewsFeed *)newsFeed didParseItem:(JONewsItem *)newsItem {
 	// No-op, heavy lifting with animations and such is done in newsFeedDidFinishParsing:
 }
@@ -223,7 +269,7 @@
 }
 - (void)newsFeed:(JONewsFeed *)newsFeed didFailWithError:(NSError *)error {
 	[self.refreshControl endRefreshing];
-	[self.tableView endUpdates];
+//	[self.tableView reloadData];
 	NSLog(@"Failed with error: %@", error);
 }
 

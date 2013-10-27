@@ -32,36 +32,31 @@
                         <rect key="frame" x="0.0" y="64" width="703" height="704"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0d1-FQ-5Hk">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jrZ-P9-uss">
                                 <rect key="frame" x="0.0" y="0.0" width="703" height="704"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jrZ-P9-uss">
-                                        <rect key="frame" x="0.0" y="0.0" width="703" height="704"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <dataDetectorType key="dataDetectorTypes"/>
-                                    </webView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="jrZ-P9-uss" firstAttribute="top" secondItem="0d1-FQ-5Hk" secondAttribute="top" id="2KQ-uq-JtW"/>
-                                    <constraint firstAttribute="trailing" secondItem="jrZ-P9-uss" secondAttribute="trailing" id="5Ud-HM-xzE"/>
-                                    <constraint firstAttribute="bottom" secondItem="jrZ-P9-uss" secondAttribute="bottom" id="5uL-1X-iAu"/>
-                                    <constraint firstItem="jrZ-P9-uss" firstAttribute="leading" secondItem="0d1-FQ-5Hk" secondAttribute="leading" id="K4M-v6-K2G"/>
-                                    <constraint firstItem="jrZ-P9-uss" firstAttribute="centerY" secondItem="0d1-FQ-5Hk" secondAttribute="centerY" id="SKK-l6-KJC"/>
-                                    <constraint firstItem="jrZ-P9-uss" firstAttribute="leading" secondItem="0d1-FQ-5Hk" secondAttribute="leading" id="bZB-n1-WhA"/>
-                                    <constraint firstAttribute="bottom" secondItem="jrZ-P9-uss" secondAttribute="bottom" id="wxZ-DT-wxR"/>
-                                    <constraint firstAttribute="trailing" secondItem="jrZ-P9-uss" secondAttribute="trailing" id="xTq-RE-P18"/>
-                                    <constraint firstItem="jrZ-P9-uss" firstAttribute="centerX" secondItem="0d1-FQ-5Hk" secondAttribute="centerX" id="zUi-PF-whG"/>
-                                </constraints>
-                            </scrollView>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
+                            </webView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-RQ-Vx4">
+                                <rect key="frame" x="0.0" y="0.0" width="703" height="704"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="0d1-FQ-5Hk" secondAttribute="bottom" id="GNa-RI-AwY"/>
-                            <constraint firstItem="0d1-FQ-5Hk" firstAttribute="top" secondItem="svH-Pt-448" secondAttribute="top" id="M7N-5w-Mzc"/>
-                            <constraint firstAttribute="trailing" secondItem="0d1-FQ-5Hk" secondAttribute="trailing" id="Ms8-zK-jib"/>
-                            <constraint firstItem="0d1-FQ-5Hk" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="QKE-xi-mbw"/>
+                            <constraint firstItem="TQg-RQ-Vx4" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="9Vl-Z7-hvu"/>
+                            <constraint firstItem="TQg-RQ-Vx4" firstAttribute="bottom" secondItem="jrZ-P9-uss" secondAttribute="bottom" id="BqB-co-Ypg"/>
+                            <constraint firstItem="TQg-RQ-Vx4" firstAttribute="top" secondItem="svH-Pt-448" secondAttribute="top" id="DqL-7a-m9R"/>
+                            <constraint firstItem="TQg-RQ-Vx4" firstAttribute="top" secondItem="jrZ-P9-uss" secondAttribute="top" id="FWD-ZF-xzM"/>
+                            <constraint firstItem="TQg-RQ-Vx4" firstAttribute="leading" secondItem="jrZ-P9-uss" secondAttribute="leading" id="JkV-3z-Ndg"/>
+                            <constraint firstAttribute="trailing" secondItem="TQg-RQ-Vx4" secondAttribute="trailing" id="LH6-Ru-adx"/>
+                            <constraint firstAttribute="bottom" secondItem="TQg-RQ-Vx4" secondAttribute="bottom" id="htR-ac-Ve4"/>
+                            <constraint firstItem="TQg-RQ-Vx4" firstAttribute="trailing" secondItem="jrZ-P9-uss" secondAttribute="trailing" id="q1A-oN-ueI"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
@@ -70,6 +65,7 @@
                     <navigationItem key="navigationItem" title="Select an Article" id="mOI-FS-AaM"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
+                        <outlet property="textView" destination="TQg-RQ-Vx4" id="db0-E9-IOM"/>
                         <outlet property="webView" destination="jrZ-P9-uss" id="5cw-Yn-8XQ"/>
                     </connections>
                 </viewController>
@@ -93,18 +89,18 @@
             </objects>
             <point key="canvasLocation" x="-687" y="-630"/>
         </scene>
-        <!--Master View Controller - Master-->
+        <!--Master View Controller - Steinbrenner Oracle-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="JOMasterViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="r7i-6Z-zg0">
+                <tableViewController title="Steinbrenner Oracle" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="JOMasterViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="64" width="320" height="704"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewsEntry" rowHeight="88" id="QPB-Ki-WW9" customClass="JOImageDetailCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="88"/>
+                                <rect key="frame" x="0.0" y="55" width="320" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QPB-Ki-WW9" id="21e-wk-zyK">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="87"/>
@@ -137,6 +133,24 @@
                                     <outlet property="titleLabel" destination="o4u-Y9-Qg2" id="4vY-Uj-Mwa"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AboutNewspaperCell" textLabel="Sdh-BQ-evd" style="IBUITableViewCellStyleDefault" id="aEG-pH-UZH">
+                                <rect key="frame" x="0.0" y="143" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aEG-pH-UZH" id="jEX-si-uwi">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="About the Steinbrenner Oracle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sdh-BQ-evd">
+                                            <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -144,6 +158,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Steinbrenner Oracle" id="Zdf-7t-Un8"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="uBU-le-mZA">

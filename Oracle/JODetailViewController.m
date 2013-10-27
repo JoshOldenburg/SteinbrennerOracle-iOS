@@ -16,31 +16,58 @@
 
 @implementation JODetailViewController
 
+- (void)awakeFromNib {
+	[super awakeFromNib];
+	if (!self.isViewLoaded) [self loadView];
+	self.navigationController.navigationBar.translucent = NO;
+//	self.usesTextView = self.usesTextView;
+//	self.newsItem = self.newsItem;
+	self.textView.hidden = !self.usesTextView;
+	self.webView.hidden = self.usesTextView;
+}
+
 #pragma mark - Managing the detail item
 - (void)setNewsItem:(JONewsItem *)newsItem {
 	if (_newsItem != newsItem) {
 		_newsItem = newsItem;
+		[self.webView loadHTMLString:@"" baseURL:nil];
 		[self configureView];
 	}
 	
 	if (self.masterPopoverController != nil) [self.masterPopoverController dismissPopoverAnimated:YES];
 }
+- (void)setUsesTextView:(BOOL)usesTextView {
+	if (usesTextView) {
+		_newsItem = nil;
+		[self.webView loadHTMLString:@"" baseURL:nil];
+	}
+	
+//	NSAssert(self.textView, @"textView is nil");
+	[self jo_updateHiddenWithTextViewHidden:!(_usesTextView = usesTextView)];
+	if (self.masterPopoverController != nil) [self.masterPopoverController dismissPopoverAnimated:YES];
+}
 
 - (void)configureView {
 	if (self.newsItem) {
+		[self jo_updateHiddenWithTextViewHidden:YES];
 		[self.webView loadHTMLString:self.newsItem.content baseURL:nil];
 		[self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)] animated:YES];
 		self.navigationItem.title = self.newsItem.title.stringByConvertingHTMLToPlainText;
+	} else if (self.usesTextView) {
+		[self jo_updateHiddenWithTextViewHidden:NO];
+		self.navigationItem.title = @"Select an Article";
 	} else {
+		[self jo_updateHiddenWithTextViewHidden:YES];
 		[self.navigationItem setRightBarButtonItem:nil animated:YES];
 		self.navigationItem.title = @"Select an Article";
 	}
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
-	
-	self.navigationController.navigationBar.translucent = NO;
+- (void)jo_updateHiddenWithTextViewHidden:(BOOL)textViewHidden {
+	self.textView.hidden = textViewHidden;
+	self.textView.scrollsToTop = !textViewHidden;
+	self.webView.hidden = !textViewHidden;
+	self.webView.scrollView.scrollsToTop = textViewHidden;
 }
 
 - (void)viewDidLoad {

@@ -13,4 +13,7 @@
 @property (nonatomic, strong) JONewsItem *newsItem;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
+@property (nonatomic, assign) BOOL usesTextView;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
 @end

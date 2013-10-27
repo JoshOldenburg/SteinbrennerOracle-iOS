@@ -9,7 +9,7 @@
 extern NSString *const JOExceptionInvalid;
 extern NSString *const JOErrorDomain;
 
-#define JOInfoSectionEnabled NO
+#define JOInfoSectionEnabled YES
 #define JOWebsiteLinkEnabled NO
 
 @interface JOUtil : NSObject

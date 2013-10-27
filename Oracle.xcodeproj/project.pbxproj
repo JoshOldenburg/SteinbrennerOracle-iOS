@@ -32,6 +32,7 @@
 		0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6918035ABD0065A400 /* JOConstants.m */; };
 		0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6F1803750D0065A400 /* JOImageDetailCell.m */; };
 		03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03900FA718037C7600ED6619 /* JOImageDetailCell.xib */; };
+		03ECFB43181C33950004C08B /* AboutSteinbrennerOracle.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */; };
 		03FE5EB1181300AF00A61921 /* libtidy.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FE5EB0181300AF00A61921 /* libtidy.dylib */; };
 		03FE5EB41814342F00A61921 /* NSString+JOUtilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FE5EB31814342F00A61921 /* NSString+JOUtilAdditions.m */; };
 		03FE5EB71814B4E700A61921 /* NSString+GTMNSStringHTMLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FE5EB61814B4E700A61921 /* NSString+GTMNSStringHTMLAdditions.m */; };
@@ -91,6 +92,7 @@
 		03ECFB3F181BF8130004C08B /* buffio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffio.h; sourceTree = "<group>"; };
 		03ECFB40181BF8610004C08B /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
 		03ECFB41181BF8720004C08B /* tidyenum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tidyenum.h; sourceTree = "<group>"; };
+		03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutSteinbrennerOracle.rtf; sourceTree = "<group>"; };
 		03FE5EB0181300AF00A61921 /* libtidy.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtidy.dylib; path = usr/lib/libtidy.dylib; sourceTree = SDKROOT; };
 		03FE5EB21814342F00A61921 /* NSString+JOUtilAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JOUtilAdditions.h"; sourceTree = "<group>"; };
 		03FE5EB31814342F00A61921 /* NSString+JOUtilAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JOUtilAdditions.m"; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		033F747318034877001681AF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */,
 				033F747418034877001681AF /* Oracle-Info.plist */,
 				033F747518034877001681AF /* InfoPlist.strings */,
 				033F747818034877001681AF /* main.m */,
@@ -352,6 +355,7 @@
 				03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */,
 				033F748018034877001681AF /* Main_iPhone.storyboard in Resources */,
 				033F747718034877001681AF /* InfoPlist.strings in Resources */,
+				03ECFB43181C33950004C08B /* AboutSteinbrennerOracle.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
