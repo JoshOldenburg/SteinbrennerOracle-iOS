@@ -14,6 +14,7 @@
 #import "JONewsFeedInfo.h"
 #import "NSString+JOUtilAdditions.h"
 #import "UIImageView+AFNetworking.h"
+#import "AFURLConnectionOperation.h" // Imported for error parsing
 
 @interface JOMasterViewController () <JONewsFeedDelegate>
 @property (nonatomic, strong) NSArray *items;
@@ -61,7 +62,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.feedURL = [NSURL URLWithString:@"http://oraclenewspaper.com/feed/atom/"];
+	self.feedURL = [NSURL URLWithString:JOOracleFeedURL];
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -239,12 +240,42 @@
 		if ([self.previousLoadError.domain isEqualToString:NSURLErrorDomain] && self.previousLoadError.code == NSURLErrorNotConnectedToInternet) {
 			cell.titleLabel.text = @"Could not connect to the Internet";
 			cell.blurbLabel.text = @"Turn off airplane mode or use Wi-Fi to access data";
+		} else if ([self.previousLoadError.domain isEqualToString:AFNetworkingErrorDomain]  && self.previousLoadError.code == NSURLErrorBadServerResponse && [self.previousLoadError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey] isKindOfClass:[NSHTTPURLResponse class]]) {
+			NSHTTPURLResponse *response = self.previousLoadError.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+			NSInteger statusCode = response.statusCode; // Separated out for debugging
+			cell.titleLabel.text = [NSString stringWithFormat:@"An error occurred loading news: %ld (%ld)", (long)self.previousLoadError.code, (long)statusCode];
+			switch (statusCode) {
+				case 404: // Not Found
+				case 406: // Not Acceptable
+				case 410: // Gone
+					cell.blurbLabel.text = @"The Oracle's website has been updated and is incompatible with this app.";
+					break;
+				case 401: // Unauthorized
+				case 403: // Forbidden
+					cell.blurbLabel.text = @"The Oracle's website is down or has blocked this app from accessing it.";
+					break;
+				case 418: // I'm a teapot
+					cell.blurbLabel.text = @"The Oracle's web server has informed you that it is a teapot.";
+					break;
+				case 450: // Blocked by Windows Parental Controls
+					cell.blurbLabel.text = @"Parental controls have blocked the Oracle's website.";
+					break;
+				case 500: // Internal Server Error
+				case 502: // Bad Gateway
+				case 503: // Service Unavailable
+				case 504: // Gateway Timeout
+					cell.blurbLabel.text = @"An unknown error occurred on the Oracle's website.";
+					break;
+				default:
+					cell.blurbLabel.text = @"Pleae try again later.";
+					break;
+			}
 		} else if (self.previousLoadError) {
 			cell.titleLabel.text = [NSString stringWithFormat:@"Error loading news: %ld", (long)self.previousLoadError.code];
 			cell.blurbLabel.text = self.previousLoadError.localizedDescription;
 		} else {
 			cell.titleLabel.text = @"An unknown error occurred loading news";
-			cell.blurbLabel.text = @"Please try again later";
+			cell.blurbLabel.text = @"Please try again later.";
 		}
 		cell.largeImageView.contentMode = UIViewContentModeCenter;
 		cell.largeImageView.image = self.class.jo_faviconImage;

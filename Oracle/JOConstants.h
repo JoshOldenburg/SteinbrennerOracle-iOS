@@ -12,6 +12,14 @@ extern NSString *const JOErrorDomain;
 #define JOInfoSectionEnabled YES
 #define JOWebsiteLinkEnabled YES
 
+#define JOCauseErrorForTesting 0 // Please, preprocessor, make NO == 0 and YES == 1 in macros...
+
+#if JOCauseErrorForTesting
+#define JOOracleFeedURL @"http://oraclenewspaper.com/ThisPageShouldNotExist"
+#else
+#define JOOracleFeedURL @"http://oraclenewspaper.com/feed/atom/"
+#endif
+
 @interface JOUtil : NSObject
 
 @end
