@@ -87,7 +87,7 @@
 	self.newsFeed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
 	self.newsFeed.customRequestHeaders = @{
 		@"X-Oracle-App-Version": [NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]],
-		@"X-Oracle-App-Device": [NSString stringWithFormat:@"%@, iOS v%@", [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]],
+//		@"X-Oracle-App-Device": [NSString stringWithFormat:@"%@, iOS v%@", [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]],
 	};
 }
 
