@@ -218,7 +218,7 @@
 					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 					break;
 				default:
-					cell.textLabel.text = @"Error";
+					cell.textLabel.text = @"Error: Invalid row";
 					cell.accessoryType = UITableViewCellAccessoryNone;
 					break;
 			}
