@@ -41,12 +41,20 @@
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	self.navigationItem.title = @"Steinbrenner Oracle";
-	self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OracleLogoText"]];
-	((UIImageView *)self.navigationItem.titleView).contentMode = UIViewContentModeScaleAspectFit;
+	[self jo_updateTitleBarForOrientation:self.interfaceOrientation];
 	
 	self.navigationController.navigationBar.translucent = NO;
 	
 	[super awakeFromNib];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+	if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) [self jo_updateTitleBarForOrientation:toInterfaceOrientation];
+}
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	[super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+	if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) [self jo_updateTitleBarForOrientation:self.interfaceOrientation];
 }
 
 - (void)viewDidLoad {
@@ -126,6 +134,16 @@
 	self.detailViewController.usesTextView = YES;
 	self.detailViewController.navigationItem.title = title;
 	self.detailViewController.textView.attributedText = text ?: [[NSAttributedString alloc] initWithString:@"An error occurred attempting to load the info"];
+}
+
+- (void)jo_updateTitleBarForOrientation:(UIInterfaceOrientation)orientation {
+	if ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone && self.navigationItem.titleView) return;
+	if (UIInterfaceOrientationIsLandscape(orientation) && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+		self.navigationItem.titleView = nil;
+	} else {
+		self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OracleLogoText"]];
+		((UIImageView *)self.navigationItem.titleView).contentMode = UIViewContentModeScaleAspectFit;
+	}
 }
 
 #pragma mark - NSTableViewDelegate
