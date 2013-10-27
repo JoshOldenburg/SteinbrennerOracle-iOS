@@ -18,6 +18,7 @@
 @interface JOMasterViewController () <JONewsFeedDelegate>
 @property (nonatomic, strong) NSArray *items;
 @property (nonatomic, strong) JONewsFeed *newsFeed;
+@property (nonatomic, strong) NSError *previousLoadError;
 @property (nonatomic, assign) BOOL shouldDoNothing; // Always NO unless testing
 @end
 
@@ -58,7 +59,7 @@
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	
 	self.feedURL = [NSURL URLWithString:@"http://oraclenewspaper.com/feed/atom/"];
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -69,8 +70,7 @@
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
 }
 
 - (void)setFeedURL:(NSURL *)feedURL {
@@ -89,6 +89,7 @@
 - (void)refreshData {
 	if (self.shouldDoNothing) return;
 	self.items = nil;
+	self.previousLoadError = nil;
 	[self.tableView reloadData];
 	[self.newsFeed start];
 }
@@ -155,8 +156,12 @@
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 		if (indexPath.section == 0) {
 			self.detailViewController.usesTextView = NO;
-			if (indexPath.row < self.items.count) self.detailViewController.newsItem = self.items[indexPath.row];
-			else self.detailViewController.newsItem = nil;
+			if (indexPath.row < self.items.count) {
+				self.detailViewController.newsItem = self.items[indexPath.row];
+			} else {
+				self.detailViewController.newsItem = nil;
+				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://oraclenewspaper.com"]];
+			}
 		} else {
 			[self prepareDetailForInfoSectionItem:indexPath];
 		}
@@ -164,18 +169,18 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (self.items.count == 0) return NO;
+	if ((self.items.count == 0 && !self.previousLoadError) || (self.previousLoadError && indexPath.section == 0)) return NO;
 	return YES;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 0) return self.tableView.rowHeight;
+	if (indexPath.section == 0 && (indexPath.row < self.items.count || (indexPath.row == 0))) return self.tableView.rowHeight;
 	return 44;
 }
 
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return self.items.count > 0 && JOInfoSectionEnabled ? 2 : 1;
+	return ((self.items.count > 0 || self.previousLoadError) && JOInfoSectionEnabled) ? 2 : 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (section == 1) return 2;
@@ -199,7 +204,7 @@
 		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:(indexPath.section == 1 && indexPath.row == 0) ? @"AboutNewspaperCell" : @"AboutCell"];
 		if (!cell) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:(indexPath.section == 1 && indexPath.row == 0) ? @"AboutNewspaperCell" : @"AboutCell"];
-			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 		}
 		
 		if (indexPath.section == 1) {
@@ -218,7 +223,7 @@
 					break;
 			}
 		} else if (indexPath.row == self.items.count) {
-			cell.textLabel.text = @"Open in Browser";
+			cell.textLabel.text = @"Read more online";
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
 		return cell;
@@ -227,12 +232,28 @@
 	JOImageDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsEntry"];
     if (!cell) {
         cell = [[JOImageDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NewsEntry"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
 	
-	if (self.items.count == 0) {
+	if (self.previousLoadError) {
+		if ([self.previousLoadError.domain isEqualToString:NSURLErrorDomain] && self.previousLoadError.code == NSURLErrorNotConnectedToInternet) {
+			cell.titleLabel.text = @"Could not connect to the Internet";
+			cell.blurbLabel.text = @"Turn off airplane mode or use Wi-Fi to access data";
+		} else if (self.previousLoadError) {
+			cell.titleLabel.text = [NSString stringWithFormat:@"Error loading news: %ld", (long)self.previousLoadError.code];
+			cell.blurbLabel.text = self.previousLoadError.localizedDescription;
+		} else {
+			cell.titleLabel.text = @"An unknown error occurred loading news";
+			cell.blurbLabel.text = @"Please try again later";
+		}
+		cell.largeImageView.contentMode = UIViewContentModeCenter;
+		cell.largeImageView.image = self.class.jo_faviconImage;
+		cell.accessoryType = UITableViewCellAccessoryNone;
+		return cell;
+	} else if (self.items.count == 0) {
 		cell.titleLabel.text = @"Loading...";
 		cell.blurbLabel.text = @"";
+		cell.largeImageView.contentMode = UIViewContentModeCenter;
 		cell.largeImageView.image = self.class.jo_faviconImage;
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		return cell;
@@ -259,8 +280,12 @@
 		
 		_cell.largeImageView.contentMode = UIViewContentModeCenter;
 		[_cell.largeImageView setImageWithURLRequest:request placeholderImage:_self.class.jo_faviconImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-			_cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
-			_cell.largeImageView.image = image;
+			[UIView transitionWithView:_cell.largeImageView duration:0.25f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+				_cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
+				_cell.largeImageView.image = image;
+			} completion:^(BOOL finished) {
+				
+			}];
 		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
 			// Will leave placeholder image by default, so do nothing here
 		}]; // Caches for us
@@ -293,6 +318,8 @@
 		}
 	} //*/
 	
+	if (JOWebsiteLinkEnabled) [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+	
 	if (JOInfoSectionEnabled) {
 		[self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -302,8 +329,9 @@
 }
 - (void)newsFeed:(JONewsFeed *)newsFeed didFailWithError:(NSError *)error {
 	[self.refreshControl endRefreshing];
-//	[self.tableView reloadData];
-	NSLog(@"Failed with error: %@", error);
+	self.previousLoadError = error;
+	[self.tableView reloadData];
+//	NSLog(@"Failed loading news with error: %@", error);
 }
 
 @end
