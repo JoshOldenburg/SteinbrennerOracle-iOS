@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *tidiedContent; // Tidies content with libtidy if this is nil. Will only tidy once, to run again, set this to nil. This is automatically nilled when content is set
 @property (nonatomic, strong) NSArray *enclosures;
 @property (nonatomic, strong) NSArray *imageURLs;
+@property (nonatomic, strong) NSString *alternateURL;
 
 - (void)getImageURLsWithCallback:(void(^)(NSArray *imageURLs))callback; // If the imageURLs have already been parsed, this will call the callback immediately on the calling thread. Otherwise, it will be called on the main thread after the parse is complete
 

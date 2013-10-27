@@ -98,6 +98,13 @@
 	XCTAssertEqualObjects(firstItem.imageURLs[0], @"http://www.oraclenewspaper.com/wp-content/uploads/2013/10/American-Horror-Story-Coven-Jessica-Lange-Kathy-Bates-300x153.png");
 }
 
+- (void)testAlternateLinks {
+	JONewsFeed *feed = [self createFeedAndLoadWithURL:self.feedURL];
+	
+	XCTAssertEqual(feed.newsItems.count, (NSUInteger)2, @"Did not completely parse");
+	XCTAssertEqualObjects(((JONewsItem *)feed.newsItems[0]).alternateURL, @"http://www.oraclenewspaper.com/2013/10/18/unable-claim-win-final-meet-season/");
+}
+
 - (void)testMultipleLoads {
 	JONewsFeed *feed = [self createFeedAndLoadWithURL:self.feedURL];
 	XCTAssertNotNil(feed.feedInfo);

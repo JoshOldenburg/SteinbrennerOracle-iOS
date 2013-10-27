@@ -145,7 +145,9 @@
 			if (titleElement) newsItem.title = [TBXML textForElement:titleElement];
 			
 			TBXMLElement *linkElement = [TBXML childElementNamed:@"link" parentElement:element];
-			if (linkElement) [self jo_parseAtomLink:linkElement intoNewsItem:newsItem];
+			do {
+				if (linkElement) [self jo_parseAtomLink:linkElement intoNewsItem:newsItem];
+			} while ((linkElement = [TBXML nextSiblingNamed:@"link" searchFromElement:element]));
 			
 			TBXMLElement *idElement = [TBXML childElementNamed:@"id" parentElement:element];
 			if (idElement) newsItem.identifier = [TBXML textForElement:idElement];
@@ -179,9 +181,10 @@
 	if (!link || !newsItem) return;
 	
 	NSString *relValue = [TBXML valueOfAttributeNamed:@"rel" forElement:link];
-	if (!relValue || ![relValue isEqualToString:@"enclosure"]) return;
+	if (!relValue) return;
 	
-	[self jo_parseEnclosureElement:link intoNewsItem:newsItem];
+	if ([relValue isEqualToString:@"enclosure"]) [self jo_parseEnclosureElement:link intoNewsItem:newsItem];
+	else if ([relValue isEqualToString:@"alternate"] && !newsItem.alternateURL) [self jo_parseAlternateLinkElement:link intoNewsItem:newsItem];
 }
 
 - (void)jo_parseRSSFeedWithXML:(TBXML *)XML {
@@ -216,6 +219,25 @@
 	
 	if (newsItem.enclosures) newsItem.enclosures = [newsItem.enclosures arrayByAddingObject:[NSDictionary dictionaryWithDictionary:enclosure]];
 	else newsItem.enclosures = [NSArray arrayWithObject:[NSDictionary dictionaryWithDictionary:enclosure]];
+}
+- (void)jo_parseAlternateLinkElement:(TBXMLElement *)element intoNewsItem:(JONewsItem *)newsItem {
+	if (!element || !newsItem) return;
+	
+	NSString *linkURL;
+	NSString *linkType;
+	
+	switch (self.feedType) {
+		case JONewsFeedTypeAtom:
+			linkURL = [TBXML valueOfAttributeNamed:@"href" forElement:element];
+			linkType = [TBXML valueOfAttributeNamed:@"type" forElement:element];
+			break;
+		default:
+			return;
+	}
+	
+	if (!linkURL) return;
+	if (![linkType isEqualToString:@"text/html"]) return;
+	newsItem.alternateURL = linkURL;
 }
 
 - (void)jo_finishWithError:(NSError *)error {

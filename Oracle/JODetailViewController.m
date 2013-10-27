@@ -11,7 +11,8 @@
 #import "NSString+JOUtilAdditions.h"
 
 @interface JODetailViewController ()
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (nonatomic, strong) UIPopoverController *masterPopoverController;
+@property (nonatomic, strong) UIPopoverController *sharePopoverController;
 @end
 
 @implementation JODetailViewController
@@ -20,10 +21,8 @@
 	[super awakeFromNib];
 	if (!self.isViewLoaded) [self loadView];
 	self.navigationController.navigationBar.translucent = NO;
-//	self.usesTextView = self.usesTextView;
-//	self.newsItem = self.newsItem;
-	self.textView.hidden = !self.usesTextView;
-	self.webView.hidden = self.usesTextView;
+	[self jo_updateBarButtonVisible:NO];
+	[self jo_updateHiddenWithTextViewHidden:!self.usesTextView];
 }
 
 #pragma mark - Managing the detail item
@@ -34,7 +33,7 @@
 		[self configureView];
 	}
 	
-	if (self.masterPopoverController != nil) [self.masterPopoverController dismissPopoverAnimated:YES];
+	[self jo_dismissPopovers];
 }
 - (void)setUsesTextView:(BOOL)usesTextView {
 	if (usesTextView) {
@@ -44,21 +43,22 @@
 	
 //	NSAssert(self.textView, @"textView is nil");
 	[self jo_updateHiddenWithTextViewHidden:!(_usesTextView = usesTextView)];
-	if (self.masterPopoverController != nil) [self.masterPopoverController dismissPopoverAnimated:YES];
+	[self jo_dismissPopovers];
 }
 
 - (void)configureView {
 	if (self.newsItem) {
 		[self jo_updateHiddenWithTextViewHidden:YES];
 		[self.webView loadHTMLString:self.newsItem.content baseURL:nil];
-		[self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)] animated:YES];
+		[self jo_updateBarButtonVisible:YES];
 		self.navigationItem.title = self.newsItem.title.stringByConvertingHTMLToPlainText;
 	} else if (self.usesTextView) {
 		[self jo_updateHiddenWithTextViewHidden:NO];
+		[self jo_updateBarButtonVisible:NO];
 		self.navigationItem.title = @"Select an Article";
 	} else {
 		[self jo_updateHiddenWithTextViewHidden:YES];
-		[self.navigationItem setRightBarButtonItem:nil animated:YES];
+		[self jo_updateBarButtonVisible:NO];
 		self.navigationItem.title = @"Select an Article";
 	}
 }
@@ -69,6 +69,15 @@
 	self.webView.hidden = !textViewHidden;
 	self.webView.scrollView.scrollsToTop = textViewHidden;
 }
+- (void)jo_updateBarButtonVisible:(BOOL)barButtonVisible {
+	if (barButtonVisible) [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)] animated:YES];
+	else [self.navigationItem setRightBarButtonItem:nil animated:YES];
+}
+
+- (void)jo_dismissPopovers {
+	[self.masterPopoverController dismissPopoverAnimated:YES];
+	[self.sharePopoverController dismissPopoverAnimated:YES];
+}
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -77,11 +86,28 @@
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
+	if (!self.usesTextView) self.textView.attributedText = nil;
+	if (self.usesTextView) [self.webView loadHTMLString:@"" baseURL:nil];
 }
 
 #pragma mark - Actions
 - (void)shareButtonPressed:(id)sender {
+//	NSURL *itemURL = [NSURL URLWithString:[self.newsItem.alternateURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//	if (!itemURL) return;
 	
+	NSMutableArray *items = [NSMutableArray arrayWithObject:self.newsItem.alternateURL];
+	UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+	activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact];
+	
+	[self jo_dismissPopovers];
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+		self.modalPresentationStyle = UIModalPresentationFullScreen;
+		self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+		[self presentViewController:activityViewController animated:YES completion:nil];
+	} else {
+		self.sharePopoverController = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
+		[self.sharePopoverController presentPopoverFromBarButtonItem:self.navigationItem.rightBarButtonItem permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+	}
 }
 
 #pragma mark - Split view
