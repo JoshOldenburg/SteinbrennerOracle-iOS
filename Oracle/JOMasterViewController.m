@@ -47,6 +47,8 @@
 	
 	self.navigationController.navigationBar.translucent = NO;
 	
+	self.clearsSelectionOnViewWillAppear = NO;
+	
 	[super awakeFromNib];
 }
 
@@ -68,6 +70,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	[self jo_updateTitleBarForOrientation:self.interfaceOrientation];
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || [self jo_indexPathIsWebsiteLink:self.tableView.indexPathForSelectedRow]) [self jo_clearSelection];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,7 +102,7 @@
 	[self.newsFeed start];
 }
 
-- (void)clearSelection {
+- (void)jo_clearSelection {
 	for (NSIndexPath *selection in self.tableView.indexPathsForSelectedRows) {
 		[self.tableView deselectRowAtIndexPath:selection animated:YES];
 	}
@@ -107,8 +110,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	self.detailViewController = [segue.destinationViewController isKindOfClass:[JODetailViewController class]] ? segue.destinationViewController : nil;
-	self.detailViewController.newsItem = (self.items.count == 0 || self.tableView.indexPathForSelectedRow.section == 1) ? nil : self.items[self.tableView.indexPathForSelectedRow.row];
-	if (self.tableView.indexPathForSelectedRow.section == 1) [self prepareDetailForInfoSectionItem:self.tableView.indexPathForSelectedRow];
+	[self prepareDetailViewControllerForIndexPath:self.tableView.indexPathForSelectedRow];
 }
 
 #pragma mark - Util
@@ -121,6 +123,20 @@
 	return faviconImage;
 }
 
+- (void)prepareDetailViewControllerForIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.section == 0) {
+		self.detailViewController.usesTextView = NO;
+		if ([self jo_indexPathIsWebsiteLink:indexPath]) {
+			self.detailViewController.newsItem = nil;
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://oraclenewspaper.com"]];
+			[self jo_clearSelection];
+		} else {
+			self.detailViewController.newsItem = self.items[indexPath.row];
+		}
+	} else {
+		[self prepareDetailForInfoSectionItem:indexPath];
+	}
+}
 - (void)prepareDetailForInfoSectionItem:(NSIndexPath *)indexPath {
 	NSString *textFileName = nil;
 	NSString *textFileExtension = nil;
@@ -150,26 +166,20 @@
 	if ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone && self.navigationItem.titleView) return;
 	if (UIInterfaceOrientationIsLandscape(orientation) && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 		self.navigationItem.titleView = nil;
-	} else {
+	} else if (!self.navigationItem.titleView) {
 		self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OracleLogoText"]];
 		((UIImageView *)self.navigationItem.titleView).contentMode = UIViewContentModeScaleAspectFit;
 	}
 }
 
+- (BOOL)jo_indexPathIsWebsiteLink:(NSIndexPath *)indexPath {
+	return JOWebsiteLinkEnabled && indexPath && (indexPath.section == 0 && indexPath.row == self.items.count && indexPath.row != 0);
+}
+
 #pragma mark - NSTableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		if (indexPath.section == 0) {
-			self.detailViewController.usesTextView = NO;
-			if (indexPath.row < self.items.count) {
-				self.detailViewController.newsItem = self.items[indexPath.row];
-			} else {
-				self.detailViewController.newsItem = nil;
-				[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://oraclenewspaper.com"]];
-			}
-		} else {
-			[self prepareDetailForInfoSectionItem:indexPath];
-		}
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || [self jo_indexPathIsWebsiteLink:indexPath]) {
+		[self prepareDetailViewControllerForIndexPath:indexPath];
 	}
 }
 
@@ -205,10 +215,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 1 || (indexPath.section == 0 && indexPath.row == self.items.count && indexPath.row != 0)) {
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:(indexPath.section == 1 && indexPath.row == 0) ? @"AboutNewspaperCell" : @"AboutCell"];
+	BOOL isWebsiteLinkCell = [self jo_indexPathIsWebsiteLink:indexPath];
+	if (indexPath.section == 1 || isWebsiteLinkCell) {
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:isWebsiteLinkCell ? @"NoSegueCell" : @"MiscCell"];
 		if (!cell) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:(indexPath.section == 1 && indexPath.row == 0) ? @"AboutNewspaperCell" : @"AboutCell"];
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:isWebsiteLinkCell ? @"NoSegueCell" : @"MiscCell"];
 			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 		}
 		
@@ -227,7 +238,7 @@
 					cell.accessoryType = UITableViewCellAccessoryNone;
 					break;
 			}
-		} else if (indexPath.row == self.items.count) {
+		} else if (isWebsiteLinkCell) {
 			cell.textLabel.text = @"Read more online";
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		}
