@@ -49,7 +49,13 @@
 	
 	self.clearsSelectionOnViewWillAppear = NO;
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jo_updateForPrefsChanged:) name:NSUserDefaultsDidChangeNotification object:nil];
+	
 	[super awakeFromNib];
+}
+
+- (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -92,6 +98,11 @@
 		@"X-Oracle-App-Version": [NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]],
 //		@"X-Oracle-App-Device": [NSString stringWithFormat:@"%@, iOS v%@", [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]],
 	};
+}
+
+- (void)jo_updateForPrefsChanged:(id)sender {
+	[self.tableView reloadData]; // TODO: prettify this
+	[self jo_updateTitleBarForOrientation:self.interfaceOrientation];
 }
 
 - (void)refreshData {
@@ -164,7 +175,7 @@
 
 - (void)jo_updateTitleBarForOrientation:(UIInterfaceOrientation)orientation {
 	if ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone && self.navigationItem.titleView) return;
-	if (UIInterfaceOrientationIsLandscape(orientation) && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+	if ((UIInterfaceOrientationIsLandscape(orientation) && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) || (!JOEnableImageHeaderOnIOS6 && floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) || JODisableImageHeaderUniversally) { // No NSFoundationVersionNumber_iOS_7_0 as of yet
 		self.navigationItem.titleView = nil;
 	} else if (!self.navigationItem.titleView) {
 		self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OracleLogoText"]];

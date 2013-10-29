@@ -9,8 +9,11 @@
 extern NSString *const JOExceptionInvalid;
 extern NSString *const JOErrorDomain;
 
-#define JOInfoSectionEnabled YES
-#define JOWebsiteLinkEnabled YES
+#define JOInfoSectionEnabled [[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowInfoSection"] // YES
+#define JOWebsiteLinkEnabled [[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowWebsiteLink"] // YES
+
+#define JODisableImageHeaderUniversally (![[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowLogoInHeader"]) // NO // This overrides the following
+#define JOEnableImageHeaderOnIOS6 [[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowLogoInHeaderIn6"] // NO
 
 #define JOCauseErrorForTesting 0 // Please, preprocessor, make NO == 0 and YES == 1 in macros...
 

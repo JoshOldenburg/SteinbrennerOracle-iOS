@@ -12,6 +12,7 @@
 		03006E8F1811FBE70032F6B1 /* JONewsFeedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E8E1811FBE70032F6B1 /* JONewsFeedInfo.m */; };
 		031D6B251812108300D1C2B6 /* JONewsFeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031D6B241812108300D1C2B6 /* JONewsFeedTests.m */; };
 		031D6B271812116700D1C2B6 /* ExampleAtomFeed.xml in Resources */ = {isa = PBXBuildFile; fileRef = 031D6B261812116700D1C2B6 /* ExampleAtomFeed.xml */; };
+		031F0770181F4B74009B13D6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 031F076F181F4B74009B13D6 /* Settings.bundle */; };
 		033F746D18034877001681AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746C18034877001681AF /* Foundation.framework */; };
 		033F746F18034877001681AF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746E18034877001681AF /* CoreGraphics.framework */; };
 		033F747118034877001681AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F747018034877001681AF /* UIKit.framework */; };
@@ -61,6 +62,7 @@
 		031D6B241812108300D1C2B6 /* JONewsFeedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsFeedTests.m; sourceTree = "<group>"; };
 		031D6B261812116700D1C2B6 /* ExampleAtomFeed.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ExampleAtomFeed.xml; sourceTree = "<group>"; };
 		031D6B28181215A500D1C2B6 /* OracleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OracleTests.h; sourceTree = "<group>"; };
+		031F076F181F4B74009B13D6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		033F746918034877001681AF /* Oracle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oracle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033F746C18034877001681AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		033F746E18034877001681AF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -193,6 +195,7 @@
 		033F747318034877001681AF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				031F076F181F4B74009B13D6 /* Settings.bundle */,
 				03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */,
 				03C03B9F181D4986001A9CBF /* AboutApp.rtf */,
 				033F747418034877001681AF /* Oracle-Info.plist */,
@@ -359,6 +362,7 @@
 				03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */,
 				033F748018034877001681AF /* Main_iPhone.storyboard in Resources */,
 				033F747718034877001681AF /* InfoPlist.strings in Resources */,
+				031F0770181F4B74009B13D6 /* Settings.bundle in Resources */,
 				03ECFB43181C33950004C08B /* AboutSteinbrennerOracle.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
