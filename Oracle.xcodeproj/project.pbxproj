@@ -12,7 +12,6 @@
 		03006E8F1811FBE70032F6B1 /* JONewsFeedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 03006E8E1811FBE70032F6B1 /* JONewsFeedInfo.m */; };
 		031D6B251812108300D1C2B6 /* JONewsFeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031D6B241812108300D1C2B6 /* JONewsFeedTests.m */; };
 		031D6B271812116700D1C2B6 /* ExampleAtomFeed.xml in Resources */ = {isa = PBXBuildFile; fileRef = 031D6B261812116700D1C2B6 /* ExampleAtomFeed.xml */; };
-		031F0770181F4B74009B13D6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 031F076F181F4B74009B13D6 /* Settings.bundle */; };
 		033F746D18034877001681AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746C18034877001681AF /* Foundation.framework */; };
 		033F746F18034877001681AF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F746E18034877001681AF /* CoreGraphics.framework */; };
 		033F747118034877001681AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F747018034877001681AF /* UIKit.framework */; };
@@ -29,7 +28,6 @@
 		033F749418034877001681AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 033F747018034877001681AF /* UIKit.framework */; };
 		033F749C18034877001681AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 033F749A18034877001681AF /* InfoPlist.strings */; };
 		033F749E18034877001681AF /* OracleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033F749D18034877001681AF /* OracleTests.m */; };
-		034183371803505000A2FA11 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 034183361803505000A2FA11 /* Podfile */; };
 		0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6918035ABD0065A400 /* JOConstants.m */; };
 		0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6F1803750D0065A400 /* JOImageDetailCell.m */; };
 		03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03900FA718037C7600ED6619 /* JOImageDetailCell.xib */; };
@@ -355,14 +353,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				034183371803505000A2FA11 /* Podfile in Resources */,
 				033F748318034877001681AF /* Main_iPad.storyboard in Resources */,
 				03C03BA0181D4986001A9CBF /* AboutApp.rtf in Resources */,
 				033F748B18034877001681AF /* Images.xcassets in Resources */,
 				03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */,
 				033F748018034877001681AF /* Main_iPhone.storyboard in Resources */,
 				033F747718034877001681AF /* InfoPlist.strings in Resources */,
-				031F0770181F4B74009B13D6 /* Settings.bundle in Resources */,
 				03ECFB43181C33950004C08B /* AboutSteinbrennerOracle.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
