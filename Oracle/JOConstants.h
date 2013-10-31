@@ -21,7 +21,11 @@
 extern NSString *const JOExceptionInvalid;
 extern NSString *const JOErrorDomain;
 
+#import "TestFlight.h"
+
 @interface JOUtil : NSObject
+
++ (void)setUpTestFlight;
 
 @end
 

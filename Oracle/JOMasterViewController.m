@@ -140,9 +140,11 @@
 		if ([self jo_indexPathIsWebsiteLink:indexPath]) {
 			self.detailViewController.newsItem = nil;
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://oraclenewspaper.com"]];
+			[TestFlight passCheckpoint:@"OpenedWebsite"];
 			[self jo_clearSelection];
 		} else {
 			self.detailViewController.newsItem = self.items[indexPath.row];
+			[TestFlight passCheckpoint:@"OpenedNewsItem"];
 		}
 	} else {
 		[self prepareDetailForInfoSectionItem:indexPath];
@@ -157,11 +159,13 @@
 			textFileName = @"AboutSteinbrennerOracle";
 			textFileExtension = @"rtf";
 			title = @"About the Steinbrenner Oracle";
+			[TestFlight passCheckpoint:@"OpenedAboutSteinbrennerOracle"];
 			break;
 		case 1:
 			textFileName = @"AboutApp";
 			textFileExtension = @"rtf";
 			title = @"About the App";
+			[TestFlight passCheckpoint:@"OpenedAboutApp"];
 			break;
 		default:
 			break;
@@ -296,12 +300,15 @@
 					cell.blurbLabel.text = @"Pleae try again later.";
 					break;
 			}
+			TFLog(@"Error loading Oracle website data: HTTP %ld (NSError: %@), gave message: %@", (long)statusCode, self.previousLoadError, cell.blurbLabel.text);
 		} else if (self.previousLoadError) {
 			cell.titleLabel.text = [NSString stringWithFormat:@"Error loading news: %ld", (long)self.previousLoadError.code];
 			cell.blurbLabel.text = self.previousLoadError.localizedDescription;
+			TFLog(@"Error loading Oracle website data: %@", self.previousLoadError);
 		} else {
 			cell.titleLabel.text = @"An unknown error occurred loading news";
 			cell.blurbLabel.text = @"Please try again later.";
+			TFLog(@"Error loading Oracle website data: %@", self.previousLoadError);
 		}
 		cell.largeImageView.contentMode = UIViewContentModeCenter;
 		cell.largeImageView.image = self.class.jo_faviconImage;
