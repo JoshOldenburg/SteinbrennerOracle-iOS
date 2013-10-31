@@ -7,9 +7,10 @@
 //
 
 // Modifiable
-#define JOUsePrefPane 0
+#define JOUsePrefPane 0 // 0/1
 #define JOCauseErrorForTesting 0 // 0/1
 #define JOOracleFeedURL @"http://oraclenewspaper.com/feed/atom/"
+#define JOTFEnableCheckpoints 0 // 0/1
 
 /* Defines:
  * JOInfoSectionEnabled

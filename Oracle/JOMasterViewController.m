@@ -140,11 +140,11 @@
 		if ([self jo_indexPathIsWebsiteLink:indexPath]) {
 			self.detailViewController.newsItem = nil;
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://oraclenewspaper.com"]];
-			[TestFlight passCheckpoint:@"OpenedWebsite"];
+			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedWebsite"];
 			[self jo_clearSelection];
 		} else {
 			self.detailViewController.newsItem = self.items[indexPath.row];
-			[TestFlight passCheckpoint:@"OpenedNewsItem"];
+			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedNewsItem"];
 		}
 	} else {
 		[self prepareDetailForInfoSectionItem:indexPath];
@@ -159,13 +159,13 @@
 			textFileName = @"AboutSteinbrennerOracle";
 			textFileExtension = @"rtf";
 			title = @"About the Steinbrenner Oracle";
-			[TestFlight passCheckpoint:@"OpenedAboutSteinbrennerOracle"];
+			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedAboutSteinbrennerOracle"];
 			break;
 		case 1:
 			textFileName = @"AboutApp";
 			textFileExtension = @"rtf";
 			title = @"About the App";
-			[TestFlight passCheckpoint:@"OpenedAboutApp"];
+			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedAboutApp"];
 			break;
 		default:
 			break;
