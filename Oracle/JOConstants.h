@@ -10,6 +10,8 @@
 #define JOUsePrefPane 0 // 0/1
 #define JOCauseErrorForTesting 0 // 0/1
 #define JOOracleFeedURL @"http://oraclenewspaper.com/feed/atom/"
+
+#define JOEnableTF 0 // 0/1. If 0, calling methods on the TestFlight class is a no-op, as well as the TFLog family
 #define JOTFEnableCheckpoints 0 // 0/1
 
 /* Defines:
@@ -47,4 +49,18 @@ extern NSString *const JOErrorDomain;
 #if JOCauseErrorForTesting
 	#undef JOOracleFeedURL
 	#define JOOracleFeedURL @"http://oraclenewspaper.com/ThisPageShouldNotExist"
+#endif
+
+#if !JOEnableTF
+	#undef JOTFEnableCheckpoints
+	#define JOTFEnableCheckpoints 0
+
+	static TestFlight *const _JODisable_TestFlight = nil;
+	#define TestFlight ((Class)[_JODisable_TestFlight class])
+	static void(^_JODisable_TFLog)(NSString *format, ...) __attribute__((format(__NSString__, 1, 2))) = nil;
+	static void(^_JODisable_TFLogv)(NSString *format, va_list arg_list) = nil;
+	static void(^_JODisable_TFLogPreFormatted)(NSString *message) = nil;
+	#define TFLog _JODisable_TFLog
+	#define TFLogv _JODisable_TFLogv
+	#define TFLogPreFormatted _JODisable_TFLogPreFormatted
 #endif
