@@ -49,13 +49,17 @@
 	
 	self.clearsSelectionOnViewWillAppear = NO;
 	
+#if JOUsePrefPane
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jo_updateForPrefsChanged:) name:NSUserDefaultsDidChangeNotification object:nil];
+#endif
 	
 	[super awakeFromNib];
 }
 
 - (void)dealloc {
+#if JOUsePrefPane
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+#endif
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -129,7 +133,7 @@
 	static UIImage *faviconImage;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		faviconImage = [UIImage imageNamed:@"Favicon"];
+		faviconImage = [UIImage imageNamed:@"O"];
 	});
 	return faviconImage;
 }
@@ -182,7 +186,7 @@
 	if ((UIInterfaceOrientationIsLandscape(orientation) && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) || (!JOEnableImageHeaderOnIOS6 && floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) || JODisableImageHeaderUniversally) { // No NSFoundationVersionNumber_iOS_7_0 as of yet
 		self.navigationItem.titleView = nil;
 	} else if (!self.navigationItem.titleView) {
-		self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"OracleLogoText"]];
+		self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TheORACLE"]];
 		((UIImageView *)self.navigationItem.titleView).contentMode = UIViewContentModeScaleAspectFit;
 	}
 }
