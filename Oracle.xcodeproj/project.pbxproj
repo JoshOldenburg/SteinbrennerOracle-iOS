@@ -30,7 +30,6 @@
 		033F749E18034877001681AF /* OracleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033F749D18034877001681AF /* OracleTests.m */; };
 		0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6918035ABD0065A400 /* JOConstants.m */; };
 		0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6F1803750D0065A400 /* JOImageDetailCell.m */; };
-		03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03900FA718037C7600ED6619 /* JOImageDetailCell.xib */; };
 		03C03BA0181D4986001A9CBF /* AboutApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 03C03B9F181D4986001A9CBF /* AboutApp.rtf */; };
 		03ECFB43181C33950004C08B /* AboutSteinbrennerOracle.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */; };
 		03FE5EB1181300AF00A61921 /* libtidy.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FE5EB0181300AF00A61921 /* libtidy.dylib */; };
@@ -88,7 +87,6 @@
 		0367FB6918035ABD0065A400 /* JOConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOConstants.m; sourceTree = "<group>"; };
 		0367FB6E1803750D0065A400 /* JOImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOImageDetailCell.h; sourceTree = "<group>"; };
 		0367FB6F1803750D0065A400 /* JOImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOImageDetailCell.m; sourceTree = "<group>"; };
-		03900FA718037C7600ED6619 /* JOImageDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JOImageDetailCell.xib; sourceTree = "<group>"; };
 		03C03B9F181D4986001A9CBF /* AboutApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutApp.rtf; sourceTree = "<group>"; };
 		03ECFB3E181BF7EC0004C08B /* tidy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tidy.h; sourceTree = "<group>"; };
 		03ECFB3F181BF8130004C08B /* buffio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = buffio.h; sourceTree = "<group>"; };
@@ -194,8 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				031F076F181F4B74009B13D6 /* Settings.bundle */,
-				03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */,
-				03C03B9F181D4986001A9CBF /* AboutApp.rtf */,
 				033F747418034877001681AF /* Oracle-Info.plist */,
 				033F747518034877001681AF /* InfoPlist.strings */,
 				033F747818034877001681AF /* main.m */,
@@ -230,18 +226,8 @@
 		0367FB66180354280065A400 /* View & View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				033F747E18034877001681AF /* Main_iPhone.storyboard */,
-				033F748118034877001681AF /* Main_iPad.storyboard */,
-				033F748418034877001681AF /* JOMasterViewController.h */,
-				033F748518034877001681AF /* JOMasterViewController.m */,
-				033F748718034877001681AF /* JODetailViewController.h */,
-				033F748818034877001681AF /* JODetailViewController.m */,
-				0367FB6E1803750D0065A400 /* JOImageDetailCell.h */,
-				0367FB6F1803750D0065A400 /* JOImageDetailCell.m */,
-				03900FA718037C7600ED6619 /* JOImageDetailCell.xib */,
-				033F748A18034877001681AF /* Images.xcassets */,
-				033F747B18034877001681AF /* JOAppDelegate.h */,
-				033F747C18034877001681AF /* JOAppDelegate.m */,
+				03C892701825B3F5005FBFC1 /* Main Master/Detail */,
+				03C892721825B41B005FBFC1 /* Delegate/Images/Resources */,
 			);
 			name = "View & View Controller";
 			sourceTree = "<group>";
@@ -259,6 +245,41 @@
 				03006E89180AFBA50032F6B1 /* News Feed */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		03C892701825B3F5005FBFC1 /* Main Master/Detail */ = {
+			isa = PBXGroup;
+			children = (
+				033F748418034877001681AF /* JOMasterViewController.h */,
+				033F748518034877001681AF /* JOMasterViewController.m */,
+				033F747E18034877001681AF /* Main_iPhone.storyboard */,
+				033F748118034877001681AF /* Main_iPad.storyboard */,
+				033F748718034877001681AF /* JODetailViewController.h */,
+				033F748818034877001681AF /* JODetailViewController.m */,
+				03C892711825B410005FBFC1 /* Cells */,
+			);
+			name = "Main Master/Detail";
+			sourceTree = "<group>";
+		};
+		03C892711825B410005FBFC1 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0367FB6E1803750D0065A400 /* JOImageDetailCell.h */,
+				0367FB6F1803750D0065A400 /* JOImageDetailCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		03C892721825B41B005FBFC1 /* Delegate/Images/Resources */ = {
+			isa = PBXGroup;
+			children = (
+				033F748A18034877001681AF /* Images.xcassets */,
+				033F747B18034877001681AF /* JOAppDelegate.h */,
+				033F747C18034877001681AF /* JOAppDelegate.m */,
+				03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */,
+				03C03B9F181D4986001A9CBF /* AboutApp.rtf */,
+			);
+			name = Delegate/Images/Resources;
 			sourceTree = "<group>";
 		};
 		03ECFB3D181BF7DA0004C08B /* Tidy Headers */ = {
@@ -356,7 +377,6 @@
 				033F748318034877001681AF /* Main_iPad.storyboard in Resources */,
 				03C03BA0181D4986001A9CBF /* AboutApp.rtf in Resources */,
 				033F748B18034877001681AF /* Images.xcassets in Resources */,
-				03900FA818037C7600ED6619 /* JOImageDetailCell.xib in Resources */,
 				033F748018034877001681AF /* Main_iPhone.storyboard in Resources */,
 				033F747718034877001681AF /* InfoPlist.strings in Resources */,
 				03ECFB43181C33950004C08B /* AboutSteinbrennerOracle.rtf in Resources */,
@@ -589,7 +609,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A0E488504504805800DA812 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 37;
@@ -598,7 +617,6 @@
 				INFOPLIST_FILE = "Oracle/Oracle-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
@@ -608,7 +626,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A0E488504504805800DA812 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 37;
@@ -617,7 +634,6 @@
 				INFOPLIST_FILE = "Oracle/Oracle-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
