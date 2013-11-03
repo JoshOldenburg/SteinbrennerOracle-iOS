@@ -70,7 +70,7 @@
 	self.webView.scrollView.scrollsToTop = textViewHidden;
 }
 - (void)jo_updateBarButtonVisible:(BOOL)barButtonVisible {
-	if (barButtonVisible) [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)] animated:YES];
+	if (barButtonVisible && self.newsItem.alternateURL) [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonPressed:)] animated:YES];
 	else [self.navigationItem setRightBarButtonItem:nil animated:YES];
 }
 
