@@ -84,6 +84,10 @@
 	[self.parser parse];
 }
 
+- (BOOL)imageURLsAreLoaded {
+	return !!_imageURLs;
+}
+
 #pragma mark - NSXMLParserDelegate
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
 	self.tempImageURLs = [NSMutableArray array];
@@ -93,9 +97,11 @@
 }
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
 	NSArray *callbacks = self.callbacks.copy;
-	self.imageURLs = self.tempImageURLs;
+	_imageURLs = self.tempImageURLs;
 	for (void (^callback)(NSArray *imageURLs) in callbacks) {
-		callback(_imageURLs);
+		dispatch_async(dispatch_get_main_queue(), ^{
+			callback(_imageURLs);
+		});
 		[self.callbacks removeObject:callback];
 	}
 	self.parser = nil;
@@ -109,25 +115,27 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	self = [super init];
 	if (self && aDecoder) {
-		self.identifier = [aDecoder decodeObjectForKey:@"JOCodingIdentifier"];
-		self.publicationDate = [aDecoder decodeObjectForKey:@"JOCodingPublicationDate"];
-		self.updateDate = [aDecoder decodeObjectForKey:@"JOCodingUpdateDate"];
-		self.title = [aDecoder decodeObjectForKey:@"JOCodingTitle"];
-		self.summary = [aDecoder decodeObjectForKey:@"JOCodingSummary"];
-		self.enclosures = [aDecoder decodeObjectForKey:@"JOCodingEnclosures"];
-		self.alternateURL = [aDecoder decodeObjectForKey:@"JOCodingAlternateURL"];
+		_identifier = [aDecoder decodeObjectForKey:@"JOCodingIdentifier"];
+		_publicationDate = [aDecoder decodeObjectForKey:@"JOCodingPublicationDate"];
+		_updateDate = [aDecoder decodeObjectForKey:@"JOCodingUpdateDate"];
+		_title = [aDecoder decodeObjectForKey:@"JOCodingTitle"];
+		_summary = [aDecoder decodeObjectForKey:@"JOCodingSummary"];
+		_enclosures = [aDecoder decodeObjectForKey:@"JOCodingEnclosures"];
+		_alternateURL = [aDecoder decodeObjectForKey:@"JOCodingAlternateURL"];
+		_imageURLs = [aDecoder decodeObjectForKey:@"JOCodingImageURLs"];
 	}
 	return self;
 }
 - (void)encodeWithCoder:(NSCoder *)aCoder {
 	if (!aCoder) return;
-	if (self.identifier) [aCoder encodeObject:self.identifier forKey:@"JOCodingIdentifier"];
-	if (self.publicationDate) [aCoder encodeObject:self.publicationDate forKey:@"JOCodingPublicationDate"];
-	if (self.updateDate) [aCoder encodeObject:self.updateDate forKey:@"JOCodingUpdateDate"];
-	if (self.title) [aCoder encodeObject:self.title forKey:@"JOCodingTitle"];
-	if (self.summary) [aCoder encodeObject:self.summary forKey:@"JOCodingSummary"];
-	if (self.enclosures) [aCoder encodeObject:self.enclosures forKey:@"JOCodingEnclosures"];
-	if (self.alternateURL) [aCoder encodeObject:self.alternateURL forKey:@"JOCodingAlternateURL"];
+	if (_identifier) [aCoder encodeObject:_identifier forKey:@"JOCodingIdentifier"];
+	if (_publicationDate) [aCoder encodeObject:_publicationDate forKey:@"JOCodingPublicationDate"];
+	if (_updateDate) [aCoder encodeObject:_updateDate forKey:@"JOCodingUpdateDate"];
+	if (_title) [aCoder encodeObject:_title forKey:@"JOCodingTitle"];
+	if (_summary) [aCoder encodeObject:_summary forKey:@"JOCodingSummary"];
+	if (_enclosures) [aCoder encodeObject:_enclosures forKey:@"JOCodingEnclosures"];
+	if (_alternateURL) [aCoder encodeObject:_alternateURL forKey:@"JOCodingAlternateURL"];
+	if (_imageURLs && _shouldArchiveImageURLs) [aCoder encodeObject:_imageURLs forKey:@"JOCodingImageURLs"];
 }
 
 #pragma NSObject
@@ -138,6 +146,22 @@
 	if (!object || ![object isKindOfClass:self.class]) return NO;
 	if (object == self) return YES;
 	return [self.identifier isEqualToString:object.identifier] && [self.publicationDate isEqualToDate:object.publicationDate];
+}
+
+#pragma mark NSCopying
+- (id)copyWithZone:(NSZone *)zone {
+	JONewsItem *copy = [[JONewsItem alloc] init];
+	copy->_title = _title.copy;
+	copy->_publicationDate = _publicationDate.copy;
+	copy->_updateDate = _updateDate.copy;
+	copy->_title = _title.copy;
+	copy->_summary = _summary.copy;
+	copy->_content = _content.copy;
+	copy->_tidiedContent = _tidiedContent.copy;
+	copy->_enclosures = _enclosures.copy;
+	copy->_imageURLs = _imageURLs.copy;
+	copy->_alternateURL = _alternateURL.copy;
+	return copy;
 }
 
 @end

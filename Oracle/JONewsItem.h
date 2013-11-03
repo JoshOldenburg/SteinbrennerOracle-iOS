@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Joshua Oldenburg. All rights reserved.
 //
 
-@interface JONewsItem : NSObject <NSCoding> // This does a whole lotta nuttin': this is just for keeping data, with the exception of imageURL's, which will lazyload parse through the content and look for <img> elements and extract the src's
+@interface JONewsItem : NSObject <NSCoding, NSCopying> // This does a whole lotta nuttin': this is just for keeping data, with the exception of imageURL's, which will lazyload parse through the content and look for <img> elements and extract the src's
 
 @property (nonatomic, strong) NSString *identifier;
 @property (nonatomic, strong) NSDate *publicationDate;
@@ -16,8 +16,11 @@
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) NSString *tidiedContent; // Tidies content with libtidy if this is nil. Will only tidy once, to run again, set this to nil. This is automatically nilled when content is set
 @property (nonatomic, strong) NSArray *enclosures;
+@property (nonatomic, assign, readonly) BOOL imageURLsAreLoaded;
 @property (nonatomic, strong) NSArray *imageURLs;
 @property (nonatomic, strong) NSString *alternateURL;
+
+@property (nonatomic, assign) BOOL shouldArchiveImageURLs;
 
 - (void)getImageURLsWithCallback:(void(^)(NSArray *imageURLs))callback; // If the imageURLs have already been parsed, this will call the callback immediately on the calling thread. Otherwise, it will be called on the main thread after the parse is complete
 

@@ -10,6 +10,11 @@
 
 @implementation JOImageDetailCell
 
-
+- (void)prepareForReuse {
+	[super prepareForReuse];
+	self.largeImageView.image = nil;
+	self.titleLabel.text = nil;
+	self.blurbLabel.text = nil;
+}
 
 @end

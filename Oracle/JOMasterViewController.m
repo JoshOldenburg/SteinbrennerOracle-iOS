@@ -16,6 +16,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "AFURLConnectionOperation.h" // Imported for error parsing
 
+static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimationRight;
+
 @interface JOMasterViewController () <JONewsFeedDelegate>
 @property (nonatomic, strong) NSArray *items;
 @property (nonatomic, strong) JONewsFeed *newsFeed;
@@ -37,7 +39,11 @@
 		self.clearsSelectionOnViewWillAppear = NO;
 	}
 	
-	self.items = [NSMutableArray array];
+#if JOSavePreviousItems
+	NSString *cachePath = JOPreviousItemsPath();
+	if (cachePath) self.items = [NSKeyedUnarchiver unarchiveObjectWithFile:cachePath]; // Throws exception only if the archive is invalid/corrupted
+#endif
+	if (!self.items) self.items = @[];
 	self.tableView.rowHeight = 88.0;
 	[self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
 	
@@ -53,14 +59,14 @@
 #if JOUsePrefPane
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jo_updateForPrefsChanged:) name:NSUserDefaultsDidChangeNotification object:nil];
 #endif
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jo_cacheItems:) name:UIApplicationWillTerminateNotification object:nil];
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(jo_cacheItems:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	
 	[super awakeFromNib];
 }
 
 - (void)dealloc {
-#if JOUsePrefPane
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-#endif
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -131,6 +137,25 @@
 }
 
 #pragma mark - Util
+- (void)jo_cacheItems:(id)sender {
+	NSString *cachePath = JOPreviousItemsPath();
+	if (!cachePath) return;
+#if 1 // 1 for debugging update (it caches all but the first item), 0 for normal
+#warning Debugging caching
+	NSArray *items = [[JOUtil semideepCopyOfArray:self.items] subarrayWithRange:self.items.count > 0 ? NSMakeRange(1, self.items.count - 1) : NSMakeRange(0, self.items.count)];
+	((JONewsItem *)items.lastObject).title = @"Debuggifying";
+	((JONewsItem *)items.lastObject).identifier = @"debuggificationID";
+	if (NO) {
+		JONewsItem *firstItem = items.count > 1 ? items[0] : nil;
+		firstItem.title = @"Debuggifying first item";
+		firstItem.identifier = @"debuggificationID2";
+	}
+	[NSKeyedArchiver archiveRootObject:items toFile:cachePath];
+#else
+	[NSKeyedArchiver archiveRootObject:self.items toFile:cachePath];
+#endif
+}
+
 + (UIImage *)jo_faviconImage {
 	static UIImage *faviconImage;
 	static dispatch_once_t onceToken;
@@ -356,10 +381,12 @@
 		
 		_cell.largeImageView.contentMode = UIViewContentModeCenter;
 		[_cell.largeImageView setImageWithURLRequest:request placeholderImage:_self.class.jo_faviconImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-			[UIView transitionWithView:_cell.largeImageView duration:0.25f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+			dispatch_block_t setImageBlock = ^{
 				_cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
 				_cell.largeImageView.image = image;
-			} completion:nil];
+			};
+			if (!self.tableView.dragging || JOAlwaysAnimateImageSetting) [UIView transitionWithView:_cell.largeImageView duration:0.25f options:UIViewAnimationOptionTransitionCrossDissolve animations:setImageBlock completion:nil];
+			else setImageBlock(); // Don't animate setting of image when the user is dragging
 		} failure:nil]; // Caches for us
 	}];
     return cell;
@@ -370,6 +397,8 @@
 	[self.refreshControl beginRefreshing];
 }
 - (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed {
+	if (![NSThread isMainThread]) return [self performSelectorOnMainThread:@selector(newsFeedDidFinishParsing:) withObject:newsFeed waitUntilDone:YES];
+	
 	[self.refreshControl endRefreshing];
 	
 	NSAssert(newsFeed == self.newsFeed, @"Copied feed parser?");
@@ -381,21 +410,31 @@
 	NSArray *oldItems = nil;
 #endif
 	self.items = newsFeed.newsItems.copy;
+	if (oldItems.count > 0) {
+		for (JONewsItem *newsItem in oldItems) {
+			if ([self.items indexOfObject:newsItem] == NSNotFound) { // In old items, but not in new
+				[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[oldItems indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:JORowUpdateAnimation];
+			} else {
+				[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[oldItems indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+			}
+		}
+	}
 	for (JONewsItem *newsItem in self.items) {
+		newsItem.shouldArchiveImageURLs = YES;
 		if (self.items[0] == newsItem && oldItems.count == 0) {
-			[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+			[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:JORowUpdateAnimation];
 		} else if (!oldItems || [oldItems indexOfObject:newsItem] == NSNotFound) {
-			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-		} else {
-			[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:JORowUpdateAnimation];
 		}
 	}
 	
-	if (JOWebsiteLinkEnabled && oldItems.count == 0) [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+	[self jo_cacheItems:self];
+	
+	if (JOWebsiteLinkEnabled && oldItems.count == 0) [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count inSection:0]] withRowAnimation:JORowUpdateAnimation];
 	
 	if (JOInfoSectionEnabled && oldItems.count == 0) {
-		[self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+		[self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:JORowUpdateAnimation];
+		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:JORowUpdateAnimation];
 	}
 	
 	[self.tableView endUpdates];
