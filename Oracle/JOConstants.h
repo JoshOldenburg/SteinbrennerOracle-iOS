@@ -11,14 +11,17 @@
 #define JOCauseErrorForTesting 0 // 0/1
 #define JOOracleFeedURL @"http://oraclenewspaper.com/feed/atom/"
 
+#define JOEnableIncrementalRefresh 1 // 0/1: whether the items are removed from display while refreshing
+
 #define JOEnableTF 0 // 0/1. If 0, calling methods on the TestFlight class is a no-op, as well as the TFLog family
 #define JOTFEnableCheckpoints 0 // 0/1
 
-/* Defines:
+/* Defines based on pref pane:
  * JOInfoSectionEnabled
  * JOWebsiteLinkEnabled
  * JODisableImageHeaderUniversally
  * JOEnableImageHeaderOnIOS6
+ * All others as above and are not modifiable at run time
  */
 
 extern NSString *const JOExceptionInvalid;

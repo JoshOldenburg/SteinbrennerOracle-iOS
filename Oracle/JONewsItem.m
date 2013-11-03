@@ -130,4 +130,14 @@
 	if (self.alternateURL) [aCoder encodeObject:self.alternateURL forKey:@"JOCodingAlternateURL"];
 }
 
+#pragma NSObject
+- (NSUInteger)hash {
+	return self.identifier.hash ^ self.publicationDate.hash;
+}
+- (BOOL)isEqual:(JONewsItem *)object {
+	if (!object || ![object isKindOfClass:self.class]) return NO;
+	if (object == self) return YES;
+	return [self.identifier isEqualToString:object.identifier] && [self.publicationDate isEqualToDate:object.publicationDate];
+}
+
 @end

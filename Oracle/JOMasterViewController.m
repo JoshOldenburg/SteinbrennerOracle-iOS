@@ -111,9 +111,11 @@
 
 - (void)refreshData {
 	if (self.shouldDoNothing) return;
+#if !JOEnableIncrementalRefresh
 	self.items = nil;
+#endif
 	self.previousLoadError = nil;
-	[self.tableView reloadData];
+	if (self.items.count == 0) [self.tableView reloadData]; // [nil count] == 0
 	[self.newsFeed start];
 }
 
@@ -371,21 +373,27 @@
 	[self.refreshControl endRefreshing];
 	
 	NSAssert(newsFeed == self.newsFeed, @"Copied feed parser?");
-	NSAssert(newsFeed.newsItems == self.newsFeed.newsItems, @"Copied feed parser (news item array)?");
 	
 	[self.tableView beginUpdates];
+#if JOEnableIncrementalRefresh
+	NSArray *oldItems = self.items;
+#else
+	NSArray *oldItems = nil;
+#endif
 	self.items = newsFeed.newsItems.copy;
 	for (JONewsItem *newsItem in self.items) {
-		if (self.items[0] == newsItem) {
+		if (self.items[0] == newsItem && oldItems.count == 0) {
 			[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-		} else {
+		} else if (!oldItems || [oldItems indexOfObject:newsItem] == NSNotFound) {
 			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+		} else {
+			[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 		}
 	}
 	
-	if (JOWebsiteLinkEnabled) [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+	if (JOWebsiteLinkEnabled && oldItems.count == 0) [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 	
-	if (JOInfoSectionEnabled) {
+	if (JOInfoSectionEnabled && oldItems.count == 0) {
 		[self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
 	}
