@@ -105,4 +105,29 @@
 	[self parserDidEndDocument:parser];
 }
 
+#pragma mark - NSCoding
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super init];
+	if (self && aDecoder) {
+		self.identifier = [aDecoder decodeObjectForKey:@"JOCodingIdentifier"];
+		self.publicationDate = [aDecoder decodeObjectForKey:@"JOCodingPublicationDate"];
+		self.updateDate = [aDecoder decodeObjectForKey:@"JOCodingUpdateDate"];
+		self.title = [aDecoder decodeObjectForKey:@"JOCodingTitle"];
+		self.summary = [aDecoder decodeObjectForKey:@"JOCodingSummary"];
+		self.enclosures = [aDecoder decodeObjectForKey:@"JOCodingEnclosures"];
+		self.alternateURL = [aDecoder decodeObjectForKey:@"JOCodingAlternateURL"];
+	}
+	return self;
+}
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+	if (!aCoder) return;
+	if (self.identifier) [aCoder encodeObject:self.identifier forKey:@"JOCodingIdentifier"];
+	if (self.publicationDate) [aCoder encodeObject:self.publicationDate forKey:@"JOCodingPublicationDate"];
+	if (self.updateDate) [aCoder encodeObject:self.updateDate forKey:@"JOCodingUpdateDate"];
+	if (self.title) [aCoder encodeObject:self.title forKey:@"JOCodingTitle"];
+	if (self.summary) [aCoder encodeObject:self.summary forKey:@"JOCodingSummary"];
+	if (self.enclosures) [aCoder encodeObject:self.enclosures forKey:@"JOCodingEnclosures"];
+	if (self.alternateURL) [aCoder encodeObject:self.alternateURL forKey:@"JOCodingAlternateURL"];
+}
+
 @end

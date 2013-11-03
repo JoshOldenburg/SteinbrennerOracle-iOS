@@ -41,7 +41,6 @@
 		[self.webView loadHTMLString:@"" baseURL:nil];
 	}
 	
-//	NSAssert(self.textView, @"textView is nil");
 	[self jo_updateHiddenWithTextViewHidden:!(_usesTextView = usesTextView)];
 	[self jo_dismissPopovers];
 }
@@ -92,9 +91,6 @@
 
 #pragma mark - Actions
 - (void)shareButtonPressed:(id)sender {
-//	NSURL *itemURL = [NSURL URLWithString:[self.newsItem.alternateURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//	if (!itemURL) return;
-	
 	NSMutableArray *items = [NSMutableArray arrayWithObject:self.newsItem.alternateURL];
 	UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
 	activityViewController.excludedActivityTypes = @[UIActivityTypePrint, UIActivityTypeAssignToContact];

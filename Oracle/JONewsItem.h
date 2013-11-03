@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Joshua Oldenburg. All rights reserved.
 //
 
-@interface JONewsItem : NSObject // This does a whole lotta nuttin': this is just for keeping data, with the exception of imageURL's, which will lazyload parse through the content and look for <img> elements and extract the src's
+@interface JONewsItem : NSObject <NSCoding> // This does a whole lotta nuttin': this is just for keeping data, with the exception of imageURL's, which will lazyload parse through the content and look for <img> elements and extract the src's
 
 @property (nonatomic, strong) NSString *identifier;
 @property (nonatomic, strong) NSDate *publicationDate;

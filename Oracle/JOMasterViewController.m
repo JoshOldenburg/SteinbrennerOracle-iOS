@@ -101,7 +101,6 @@
 	self.newsFeed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
 	self.newsFeed.customRequestHeaders = @{
 		@"X-Oracle-App-Version": [NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]],
-//		@"X-Oracle-App-Device": [NSString stringWithFormat:@"%@, iOS v%@", [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion]],
 	};
 }
 
@@ -344,7 +343,6 @@
 	__weak JOImageDetailCell *_cell = cell;
 	[item getImageURLsWithCallback:^(NSArray *imageURLs) {
 		if (!_cell) return;
-//		JOImageDetailCell *_cell = (JOImageDetailCell *)[_self.tableView cellForRowAtIndexPath:indexPath];
 		if (!imageURLs || imageURLs.count == 0) {
 			_cell.largeImageView.contentMode = UIViewContentModeCenter;
 			_cell.largeImageView.image = _self.class.jo_faviconImage;
@@ -359,24 +357,15 @@
 			[UIView transitionWithView:_cell.largeImageView duration:0.25f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
 				_cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
 				_cell.largeImageView.image = image;
-			} completion:^(BOOL finished) {
-				
-			}];
-		} failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-			// Will leave placeholder image by default, so do nothing here
-		}]; // Caches for us
+			} completion:nil];
+		} failure:nil]; // Caches for us
 	}];
     return cell;
 }
 
 #pragma mark - JONewsFeedDelegate
-- (void)newsFeed:(JONewsFeed *)newsFeed didParseItem:(JONewsItem *)newsItem {
-	// No-op, heavy lifting with animations and such is done in newsFeedDidFinishParsing:
-}
-
 - (void)newsFeedDidStartDownload:(JONewsFeed *)newsFeed {
 	[self.refreshControl beginRefreshing];
-//	[self.tableView beginUpdates];
 }
 - (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed {
 	[self.refreshControl endRefreshing];
@@ -392,7 +381,7 @@
 		} else {
 			[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.items indexOfObjectIdenticalTo:newsItem] inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 		}
-	} //*/
+	}
 	
 	if (JOWebsiteLinkEnabled) [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 	
@@ -407,7 +396,6 @@
 	[self.refreshControl endRefreshing];
 	self.previousLoadError = error;
 	[self.tableView reloadData];
-//	NSLog(@"Failed loading news with error: %@", error);
 }
 
 @end
