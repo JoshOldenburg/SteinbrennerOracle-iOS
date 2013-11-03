@@ -32,7 +32,8 @@
 	}
 	
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-	    self.preferredContentSize = CGSizeMake(320.0, 600.0);
+	    if ([self respondsToSelector:@selector(setPreferredContentSize:)]) self.preferredContentSize = CGSizeMake(320.0, 600.0);
+		else self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
 		self.clearsSelectionOnViewWillAppear = NO;
 	}
 	
@@ -175,7 +176,14 @@
 			break;
 	}
 	NSURL *textFileURL = [[NSBundle bundleForClass:self.class] URLForResource:textFileName withExtension:textFileExtension];
-	NSAttributedString *text = [[NSAttributedString alloc] initWithFileURL:textFileURL options:[textFileExtension isEqualToString:@"rtf"] ? @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType} : nil documentAttributes:nil error:nil];
+	NSURL *plaintextFileURL = [[NSBundle bundleForClass:self.class] URLForResource:textFileName withExtension:@"txt"];
+	NSAttributedString *text;
+	if ([NSAttributedString instancesRespondToSelector:@selector(initWithFileURL:options:documentAttributes:error:)]) {
+		text = [[NSAttributedString alloc] initWithFileURL:textFileURL options:[textFileExtension isEqualToString:@"rtf"] ? @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType} : nil documentAttributes:nil error:nil];
+	} else {
+		NSString *plaintext = [NSString stringWithContentsOfURL:plaintextFileURL usedEncoding:nil error:nil];
+		if (plaintext) text = [[NSAttributedString alloc] initWithString:plaintext];
+	}
 	self.detailViewController.usesTextView = YES;
 	self.detailViewController.navigationItem.title = title;
 	self.detailViewController.textView.attributedText = text ?: [[NSAttributedString alloc] initWithString:@"An error occurred attempting to load the info"];

@@ -432,7 +432,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "textutil ${SRCROOT}/Oracle/AboutFiles/*.rtf -convert txt";
+			shellScript = "textutil ${SRCROOT}/Oracle/AboutFiles/*.{rtf,rtfd,html,doc,docx} -convert txt";
 		};
 		8AA7D687F5C3457993B53CF3 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
