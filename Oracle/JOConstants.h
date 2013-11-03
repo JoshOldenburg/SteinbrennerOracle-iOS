@@ -66,10 +66,7 @@ NSString *JOPreviousItemsPath(void);
 
 	static TestFlight *const _JODisable_TestFlight = nil;
 	#define TestFlight ((Class)[_JODisable_TestFlight class])
-	static void(^_JODisable_TFLog)(NSString *format, ...) __attribute__((format(__NSString__, 1, 2))) = nil;
-	static void(^_JODisable_TFLogv)(NSString *format, va_list arg_list) = nil;
-	static void(^_JODisable_TFLogPreFormatted)(NSString *message) = nil;
-	#define TFLog _JODisable_TFLog
-	#define TFLogv _JODisable_TFLogv
-	#define TFLogPreFormatted _JODisable_TFLogPreFormatted
+	#define TFLog NSLog
+	#define TFLogv NSLogv
+	#define TFLogPreFormatted NSLog
 #endif

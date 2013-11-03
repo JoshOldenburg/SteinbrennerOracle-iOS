@@ -140,7 +140,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 - (void)jo_cacheItems:(id)sender {
 	NSString *cachePath = JOPreviousItemsPath();
 	if (!cachePath) return;
-#if 1 // 1 for debugging update (it caches all but the first item), 0 for normal
+#if 0 // 1 for debugging update (it caches all but the first item), 0 for normal
 #warning Debugging caching
 	NSArray *items = [[JOUtil semideepCopyOfArray:self.items] subarrayWithRange:self.items.count > 0 ? NSMakeRange(1, self.items.count - 1) : NSMakeRange(0, self.items.count)];
 	((JONewsItem *)items.lastObject).title = @"Debuggifying";
