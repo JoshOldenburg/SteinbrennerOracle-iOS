@@ -37,8 +37,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
+                                <connections>
+                                    <outlet property="delegate" destination="JEX-9P-axG" id="S9V-1i-vl7"/>
+                                </connections>
                             </webView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-RQ-Vx4">
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-RQ-Vx4">
                                 <rect key="frame" x="0.0" y="0.0" width="703" height="704"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,14 +49,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="c9G-t7-4GP">
+                                <rect key="frame" x="342" y="342" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="c9G-t7-4GP" secondAttribute="centerY" id="1T3-4I-UvI"/>
                             <constraint firstItem="TQg-RQ-Vx4" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="9Vl-Z7-hvu"/>
                             <constraint firstItem="TQg-RQ-Vx4" firstAttribute="bottom" secondItem="jrZ-P9-uss" secondAttribute="bottom" id="BqB-co-Ypg"/>
                             <constraint firstItem="TQg-RQ-Vx4" firstAttribute="top" secondItem="svH-Pt-448" secondAttribute="top" id="DqL-7a-m9R"/>
                             <constraint firstItem="TQg-RQ-Vx4" firstAttribute="top" secondItem="jrZ-P9-uss" secondAttribute="top" id="FWD-ZF-xzM"/>
                             <constraint firstItem="TQg-RQ-Vx4" firstAttribute="leading" secondItem="jrZ-P9-uss" secondAttribute="leading" id="JkV-3z-Ndg"/>
+                            <constraint firstAttribute="centerX" secondItem="c9G-t7-4GP" secondAttribute="centerX" id="K0d-pd-Kvj"/>
                             <constraint firstAttribute="trailing" secondItem="TQg-RQ-Vx4" secondAttribute="trailing" id="LH6-Ru-adx"/>
                             <constraint firstAttribute="bottom" secondItem="TQg-RQ-Vx4" secondAttribute="bottom" id="htR-ac-Ve4"/>
                             <constraint firstItem="TQg-RQ-Vx4" firstAttribute="trailing" secondItem="jrZ-P9-uss" secondAttribute="trailing" id="q1A-oN-ueI"/>
@@ -65,6 +74,7 @@
                     <navigationItem key="navigationItem" title="Select an Article" id="mOI-FS-AaM"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="c9G-t7-4GP" id="cp9-IC-MiH"/>
                         <outlet property="textView" destination="TQg-RQ-Vx4" id="db0-E9-IOM"/>
                         <outlet property="webView" destination="jrZ-P9-uss" id="5cw-Yn-8XQ"/>
                     </connections>

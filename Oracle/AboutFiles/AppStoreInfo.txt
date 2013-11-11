@@ -1,0 +1,33 @@
+Default language: English
+App name: Steinbrenner Oracle
+SKU number: SteinbrennerOracle
+Bundle ID: Steinbrenner Oracle - com.joshuaoldenburg.Oracle
+
+Availability date: 11/25/13
+Price Tier: free
+Educational discount: yes, though not really applicable
+Available territories: US only
+
+Version: 1.0.0
+Copyright: 2013 Joshua Oldenburg, all articles by the Steinbrenner High School Oracle and its authors
+Primary Category: News
+Secondary Category: none
+Ratings: all none except horror/fear themes (infrequent/mild)
+
+Description:
+The Steinbrenner Oracle mobile app allows easy access to articles recently published on the Steinbrenner High School Oracle's website.
+
+All content is by the Steinbrenner High School Oracle and its authors. The app was created by a Steinbrenner freshman.
+
+Keywords: steinbrenner,steinbrenner high school,oracle,steinbrenner oracle,steinbrenner newspaper,school newspaper,steinbrenner school newspaper
+Support URL: 
+Marketing URL: none
+Privacy Policy URL: none
+Contact Name:
+Contact email:
+Contact phone:
+Review Notes:
+Demo info: none
+Large app icon: iTunesArtwork
+Screenshots:
+Routing app coverage file: none

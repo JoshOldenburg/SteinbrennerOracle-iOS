@@ -9,10 +9,12 @@
 #import "JODetailViewController.h"
 #import "JONewsItem.h"
 #import "NSString+JOUtilAdditions.h"
+#import "UIWebView+AFNetworking.h"
 
 @interface JODetailViewController ()
 @property (nonatomic, strong) UIPopoverController *masterPopoverController;
 @property (nonatomic, strong) UIPopoverController *sharePopoverController;
+@property (nonatomic, assign) BOOL hasHiddenElements;
 @end
 
 @implementation JODetailViewController
@@ -21,8 +23,17 @@
 	[super awakeFromNib];
 	if (!self.isViewLoaded) [self loadView];
 	self.navigationController.navigationBar.translucent = NO;
+	self.webView.delegate = self;
 	[self jo_updateBarButtonVisible:NO];
 	[self jo_updateHiddenWithTextViewHidden:!self.usesTextView];
+}
+- (void)jo_showMasterIfNecessary UNAVAILABLE_ATTRIBUTE { // Don't use, doesn't work anyways
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && !self.masterPopoverController && !self.newsItem && !self.usesTextView && self.navigationItem) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+		[self.navigationItem.leftBarButtonItem.target performSelector:self.navigationItem.leftBarButtonItem.action];
+#pragma clang diagnostic pop
+	}
 }
 
 #pragma mark - Managing the detail item
@@ -48,7 +59,25 @@
 - (void)configureView {
 	if (self.newsItem) {
 		[self jo_updateHiddenWithTextViewHidden:YES];
-		[self.webView loadHTMLString:self.newsItem.content baseURL:nil];
+		if (JOEnablePrettificationOfDetail && self.newsItem.alternateURL) {
+			[self.activityIndicator startAnimating];
+			self.webView.hidden = YES;
+			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[self.newsItem.alternateURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+			[request addValue:[NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]] forHTTPHeaderField:@"X-Oracle-App-Version"];
+			__block JODetailViewController *weakSelf = self;
+			[self.webView loadRequest:request progress:nil success:^NSString *(NSHTTPURLResponse *response, NSString *HTML) {
+				weakSelf.hasHiddenElements = NO;
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[weakSelf jo_removeAllElementsButContentAndDisplay];
+				});
+				return [HTML stringByAppendingString:self.jo_hidingJS];
+			} failure:^(NSError *error) {
+				[weakSelf.webView loadHTMLString:weakSelf.newsItem.content baseURL:nil];
+				TFLog(@"Error loading request, falling back to default: %@", error);
+			}];
+		} else {
+			[self.webView loadHTMLString:self.newsItem.content baseURL:nil];
+		}
 		[self jo_updateBarButtonVisible:YES];
 		self.navigationItem.title = self.newsItem.title.stringByConvertingHTMLToPlainText;
 	} else if (self.usesTextView) {
@@ -61,6 +90,23 @@
 		self.navigationItem.title = @"Select an Article";
 	}
 }
+
+- (NSString *)jo_hidingJS {
+#if JOEnablePrettificationOfDetail
+	NSURL *jsURL = [[NSBundle bundleForClass:self.class] URLForResource:@"hideallelements" withExtension:@"js"];
+	NSString *js = [NSString stringWithContentsOfURL:jsURL encoding:NSUTF8StringEncoding error:nil] ?: @"alert(\"No magic!\");";
+	NSRange range = [js rangeOfString:@"// JO_END_EXECUTABLE"];
+	return [js substringToIndex:range.location - 1];
+#else
+	return @"return 0;";
+#endif
+}
+#if JOEnablePrettificationOfDetail
+- (void)jo_removeAllElementsButContentAndDisplay {
+	[self.activityIndicator stopAnimating];
+	self.webView.hidden = NO;
+}
+#endif
 
 - (void)jo_updateHiddenWithTextViewHidden:(BOOL)textViewHidden {
 	self.textView.hidden = textViewHidden;
@@ -116,6 +162,11 @@
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
 	[self.navigationItem setLeftBarButtonItem:nil animated:YES];
 	self.masterPopoverController = nil;
+}
+
+#pragma mark - UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+	return YES;
 }
 
 @end

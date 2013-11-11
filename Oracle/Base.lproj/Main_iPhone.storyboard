@@ -155,6 +155,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Ah7-4n-0Wa" id="EI9-OL-qn0"/>
+                                </connections>
                             </webView>
                             <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kuw-XA-B16">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
@@ -171,6 +174,10 @@
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uEo-bY-Od1">
+                                <rect key="frame" x="150" y="198" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -181,12 +188,15 @@
                             <constraint firstAttribute="trailing" secondItem="Kuw-XA-B16" secondAttribute="trailing" id="ITx-qG-MhB"/>
                             <constraint firstItem="Kuw-XA-B16" firstAttribute="bottom" secondItem="VEh-Jc-uJV" secondAttribute="bottom" id="KDY-qZ-Cbg"/>
                             <constraint firstItem="Kuw-XA-B16" firstAttribute="trailing" secondItem="VEh-Jc-uJV" secondAttribute="trailing" id="LbD-HQ-4JF"/>
+                            <constraint firstAttribute="centerX" secondItem="uEo-bY-Od1" secondAttribute="centerX" id="aVC-ex-L3o"/>
+                            <constraint firstAttribute="centerY" secondItem="uEo-bY-Od1" secondAttribute="centerY" id="ezG-lc-82a"/>
                             <constraint firstAttribute="bottom" secondItem="Kuw-XA-B16" secondAttribute="bottom" id="fyV-bx-K2i"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Article" id="cra-N8-TIN"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="uEo-bY-Od1" id="ifM-oQ-aF0"/>
                         <outlet property="textView" destination="Kuw-XA-B16" id="noS-Zt-ZHf"/>
                         <outlet property="webView" destination="VEh-Jc-uJV" id="4ZO-Dn-Buw"/>
                     </connections>

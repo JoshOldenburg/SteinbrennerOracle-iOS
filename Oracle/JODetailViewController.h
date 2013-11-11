@@ -8,12 +8,14 @@
 
 @class JONewsItem;
 
-@interface JODetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface JODetailViewController : UIViewController <UISplitViewControllerDelegate, UIWebViewDelegate>
 
 @property (nonatomic, strong) JONewsItem *newsItem;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @property (nonatomic, assign) BOOL usesTextView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
