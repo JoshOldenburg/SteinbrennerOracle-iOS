@@ -9,12 +9,13 @@
 // Modifiable. All 0 or 1 unless otherwise noted
 #define JOUsePrefPane 0
 #define JOCauseErrorForTesting 0
+#define JOUseTestingURL 0
 #define JOOracleFeedURL @"http://oraclenewspaper.com/feed/atom/"
 
 #define JOEnableIncrementalRefresh 1 // Whether the items are removed from display while refreshing
 #define JOSavePreviousItems (JOEnableIncrementalRefresh && 1) // Whether the items are cached and immediately displayed at open while refreshing
 #define JOAlwaysAnimateImageSetting 0
-
+#define JOShowCachedItemsInErrorState 0
 #define JOEnablePrettificationOfDetail 1 // Whether to use the web page and its formatting or just the HTML from the feed
 
 #define JOEnableTF 0 // If 0, calling methods on the TestFlight class is a no-op, as well as the TFLog family
@@ -57,9 +58,16 @@ NSString *JOPreviousItemsPath(void);
 	#define JOEnableImageHeaderOnIOS6 NO
 #endif
 
+#if JOUseTestingURL
+	#undef JOOracleFeedURL
+	#define JOOracleFeedURL @"http://192.168.1.151/OracleWordpress/feed/atom/"
+	#warning Using testing URL
+#endif
+
 #if JOCauseErrorForTesting
 	#undef JOOracleFeedURL
 	#define JOOracleFeedURL @"http://oraclenewspaper.com/ThisPageShouldNotExist"
+	#warning Causing testing error
 #endif
 
 #if !JOEnableTF

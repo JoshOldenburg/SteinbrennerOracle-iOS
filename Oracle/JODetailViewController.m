@@ -64,12 +64,15 @@
 			self.webView.hidden = YES;
 			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[self.newsItem.alternateURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 			[request addValue:[NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]] forHTTPHeaderField:@"X-Oracle-App-Version"];
+			[request addValue:[NSString stringWithFormat:@"OracleMobileIOS"] forHTTPHeaderField:@"User-Agent"];
 			__block JODetailViewController *weakSelf = self;
 			[self.webView loadRequest:request progress:nil success:^NSString *(NSHTTPURLResponse *response, NSString *HTML) {
 				weakSelf.hasHiddenElements = NO;
+#if JOEnablePrettificationOfDetail
 				dispatch_async(dispatch_get_main_queue(), ^{
 					[weakSelf jo_removeAllElementsButContentAndDisplay];
 				});
+#endif
 				return [HTML stringByAppendingString:self.jo_hidingJS];
 			} failure:^(NSError *error) {
 				[weakSelf.webView loadHTMLString:weakSelf.newsItem.content baseURL:nil];
@@ -94,11 +97,11 @@
 - (NSString *)jo_hidingJS {
 #if JOEnablePrettificationOfDetail
 	NSURL *jsURL = [[NSBundle bundleForClass:self.class] URLForResource:@"hideallelements" withExtension:@"js"];
-	NSString *js = [NSString stringWithContentsOfURL:jsURL encoding:NSUTF8StringEncoding error:nil] ?: @"alert(\"No magic!\");";
+	NSString *js = [NSString stringWithContentsOfURL:jsURL encoding:NSUTF8StringEncoding error:nil] ?: @"";
 	NSRange range = [js rangeOfString:@"// JO_END_EXECUTABLE"];
 	return [js substringToIndex:range.location - 1];
 #else
-	return @"return 0;";
+	return @"";
 #endif
 }
 #if JOEnablePrettificationOfDetail

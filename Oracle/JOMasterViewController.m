@@ -226,7 +226,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 }
 
 - (BOOL)jo_indexPathIsWebsiteLink:(NSIndexPath *)indexPath {
-	return JOWebsiteLinkEnabled && indexPath && (indexPath.section == 0 && indexPath.row == self.items.count && indexPath.row != 0);
+	return JOWebsiteLinkEnabled && indexPath && (indexPath.section == 0 && indexPath.row == (self.items.count + (NSUInteger)(self.previousLoadError != nil)) && indexPath.row != 0);
 }
 
 #pragma mark - NSTableViewDelegate
@@ -242,7 +242,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 0 && (indexPath.row < self.items.count || (indexPath.row == 0))) return self.tableView.rowHeight;
+	if (indexPath.section == 0 && (indexPath.row < (self.items.count + (NSUInteger)(self.previousLoadError != nil)) || (indexPath.row == 0))) return self.tableView.rowHeight;
 	return 44;
 }
 
@@ -252,7 +252,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (section == 1) return 2;
-	return self.items.count > 0 ? self.items.count + ((NSUInteger)JOWebsiteLinkEnabled) : 1;
+	return self.items.count > 0 ? self.items.count + ((NSUInteger)JOWebsiteLinkEnabled) + (NSUInteger)(self.previousLoadError != nil) : 1;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	switch (section) {
@@ -304,7 +304,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
 	
-	if (self.previousLoadError) {
+	if (self.previousLoadError && indexPath.row == 0) {
 		if ([self.previousLoadError.domain isEqualToString:NSURLErrorDomain] && self.previousLoadError.code == NSURLErrorNotConnectedToInternet) {
 			cell.titleLabel.text = @"Could not connect to the Internet";
 			cell.blurbLabel.text = @"Turn off airplane mode or use Wi-Fi to access data";
@@ -361,7 +361,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 		return cell;
 	}
 	
-    JONewsItem *item = self.items[indexPath.row];
+    JONewsItem *item = self.items[indexPath.row - (NSUInteger)(self.previousLoadError != nil)]; // If the error is there, then the rows are all shifted down
 	cell.titleLabel.text = item.title.stringByDecodingHTMLEntities;
 	cell.blurbLabel.text = item.summary.stringByDecodingHTMLEntities;
 	cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -441,8 +441,20 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 }
 - (void)newsFeed:(JONewsFeed *)newsFeed didFailWithError:(NSError *)error {
 	[self.refreshControl endRefreshing];
+#if JOShowCachedItemsInErrorState
+	BOOL hadTwoSections = ([self numberOfSectionsInTableView:self.tableView] == 2);
+	BOOL hadErrorPreviously = (self.previousLoadError != nil);
+#endif
 	self.previousLoadError = error;
+#if JOShowCachedItemsInErrorState
+	[self.tableView beginUpdates];
+	if (!hadErrorPreviously) [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:JORowUpdateAnimation];
+	if (!hadTwoSections && JOInfoSectionEnabled) [self.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:JORowUpdateAnimation];
+	[self.tableView endUpdates];
+#else
+	self.items = nil;
 	[self.tableView reloadData];
+#endif
 }
 
 @end

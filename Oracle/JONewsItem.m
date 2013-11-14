@@ -37,6 +37,8 @@
 }
 
 - (NSString *)tidiedContent {
+	if (_tidiedContent) return _tidiedContent;
+	
 	TidyBuffer output = {0};
 	TidyDoc tidyDoc = tidyCreate();
     if (!tidyOptSetBool(tidyDoc, TidyXmlOut, yes)) return nil; // Convert to XML
@@ -76,6 +78,7 @@
 		return;
 	}
 	
+	if (!self.callbacks) self.callbacks = [NSMutableArray array];
 	if (callback) [self.callbacks addObject:callback];
 	if (self.parser) return;
 	
