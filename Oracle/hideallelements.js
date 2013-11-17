@@ -1,6 +1,6 @@
 <script type="text/javascript">
 jQuery(document).ready(function() {
-	jQuery(":not(div.entry)").hide(); jQuery(":has(div.entry)").show(); jQuery("div.entry *").show(); jQuery("#container").css("background-image", "none").css("padding", "0px").css("margin", "0px"); jQuery(":has(.post)").css("padding", "0px").css("margin", "0px"); jQuery(":has(div.entry), div.entry").css("width", "100%"); jQuery("#socialbuttons").hide();
+	jQuery(":not(div.entry)").hide(); jQuery(":has(div.entry)").show(); jQuery("div.entry *").show(); jQuery("#container").css("background-image", "none").css("padding", "0px").css("margin", "0px"); jQuery(":has(.post)").css("padding", "0px").css("margin", "0px"); jQuery(":has(div.entry), div.entry").css("width", "100%").css("background", "").css("background-color", "#fff"); jQuery("#socialbuttons").hide(); jQuery("a[href]").removeAttr("href"); jQuery("html,head,body").css("width", "");
 });
 </script>
 // JO_END_EXECUTABLE - nothing will execute beyond this line
