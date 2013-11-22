@@ -17,13 +17,15 @@ Ratings: all none except horror/fear themes (infrequent/mild)
 Description:
 The Steinbrenner Oracle mobile app allows easy access to articles recently published on the Steinbrenner High School Oracle's website.
 
-All content is by the Steinbrenner High School Oracle and its authors. The app was created by a Steinbrenner freshman.
+Coming soon: more articles displayed at one time, displaying of articles in multiple categories, and a redesigned article display.
+
+All content is by the Steinbrenner High School Oracle and its authors, and can also be found online at http://oraclenewspaper.com. The app was created by a Steinbrenner freshman.
 
 Keywords: steinbrenner,steinbrenner high school,oracle,steinbrenner oracle,steinbrenner newspaper,school newspaper,steinbrenner school newspaper
 Support URL: 
 Marketing URL: none
 Privacy Policy URL: none
-Contact Name:
+Contact Name: 
 Contact email:
 Contact phone:
 Review Notes:
