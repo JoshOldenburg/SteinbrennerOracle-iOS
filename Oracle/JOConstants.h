@@ -39,6 +39,7 @@ extern NSString *const JOPreviousItemsKey;
 
 + (void)setUpTestFlight;
 + (NSArray *)semideepCopyOfArray:(NSArray *)array; // Only copies first level
++ (NSString *)versionString;
 
 @end
 

@@ -32,6 +32,10 @@ NSString *const JOPreviousItemsKey = @"JOPreviousItems";
 	return copiedItems;
 }
 
++ (NSString *)versionString {
+	return [NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+}
+
 @end
 
 NSString *JOPreviousItemsPath() {

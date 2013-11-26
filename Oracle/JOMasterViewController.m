@@ -106,7 +106,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	
 	self.newsFeed = [[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:self];
 	self.newsFeed.customRequestHeaders = @{
-		@"X-Oracle-App-Version": [NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]],
+		@"X-Oracle-App-Version": [JOUtil versionString],
 	};
 }
 
@@ -203,13 +203,14 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	}
 	NSURL *textFileURL = [[NSBundle bundleForClass:self.class] URLForResource:textFileName withExtension:textFileExtension];
 	NSURL *plaintextFileURL = [[NSBundle bundleForClass:self.class] URLForResource:textFileName withExtension:@"txt"];
-	NSAttributedString *text;
+	NSMutableAttributedString *text;
 	if ([NSAttributedString instancesRespondToSelector:@selector(initWithFileURL:options:documentAttributes:error:)]) {
-		text = [[NSAttributedString alloc] initWithFileURL:textFileURL options:[textFileExtension isEqualToString:@"rtf"] ? @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType} : nil documentAttributes:nil error:nil];
+		text = [[NSMutableAttributedString alloc] initWithFileURL:textFileURL options:[textFileExtension isEqualToString:@"rtf"] ? @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType} : nil documentAttributes:nil error:nil];
 	} else {
 		NSString *plaintext = [NSString stringWithContentsOfURL:plaintextFileURL usedEncoding:nil error:nil];
-		if (plaintext) text = [[NSAttributedString alloc] initWithString:plaintext];
+		if (plaintext) text = [[NSMutableAttributedString alloc] initWithString:plaintext];
 	}
+	[text.mutableString replaceOccurrencesOfString:@"{VERSION_INFO}" withString:[JOUtil versionString] options:0 range:NSMakeRange(0, text.length)];
 	self.detailViewController.usesTextView = YES;
 	self.detailViewController.navigationItem.title = title;
 	self.detailViewController.textView.attributedText = text ?: [[NSAttributedString alloc] initWithString:@"An error occurred attempting to load the info"];

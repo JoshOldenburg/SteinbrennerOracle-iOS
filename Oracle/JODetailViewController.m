@@ -63,7 +63,7 @@
 			[self.activityIndicator startAnimating];
 			self.webView.hidden = YES;
 			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[self.newsItem.alternateURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-			[request addValue:[NSString stringWithFormat:@"%@ (%@)", [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle bundleForClass:self.class] objectForInfoDictionaryKey:@"CFBundleVersion"]] forHTTPHeaderField:@"X-Oracle-App-Version"];
+			[request addValue:[JOUtil versionString] forHTTPHeaderField:@"X-Oracle-App-Version"];
 			[request addValue:[NSString stringWithFormat:@"OracleMobileIOS"] forHTTPHeaderField:@"User-Agent"];
 			__block JODetailViewController *weakSelf = self;
 			[self.webView loadRequest:request progress:nil success:^NSString *(NSHTTPURLResponse *response, NSString *HTML) {
