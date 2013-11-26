@@ -34,7 +34,6 @@
 		03C892761825D825005FBFC1 /* AboutApp.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03C892741825D825005FBFC1 /* AboutApp.txt */; };
 		03C892771825D825005FBFC1 /* AboutSteinbrennerOracle.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03C892751825D825005FBFC1 /* AboutSteinbrennerOracle.txt */; };
 		03E142FF182FE52C0033BE6A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033F748A18034877001681AF /* Images.xcassets */; };
-		03E14303183072F50033BE6A /* hideallelements.js in Resources */ = {isa = PBXBuildFile; fileRef = 03E143001830471F0033BE6A /* hideallelements.js */; };
 		03ECFB43181C33950004C08B /* AboutSteinbrennerOracle.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 03ECFB42181C33950004C08B /* AboutSteinbrennerOracle.rtf */; };
 		03FE5EB1181300AF00A61921 /* libtidy.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FE5EB0181300AF00A61921 /* libtidy.dylib */; };
 		03FE5EB41814342F00A61921 /* NSString+JOUtilAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FE5EB31814342F00A61921 /* NSString+JOUtilAdditions.m */; };
@@ -410,7 +409,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03E14303183072F50033BE6A /* hideallelements.js in Resources */,
 				033F748318034877001681AF /* Main_iPad.storyboard in Resources */,
 				03E142FF182FE52C0033BE6A /* Images.xcassets in Resources */,
 				03C892771825D825005FBFC1 /* AboutSteinbrennerOracle.txt in Resources */,
