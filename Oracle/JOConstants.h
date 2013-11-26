@@ -18,8 +18,8 @@
 #define JOShowCachedItemsInErrorState 0
 #define JOEnablePrettificationOfDetail 0 // Whether to use the web page and its formatting or just the HTML from the feed
 
-#define JOEnableTF 0 // If 0, calling methods on the TestFlight class is a no-op, as well as the TFLog family
-#define JOTFEnableCheckpoints 0
+#define JOEnableTF 1 // If 0, calling methods on the TestFlight class is a no-op, as well as the TFLog family
+#define JOTFEnableCheckpoints 1
 
 /* Defines based on pref pane:
  * JOInfoSectionEnabled
@@ -70,7 +70,11 @@ NSString *JOPreviousItemsPath(void);
 	#warning Causing testing error
 #endif
 
-#if !JOEnableTF
+#if JOEnableTF
+	@compatibility_alias _TestFlight TestFlight;
+	#define TestFlight _JOTFProxy
+	#import "JOTFProxy.h"
+#else
 	#undef JOTFEnableCheckpoints
 	#define JOTFEnableCheckpoints 0
 
