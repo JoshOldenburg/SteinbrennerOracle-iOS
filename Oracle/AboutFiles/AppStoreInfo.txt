@@ -1,9 +1,9 @@
 Default language: English
 App name: Steinbrenner Oracle
-SKU number: SteinbrennerOracle
+SKU number: 1-SteinbrennerOracle
 Bundle ID: Steinbrenner Oracle - com.joshuaoldenburg.Oracle
 
-Availability date: 11/25/13
+Availability date: 11/25/14
 Price Tier: free
 Educational discount: yes, though not really applicable
 Available territories: US only
@@ -12,24 +12,25 @@ Version: 1.0.0
 Copyright: 2013 Joshua Oldenburg, all articles by the Steinbrenner High School Oracle and its authors
 Primary Category: News
 Secondary Category: none
-Ratings: all none except horror/fear themes (infrequent/mild)
+Ratings: all none
 
 Description:
 The Steinbrenner Oracle mobile app allows easy access to articles recently published on the Steinbrenner High School Oracle's website.
 
-Coming soon: more articles displayed at one time, displaying of articles in multiple categories, and a redesigned article display.
+Coming soon: more articles displayed at one time, displaying of articles by category, and a redesigned article display.
 
 All content is by the Steinbrenner High School Oracle and its authors, and can also be found online at http://oraclenewspaper.com. The app was created by a Steinbrenner freshman.
 
-Keywords: steinbrenner,steinbrenner high school,oracle,steinbrenner oracle,steinbrenner newspaper,school newspaper,steinbrenner school newspaper
-Support URL: 
-Marketing URL: none
+Keywords: steinbrenner,steinbrenner high school,oracle,steinbrenner newspaper,school newspaper
+Support URL: http://joshuaoldenburg.com/apps/steinbrenner-oracle/support
+Marketing URL: http://joshuaoldenburg.com/apps/steinbrenner-oracle
 Privacy Policy URL: none
-Contact Name: 
-Contact email:
-Contact phone:
-Review Notes:
+Contact Name: Josh Oldenburg
+Contact email: mkoappledev@gmail.com
+Contact phone: ***REMOVED***
+Review Notes: Instead of calling, please email.
+	Original review notes: All content is pulled from the Oracle's website and simply formatted for the device. I was given permission by the staff adviser of the newspaper to create and publish this app.
 Demo info: none
 Large app icon: iTunesArtwork
-Screenshots:
+Screenshots: Raw Assets/Screenshots/App Store/CroppedAndResized/Screenshot*-noalpha-*@2x.png
 Routing app coverage file: none
