@@ -8,7 +8,7 @@ Price Tier: free
 Educational discount: yes, though not really applicable
 Available territories: US only
 
-Version: 1.0.0
+Version: 1.0.1
 Copyright: 2013 Joshua Oldenburg, all articles by the Steinbrenner High School Oracle and its authors
 Primary Category: News
 Secondary Category: none
@@ -34,3 +34,7 @@ Demo info: none
 Large app icon: iTunesArtwork
 Screenshots: Raw Assets/Screenshots/App Store/CroppedAndResized/Screenshot*-noalpha-*@2x.png
 Routing app coverage file: none
+
+Version history:
+1.0.0: Rejected for using private API's (libtidy)
+1.0.1: Switched to CTidy
