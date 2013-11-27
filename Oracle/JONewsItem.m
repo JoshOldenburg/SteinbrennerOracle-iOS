@@ -40,14 +40,14 @@
 	if (_tidiedContent) return _tidiedContent;
 	
 	TidyBuffer output = {0};
-	TidyDoc tidyDoc = tidyCreate();
-    if (!tidyOptSetBool(tidyDoc, TidyXmlOut, yes)) return nil; // Convert to XML
-    if (!tidyOptSetValue(tidyDoc, TidyCharEncoding, "utf8")) return nil; // UTF-8
+	TidyDoc tidyDoc = ig_tidyCreate();
+    if (!ig_tidyOptSetBool(tidyDoc, TidyXmlOut, yes)) return nil; // Convert to XML
+    if (!ig_tidyOptSetValue(tidyDoc, TidyCharEncoding, "utf8")) return nil; // UTF-8
 	TidyBuffer errorBuffer = {0};
-	if (tidySetErrorBuffer(tidyDoc, &errorBuffer) < 0) return nil; // Shut up tidy: puts errors to stderr if this isn't set
-    if (tidyParseString(tidyDoc, self.content.UTF8String) < 0) return nil; // Parse
-    if (tidyCleanAndRepair(tidyDoc) < 0) return nil; // Fix/tidy
-    if (tidySaveBuffer(tidyDoc, &output) < 0) return nil; // Save
+	if (ig_tidySetErrorBuffer(tidyDoc, &errorBuffer) < 0) return nil; // Shut up tidy: puts errors to stderr if this isn't set
+    if (ig_tidyParseString(tidyDoc, self.content.UTF8String) < 0) return nil; // Parse
+    if (ig_tidyCleanAndRepair(tidyDoc) < 0) return nil; // Fix/tidy
+    if (ig_tidySaveBuffer(tidyDoc, &output) < 0) return nil; // Save
 	
 	return _tidiedContent = [NSString stringWithUTF8String:(char *)output.bp];
 }
