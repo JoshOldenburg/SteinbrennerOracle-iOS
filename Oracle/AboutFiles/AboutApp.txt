@@ -7,7 +7,7 @@ App copyright © 2013 Josh Oldenburg. All articles and content by the Steinbrenn
 For questions involving the newspaper, please ask Ms. Crosby in room 215.
 
 Credits
-AFNetworking - Magic behind downloading of articles
+AFNetworking
 Copyright (c) 2013 AFNetworking (http://afnetworking.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,7 +28,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-NSDate+InternetDateTime & NSString+HTML - Someone needs to harass the guy who said dates should look like 2013-11-27T16:39:57-0500
+NSDate+InternetDateTime & NSString+HTML
 Copyright (c) 2010 Michael Waterfall
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -53,7 +53,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-TBXML - Magic behind XML parsing
+TBXML
 Copyright 2012 71Squared All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -74,7 +74,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-CTidy - Easy packaging of libtidy (below)
+CTidy
 Copyright (c) 2012, Francis Chong.
 All rights reserved.
 
@@ -102,7 +102,7 @@ The views and conclusions contained in the software and documentation are those
 of the authors and should not be interpreted as representing official policies, 
 either expressed or implied, of the FreeBSD Project.
 
-libtidy - Magic behind making ugly HTML pretty
+libtidy
 This software and documentation is provided "as is," and
 the copyright holders and contributing author(s) make no
 representations or warranties, express or implied, including
