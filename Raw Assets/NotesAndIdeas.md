@@ -27,3 +27,4 @@ Steinbrenner Oracle App
 	- More reliable, paginated way to get posts than Atom feed
 	- API design notes in back of tech binder
 	- Publish plugin and iOS library as FOSS
+	- Future: take over website and migrate to Drupal? Then use Drupal iOS SDK
