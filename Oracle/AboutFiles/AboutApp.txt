@@ -7,7 +7,7 @@ App copyright © 2013 Josh Oldenburg. All articles and content by the Steinbrenn
 For questions involving the newspaper, please ask Ms. Crosby in room 215.
 
 Credits
-AFNetworking
+AFNetworking - Magic behind downloading of articles
 Copyright (c) 2013 AFNetworking (http://afnetworking.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,7 +28,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-NSDate+InternetDateTime & NSString+HTML
+NSDate+InternetDateTime & NSString+HTML - Someone needs to harass the guy who said dates should look like 2013-11-27T16:39:57-0500
 Copyright (c) 2010 Michael Waterfall
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -53,7 +53,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-TBXML
+TBXML - Magic behind XML parsing
 Copyright 2012 71Squared All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -73,3 +73,61 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+CTidy - Easy packaging of libtidy (below)
+Copyright (c) 2012, Francis Chong.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met: 
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer. 
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution. 
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those
+of the authors and should not be interpreted as representing official policies, 
+either expressed or implied, of the FreeBSD Project.
+
+libtidy - Magic behind making ugly HTML pretty
+This software and documentation is provided "as is," and
+the copyright holders and contributing author(s) make no
+representations or warranties, express or implied, including
+but not limited to, warranties of merchantability or fitness
+for any particular purpose or that the use of the software or
+documentation will not infringe any third party patents,
+copyrights, trademarks or other rights. 
+
+The copyright holders and contributing author(s) will not be held
+liable for any direct, indirect, special or consequential damages
+arising out of any use of the software or documentation, even if
+advised of the possibility of such damage.
+
+Permission is hereby granted to use, copy, modify, and distribute
+this source code, or portions hereof, documentation and executables,
+for any purpose, without fee, subject to the following restrictions:
+
+1. The origin of this source code must not be misrepresented.
+2. Altered versions must be plainly marked as such and must
+   not be misrepresented as being the original source.
+3. This Copyright notice may not be removed or altered from any
+   source or altered source distribution.
+
+The copyright holders and contributing author(s) specifically
+permit, without fee, and encourage the use of this source code
+as a component for supporting the Hypertext Markup Language in
+commercial products. If you use this source code in a product,
+acknowledgment is not required but would be appreciated.
