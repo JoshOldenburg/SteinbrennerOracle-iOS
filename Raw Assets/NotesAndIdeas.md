@@ -8,6 +8,8 @@ Steinbrenner Oracle App
 	- See below about stats
 	- See below about WP plugin
 		- and Drupal migration/plugin/framework
+	- Dynamic type - about pages and content pages
+	- Content display - show title like in Mail app
 - **Stats ideas**
 	- Start over with Drupal 7 website
 	- Create module that adds 'app' content type w/ fields for icons, screenshots, price, App Store link, availability date, ...
