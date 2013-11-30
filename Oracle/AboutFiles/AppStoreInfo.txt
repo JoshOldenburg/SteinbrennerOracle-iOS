@@ -19,7 +19,7 @@ The Steinbrenner Oracle mobile app allows easy access to articles recently publi
 
 Coming soon: more articles displayed at one time, displaying of articles by category, and a redesigned article display.
 
-All content is by the Steinbrenner High School Oracle and its authors, and can also be found online at http://oraclenewspaper.com. The app was created by a Steinbrenner freshman.
+All content is by the Steinbrenner High School Oracle and its authors, and can also be found online at http://oraclenewspaper.com. The app was created by a Steinbrenner student.
 
 Keywords: steinbrenner,steinbrenner high school,oracle,steinbrenner newspaper,school newspaper
 Support URL: http://joshuaoldenburg.com/apps/steinbrenner-oracle/support
