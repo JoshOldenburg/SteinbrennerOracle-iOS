@@ -47,7 +47,6 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	self.tableView.rowHeight = 88.0;
 	[self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
 	
-	self.navigationController.delegate = self;
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	self.navigationItem.title = @"Steinbrenner Oracle";
@@ -472,12 +471,6 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	self.items = nil;
 	[self.tableView reloadData];
 #endif
-}
-
-#pragma mark - UINavigationControllerDelegate
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-	if (viewController != self) return;
-	[self jo_stopAnalyticsTimedEvent];
 }
 
 @end
