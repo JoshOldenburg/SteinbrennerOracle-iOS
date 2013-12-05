@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSDate *publicationDate;
 @property (nonatomic, strong) NSDate *updateDate;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *author;
 @property (nonatomic, strong) NSString *summary;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) NSString *tidiedContent; // Tidies content with libtidy if this is nil. Will only tidy once, to run again, set this to nil. This is automatically nilled when content is set
