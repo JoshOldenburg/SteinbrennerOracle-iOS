@@ -122,6 +122,7 @@
 		_publicationDate = [aDecoder decodeObjectForKey:@"JOCodingPublicationDate"];
 		_updateDate = [aDecoder decodeObjectForKey:@"JOCodingUpdateDate"];
 		_title = [aDecoder decodeObjectForKey:@"JOCodingTitle"];
+		_author = [aDecoder decodeObjectForKey:@"JOCodingAuthor"];
 		_summary = [aDecoder decodeObjectForKey:@"JOCodingSummary"];
 		_enclosures = [aDecoder decodeObjectForKey:@"JOCodingEnclosures"];
 		_alternateURL = [aDecoder decodeObjectForKey:@"JOCodingAlternateURL"];
@@ -135,6 +136,7 @@
 	if (_publicationDate) [aCoder encodeObject:_publicationDate forKey:@"JOCodingPublicationDate"];
 	if (_updateDate) [aCoder encodeObject:_updateDate forKey:@"JOCodingUpdateDate"];
 	if (_title) [aCoder encodeObject:_title forKey:@"JOCodingTitle"];
+	if (_author) [aCoder encodeObject:_author forKey:@"JOCodingAuthor"];
 	if (_summary) [aCoder encodeObject:_summary forKey:@"JOCodingSummary"];
 	if (_enclosures) [aCoder encodeObject:_enclosures forKey:@"JOCodingEnclosures"];
 	if (_alternateURL) [aCoder encodeObject:_alternateURL forKey:@"JOCodingAlternateURL"];
@@ -158,6 +160,7 @@
 	copy->_publicationDate = _publicationDate.copy;
 	copy->_updateDate = _updateDate.copy;
 	copy->_title = _title.copy;
+	copy->_author = _author.copy;
 	copy->_summary = _summary.copy;
 	copy->_content = _content.copy;
 	copy->_tidiedContent = _tidiedContent.copy;

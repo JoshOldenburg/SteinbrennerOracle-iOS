@@ -157,6 +157,12 @@
 			TBXMLElement *idElement = [TBXML childElementNamed:@"id" parentElement:element];
 			if (idElement) newsItem.identifier = [TBXML textForElement:idElement];
 			
+			TBXMLElement *authorElement = [TBXML childElementNamed:@"author" parentElement:element];
+			if (authorElement) {
+				TBXMLElement *authorNameElement = [TBXML childElementNamed:@"name" parentElement:authorElement];
+				if (authorNameElement) newsItem.author = [TBXML textForElement:authorNameElement];
+			}
+			
 			TBXMLElement *summaryElement = [TBXML childElementNamed:@"summary" parentElement:element];
 			if (summaryElement) newsItem.summary = [TBXML textForElement:summaryElement];
 			

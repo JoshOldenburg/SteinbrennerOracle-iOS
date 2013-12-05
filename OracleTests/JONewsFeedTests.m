@@ -18,6 +18,7 @@
 @interface JONewsFeedTests : XCTestCase <JONewsFeedDelegate>
 @property (nonatomic, assign) BOOL hasFinishedParsing;
 @property (nonatomic, assign) BOOL parseFailed;
+@property (nonatomic, strong, readonly) NSURL *feedURL;
 @end
 
 @implementation JONewsFeedTests
@@ -119,6 +120,12 @@
 	XCTAssertThrowsSpecificNamed([[JONewsFeed alloc] init], NSException, JOExceptionInvalid);
 	XCTAssertNil([[JONewsFeed alloc] initWithFeedURL:nil delegate:self]);
 	XCTAssertNotNil([[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:nil]);
+}
+
+- (void)testAuthor {
+	JONewsFeed *feed = [self createFeedAndLoadWithURL:self.feedURL];
+	
+	XCTAssertEqualObjects(((JONewsItem *)feed.newsItems[0]).author, @"EmmaS");
 }
 
 #pragma mark - JONewsFeedDelegate
