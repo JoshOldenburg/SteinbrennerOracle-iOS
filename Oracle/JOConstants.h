@@ -18,8 +18,7 @@
 #define JOShowCachedItemsInErrorState 0
 #define JOEnablePrettificationOfDetail 0 // Whether to use the web page and its formatting or just the HTML from the feed
 
-#define JOEnableTF 1 // If 0, calling methods on the TestFlight class is a no-op, as well as the TFLog family
-#define JOTFEnableCheckpoints 1
+#import "JOAnalytics.h" // More defines here
 
 /* Defines based on pref pane:
  * JOInfoSectionEnabled
@@ -33,11 +32,9 @@ extern NSString *const JOExceptionInvalid;
 extern NSString *const JOErrorDomain;
 extern NSString *const JOPreviousItemsKey;
 
-#import "TestFlight.h"
-
 @interface JOUtil : NSObject
 
-+ (void)setUpTestFlight;
++ (void)setUpAnalytics;
 + (NSArray *)semideepCopyOfArray:(NSArray *)array; // Only copies first level
 + (NSString *)versionString;
 
@@ -69,19 +66,4 @@ NSString *JOPreviousItemsPath(void);
 	#undef JOOracleFeedURL
 	#define JOOracleFeedURL @"http://oraclenewspaper.com/ThisPageShouldNotExist"
 	#warning Causing testing error
-#endif
-
-#if JOEnableTF
-	@compatibility_alias _TestFlight TestFlight;
-	#define TestFlight _JOTFProxy
-	#import "JOTFProxy.h"
-#else
-	#undef JOTFEnableCheckpoints
-	#define JOTFEnableCheckpoints 0
-
-	static TestFlight *const _JODisable_TestFlight = nil;
-	#define TestFlight ((Class)[_JODisable_TestFlight class])
-	#define TFLog NSLog
-	#define TFLogv NSLogv
-	#define TFLogPreFormatted NSLog
 #endif

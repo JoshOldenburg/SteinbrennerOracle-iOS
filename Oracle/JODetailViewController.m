@@ -76,7 +76,7 @@
 				return [HTML stringByAppendingString:self.jo_hidingJS];
 			} failure:^(NSError *error) {
 				[weakSelf.webView loadHTMLString:weakSelf.newsItem.content baseURL:nil];
-				TFLog(@"Error loading request, falling back to default: %@", error);
+				JOLog(@"Error loading request, falling back to default: %@", error);
 			}];
 		} else {
 			[self.webView loadHTMLString:self.newsItem.content baseURL:nil];

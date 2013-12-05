@@ -14,14 +14,10 @@ NSString *const JOPreviousItemsKey = @"JOPreviousItems";
 
 @implementation JOUtil
 
-+ (void)setUpTestFlight {
-#if JOEnableTF
-	[TestFlight setOptions:@{
-//		TFOptionLogOnCheckpoint: @NO, // Unnecessary
-//		TFOptionSendLogOnlyOnCrash: @YES, // So we can TFLog HTTP errors, otherwise will be unused
-	}];
-	[TestFlight takeOff:@"5fec93db-e9c4-4f5f-b58d-9c5e25f98e4e"];
-#endif
++ (void)setUpAnalytics {
+	[JOAnalytics setFlurryKey:@"ZKW4DG2XZY5K2G5S2KN3"];
+	[JOAnalytics setTestFlightKey:@"5fec93db-e9c4-4f5f-b58d-9c5e25f98e4e"];
+	[JOAnalytics startSessionsWithOptions:nil];
 }
 
 + (NSArray *)semideepCopyOfArray:(NSArray *)array {

@@ -18,7 +18,7 @@
 
 static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimationRight;
 
-@interface JOMasterViewController () <JONewsFeedDelegate>
+@interface JOMasterViewController () <JONewsFeedDelegate, UINavigationControllerDelegate>
 @property (nonatomic, strong) NSArray *items;
 @property (nonatomic, strong) JONewsFeed *newsFeed;
 @property (nonatomic, strong) NSError *previousLoadError;
@@ -47,6 +47,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	self.tableView.rowHeight = 88.0;
 	[self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
 	
+	self.navigationController.delegate = self;
 	self.detailViewController = (JODetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
 	
 	self.navigationItem.title = @"Steinbrenner Oracle";
@@ -88,6 +89,8 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	[super viewWillAppear:animated];
 	[self jo_updateTitleBarForOrientation:self.interfaceOrientation];
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || [self jo_indexPathIsWebsiteLink:self.tableView.indexPathForSelectedRow]) [self jo_clearSelection];
+	
+	[self jo_stopAnalyticsTimedEvent];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -166,16 +169,21 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 }
 
 - (void)prepareDetailViewControllerForIndexPath:(NSIndexPath *)indexPath {
+	[self jo_stopAnalyticsTimedEvent];
 	if (indexPath.section == 0) {
 		self.detailViewController.usesTextView = NO;
 		if ([self jo_indexPathIsWebsiteLink:indexPath]) {
 			self.detailViewController.newsItem = nil;
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://oraclenewspaper.com"]];
-			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedWebsite"];
+			[JOAnalytics logEvent:@"Opened Website"];
 			[self jo_clearSelection];
 		} else {
-			self.detailViewController.newsItem = self.items[indexPath.row];
-			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedNewsItem"];
+			JONewsItem *newsItem = self.items[indexPath.row];
+			self.detailViewController.newsItem = newsItem;
+			[JOAnalytics logEvent:@"Opened News Story" data:@{
+				@"Article URL": newsItem.alternateURL ?: @"{none given}",
+				@"Article Title": newsItem.title ?: @"{none given (?)}",
+			} timed:YES];
 		}
 	} else {
 		[self prepareDetailForInfoSectionItem:indexPath];
@@ -190,13 +198,13 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 			textFileName = @"AboutSteinbrennerOracle";
 			textFileExtension = @"rtf";
 			title = @"About the Steinbrenner Oracle";
-			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedAboutSteinbrennerOracle"];
+			[JOAnalytics logEvent:@"Opened 'About Steinbrenner Oracle'" timed:YES];
 			break;
 		case 1:
 			textFileName = @"AboutApp";
 			textFileExtension = @"rtf";
 			title = @"About the App";
-			if (JOTFEnableCheckpoints) [TestFlight passCheckpoint:@"OpenedAboutApp"];
+			[JOAnalytics logEvent:@"Opened 'About App'" timed:YES];
 			break;
 		default:
 			break;
@@ -228,6 +236,14 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 
 - (BOOL)jo_indexPathIsWebsiteLink:(NSIndexPath *)indexPath {
 	return JOWebsiteLinkEnabled && indexPath && (indexPath.section == 0 && indexPath.row == (self.items.count + (NSUInteger)(self.previousLoadError != nil)) && indexPath.row != 0);
+}
+
+- (void)jo_stopAnalyticsTimedEvent {
+	[JOAnalytics endPreviousTimedEventAmong:@[
+		@"Opened News Story",
+		@"Opened 'About Steinbrenner Oracle'",
+		@"Opened 'About App'",
+	]];
 }
 
 #pragma mark - NSTableViewDelegate
@@ -339,15 +355,15 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 					cell.blurbLabel.text = @"Pleae try again later.";
 					break;
 			}
-			TFLog(@"Error loading Oracle website data: HTTP %ld (NSError: %@), gave message: %@", (long)statusCode, self.previousLoadError, cell.blurbLabel.text);
+			JOLog(@"Error loading Oracle website data: HTTP %ld (NSError: %@), gave message: %@", (long)statusCode, self.previousLoadError, cell.blurbLabel.text);
 		} else if (self.previousLoadError) {
 			cell.titleLabel.text = [NSString stringWithFormat:@"Error loading news: %ld", (long)self.previousLoadError.code];
 			cell.blurbLabel.text = self.previousLoadError.localizedDescription;
-			TFLog(@"Error loading Oracle website data: %@", self.previousLoadError);
+			JOLog(@"Error loading Oracle website data: %@", self.previousLoadError);
 		} else {
 			cell.titleLabel.text = @"An unknown error occurred loading news";
 			cell.blurbLabel.text = @"Please try again later.";
-			TFLog(@"Error loading Oracle website data: %@", self.previousLoadError);
+			JOLog(@"Error loading Oracle website data: %@", self.previousLoadError);
 		}
 		cell.largeImageView.contentMode = UIViewContentModeCenter;
 		cell.largeImageView.image = self.class.jo_faviconImage;
@@ -456,6 +472,12 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	self.items = nil;
 	[self.tableView reloadData];
 #endif
+}
+
+#pragma mark - UINavigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+	if (viewController != self) return;
+	[self jo_stopAnalyticsTimedEvent];
 }
 
 @end
