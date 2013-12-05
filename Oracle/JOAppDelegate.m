@@ -12,7 +12,7 @@
 @implementation JOAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	[JOUtil setUpTestFlight];
+	[JOUtil setUpAnalytics];
 	
     // Override point for customization after application launch.
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
