@@ -26,6 +26,9 @@
  * JODisableImageHeaderUniversally
  * JOEnableImageHeaderOnIOS6
  * All others as above and are not modifiable at run time
+ *
+ * Defines based on others:
+ * JODEBUG - 1 if DEBUG is set, 0 otherwise
  */
 
 extern NSString *const JOExceptionInvalid;
@@ -66,4 +69,10 @@ NSString *JOPreviousItemsPath(void);
 	#undef JOOracleFeedURL
 	#define JOOracleFeedURL @"http://oraclenewspaper.com/ThisPageShouldNotExist"
 	#warning Causing testing error
+#endif
+
+#ifdef DEBUG
+	#define JODEBUG 1
+#else
+	#define JODEBUG 0
 #endif
