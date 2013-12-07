@@ -24,6 +24,10 @@ void JOLog(NSString *format, ...) {
 	NSLog(@"%@", string);
 }
 
+void _JOAnalyticsExceptionHandler(NSException *exception) {
+	[JOAnalytics logException:exception];
+}
+
 @interface JOAnalytics ()
 @property (nonatomic, strong) NSString *testFlightKey;
 @property (nonatomic, strong) NSString *flurryKey;
@@ -39,12 +43,13 @@ void JOLog(NSString *format, ...) {
 	self.jo_sharedAnalytics.flurryKey = key;
 }
 + (void)startSessionsWithOptions:(id)options {
+	if (JOAnalyticsEnableExceptionReporting && JOAnalyticsEnableFlurry) NSSetUncaughtExceptionHandler(&_JOAnalyticsExceptionHandler);
 	if (JOAnalyticsEnableTF && self.testFlightKey) [TestFlight takeOff:self.testFlightKey];
 	if (JOAnalyticsEnableFlurry && self.flurryKey) [Flurry startSession:self.flurryKey withOptions:options];
 }
 
 + (void)logEvent:(NSString *)event {
-	[self logEvent:event data:Nil timed:NO];
+	[self logEvent:event data:nil timed:NO];
 }
 + (void)logEvent:(NSString *)event data:(NSDictionary *)data {
 	[self logEvent:event data:data timed:NO];
@@ -53,11 +58,17 @@ void JOLog(NSString *format, ...) {
 	[self logEvent:event data:nil timed:timed];
 }
 + (void)logEvent:(NSString *)event data:(NSDictionary *)data timed:(BOOL)timed {
+	if (!event) {
+		NSLog(@"Must specify event name!");
+		return;
+	}
+	
 	if (JOAnalyticsEnableTF) [TestFlight passCheckpoint:event];
 	if (JOAnalyticsEnableFlurry) [Flurry logEvent:event withParameters:data timed:timed];
 	
 	if (timed) {
-		[self.timedEventStack insertObject:event atIndex:0];
+		NSDictionary *stackObject = @{@"name": event, @"data": data ?: [NSNull null]};
+		[self.timedEventStack insertObject:stackObject atIndex:0];
 	}
 }
 + (void)endTimedEvent:(NSString *)event {
@@ -65,14 +76,20 @@ void JOLog(NSString *format, ...) {
 }
 + (void)endTimedEvent:(NSString *)event data:(NSDictionary *)data {
 	if (JOAnalyticsEnableFlurry) [Flurry endTimedEvent:event withParameters:data];
-	[self.timedEventStack removeObject:event];
+	
+	for (NSDictionary *stackObject in self.timedEventStack) {
+		if ([stackObject[@"name"] isEqual:event]) {
+			[self.timedEventStack removeObject:stackObject];
+			return;
+		}
+	}
 }
 + (void)endPreviousTimedEventAmong:(NSArray *)events {
 	if (self.timedEventStack.count == 0 || events.count == 0) return;
-	for (NSString *event in self.timedEventStack) {
-		if ([events containsObject:event]) {
-			[self endTimedEvent:event];
-			[self.timedEventStack removeObject:event];
+	for (NSDictionary *stackObject in self.timedEventStack) {
+		if ([events containsObject:stackObject[@"name"]]) {
+			[self endTimedEvent:stackObject[@"name"] data:([stackObject[@"data"] isKindOfClass:[NSNull class]] ? nil : stackObject[@"data"])];
+//			[self.timedEventStack removeObject:stackObject]; // Already happens in +endTimedEvent:data:
 			return;
 		}
 	}
@@ -88,13 +105,27 @@ void JOLog(NSString *format, ...) {
 + (void)logException:(NSException *)exception {
 	[self logException:exception otherInfo:nil];
 }
-+ (void)logException:(NSException *)exception otherInfo:(NSString *)otherInfo {
++ (void)logException:(NSException *)exception otherInfo:(NSString *)otherInfo, ... {
+	if (otherInfo) {
+		va_list args;
+		va_start(args, otherInfo);
+		otherInfo = [[NSString alloc] initWithFormat:otherInfo arguments:args];
+		va_end(args);
+	}
+	
 	if (JOAnalyticsEnableFlurry) [Flurry logError:@"Exception" message:otherInfo exception:exception];
 }
 + (void)logError:(NSError *)error {
 	[self logError:error otherInfo:nil];
 }
-+ (void)logError:(NSError *)error otherInfo:(NSString *)otherInfo {
++ (void)logError:(NSError *)error otherInfo:(NSString *)otherInfo, ... {
+	if (otherInfo) {
+		va_list args;
+		va_start(args, otherInfo);
+		otherInfo = [[NSString alloc] initWithFormat:otherInfo arguments:args];
+		va_end(args);
+	}
+	
 	if (JOAnalyticsEnableFlurry) [Flurry logError:@"Error" message:otherInfo error:error];
 }
 

@@ -180,9 +180,12 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 			JONewsItem *newsItem = self.items[indexPath.row];
 			self.detailViewController.newsItem = newsItem;
 			[JOAnalytics logEvent:@"Opened News Story" data:@{
-				@"Article URL": newsItem.alternateURL ?: @"{none given}",
-				@"Article Title": newsItem.title ?: @"{none given (?)}",
+				@"Article URL/ID": newsItem.identifier ?: (newsItem.alternateURL ?: @"{none given (this shouldn't happen)}"),
+				@"Article Title": newsItem.title ?: @"{none given (this shouldn't happen)}",
+				@"Article Author": newsItem.author ?: @"{none given (this shouldn't happen)}",
+				@"Article Position in List (1 is top)": @(indexPath.row + 1),
 			} timed:YES];
+			[JOAnalytics logPageView];
 		}
 	} else {
 		[self prepareDetailForInfoSectionItem:indexPath];
@@ -354,15 +357,16 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 					cell.blurbLabel.text = @"Pleae try again later.";
 					break;
 			}
-			JOLog(@"Error loading Oracle website data: HTTP %ld (NSError: %@), gave message: %@", (long)statusCode, self.previousLoadError, cell.blurbLabel.text);
+			if (self.previousLoadError) [JOAnalytics logError:self.previousLoadError otherInfo:@"Errored when loading website data - HTTP %ld", (long)statusCode];
+			else JOLog(@"Error loading Oracle website data: HTTP %ld (NSError: %@), gave message: %@", (long)statusCode, self.previousLoadError, cell.blurbLabel.text);
 		} else if (self.previousLoadError) {
 			cell.titleLabel.text = [NSString stringWithFormat:@"Error loading news: %ld", (long)self.previousLoadError.code];
 			cell.blurbLabel.text = self.previousLoadError.localizedDescription;
-			JOLog(@"Error loading Oracle website data: %@", self.previousLoadError);
+			[JOAnalytics logError:self.previousLoadError otherInfo:@"Errored when loading website data - not HTTP"];
 		} else {
 			cell.titleLabel.text = @"An unknown error occurred loading news";
 			cell.blurbLabel.text = @"Please try again later.";
-			JOLog(@"Error loading Oracle website data: %@", self.previousLoadError);
+			JOLog(@"Unknown error loading Oracle website data");
 		}
 		cell.largeImageView.contentMode = UIViewContentModeCenter;
 		cell.largeImageView.image = self.class.jo_faviconImage;
