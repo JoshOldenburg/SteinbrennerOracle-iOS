@@ -37,4 +37,15 @@ Routing app coverage file: none
 
 Version history:
 1.0.0: Rejected for using private API's (libtidy)
-1.0.1: Switched to CTidy
+1.0.1: (Initial public version) Switched to CTidy
+1.1.0: (Public version) Added analytics
+
+Version release notes:
+1.0.1: n/a
+1.1.0:
+Added analytics, so we can see how many people use the app and similar statistics.
+
+Version review time history: (trailing time is Upload Received -> Invalid Binary/Processing for App Store)
+1.0.0: 11/26/13 (Upload Received), 11/26/13 (Invalid Binary) - 1 minute
+1.0.1: 11/27/13 (Upload Received), 12/3/13 (Processing for App Store) - 6 days, 2 hours, 30 minutes
+1.1.0: 12/6/13 (Upload Received)
