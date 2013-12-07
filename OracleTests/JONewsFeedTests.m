@@ -61,9 +61,9 @@
 	self.parseFailed = NO;
 	
 	[feed start];
-	JOWaitForTrueWithExpiration(&_hasFinishedParsing, [NSDate dateWithTimeIntervalSinceNow:5]);
+	JOWaitForTrueWithExpiration(&_hasFinishedParsing, [NSDate dateWithTimeIntervalSinceNow:1]);
 	XCTAssertFalse(self.parseFailed, @"Parse failed");
-	XCTAssertTrue(self.hasFinishedParsing, @"Took >5 seconds to parse");
+	XCTAssertTrue(self.hasFinishedParsing, @"Took >1 seconds to parse");
 }
 
 #pragma mark - Tests
@@ -122,19 +122,29 @@
 	XCTAssertNotNil([[JONewsFeed alloc] initWithFeedURL:self.feedURL delegate:nil]);
 }
 
-- (void)testAuthor {
+- (void)testMetadata {
 	JONewsFeed *feed = [self createFeedAndLoadWithURL:self.feedURL];
+	JONewsItem *item = feed.newsItems[0];
 	
-	XCTAssertEqualObjects(((JONewsItem *)feed.newsItems[0]).author, @"EmmaS");
+	XCTAssertEqualObjects(item.title, @"Swim falls to Plant in season&#8217;s conclusion");
+	XCTAssertEqualObjects(item.author, @"EmmaS");
+	XCTAssertEqualObjects(item.identifier, @"http://www.oraclenewspaper.com/?p=8117");
+	XCTAssertEqualObjects(item.alternateURL, @"http://www.oraclenewspaper.com/2013/10/18/unable-claim-win-final-meet-season/");
+	XCTAssertNotNil(item.summary); // Summaries are to the right of categories in example atom feed
+	XCTAssertNotNil(item.content);
+	XCTAssertNotNil(item.updateDate);
+	XCTAssertNotNil(item.publicationDate);
 }
 
 #pragma mark - JONewsFeedDelegate
 - (void)newsFeedDidFinishParsing:(JONewsFeed *)newsFeed {
 	self.hasFinishedParsing = YES;
+	XCTAssertNotNil(newsFeed);
 }
 - (void)newsFeed:(JONewsFeed *)newsFeed didFailWithError:(NSError *)error {
 	self.hasFinishedParsing = YES;
 	self.parseFailed = YES;
+	XCTAssertNotNil(newsFeed);
 	XCTFail(@"Parse failed with error: %@", error);
 }
 
