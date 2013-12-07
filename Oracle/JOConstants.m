@@ -15,7 +15,7 @@ NSString *const JOPreviousItemsKey = @"JOPreviousItems";
 @implementation JOUtil
 
 + (void)setUpAnalytics {
-	if (DEBUG) [JOAnalytics setFlurryKey:@"ZKW4DG2XZY5K2G5S2KN3"]; // Testing app
+	if (JODEBUG) [JOAnalytics setFlurryKey:@"ZKW4DG2XZY5K2G5S2KN3"]; // Testing app
 	else [JOAnalytics setFlurryKey:@"FPX9F2Q7Y4Q74FXDVWS8"]; // Production app
 	[JOAnalytics setTestFlightKey:@"5fec93db-e9c4-4f5f-b58d-9c5e25f98e4e"];
 	[JOAnalytics startSessionsWithOptions:nil];
