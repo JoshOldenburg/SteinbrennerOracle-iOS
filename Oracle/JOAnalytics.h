@@ -36,9 +36,9 @@ void JOLog(NSString *, ...);
 + (void)endAllTimedEvents;
 
 + (void)logException:(NSException *)exception;
-+ (void)logException:(NSException *)exception otherInfo:(NSString *)otherInfo;
++ (void)logException:(NSException *)exception otherInfo:(NSString *)otherInfo, ...;
 + (void)logError:(NSError *)error;
-+ (void)logError:(NSError *)error otherInfo:(NSString *)otherInfo;
++ (void)logError:(NSError *)error otherInfo:(NSString *)otherInfo, ...;
 
 + (void)logPageViews:(id)target; // Where target is a UINavigationController or a UITabBarController
 + (void)logPageView; // Logs a single page view
@@ -48,6 +48,11 @@ void JOLog(NSString *, ...);
 // Private
 #if JOAnalyticsWarnOnTFDisabledInRelease && !DEBUG && JOAnalyticsEnableTFInRelease
 	#warning TestFlight not enabled in release build!
+#endif
+
+#if !JOAnalyticsEnableFlurryInDebug && DEBUG && JOAnalyticsEnableFlurry
+	#undef JOAnalyticsEnableFlurry
+	#define JOAnalyticsEnableFlurry 0
 #endif
 
 #if !JOAnalyticsEnableFlurry && !JOAnalyticsEnableTF
