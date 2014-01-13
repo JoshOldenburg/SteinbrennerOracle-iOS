@@ -23,6 +23,7 @@
 /* Defines based on pref pane:
  * JOInfoSectionEnabled
  * JOWebsiteLinkEnabled
+ * JOContactLinkEnabled
  * JODisableImageHeaderUniversally
  * JOEnableImageHeaderOnIOS6
  * All others as above and are not modifiable at run time
@@ -55,6 +56,7 @@ NSString *JOPreviousItemsPath(void);
 #else
 	#define JOInfoSectionEnabled YES
 	#define JOWebsiteLinkEnabled YES
+	#define JOContactLinkEnabled YES
 	#define JODisableImageHeaderUniversally NO
 	#define JOEnableImageHeaderOnIOS6 NO
 #endif
