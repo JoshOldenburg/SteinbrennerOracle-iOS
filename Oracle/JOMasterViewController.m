@@ -275,6 +275,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 
 #pragma mark - NSTableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	if (self.shouldDoNothing) return 0;
 	return ((self.items.count > 0 || self.previousLoadError) && JOInfoSectionEnabled) ? 2 : 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -395,8 +396,8 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	}
 	
     JONewsItem *item = self.items[indexPath.row - (NSUInteger)(self.previousLoadError != nil)]; // If the error is there, then the rows are all shifted down
-	cell.titleLabel.text = item.title.stringByDecodingHTMLEntities;
-	cell.blurbLabel.text = item.summary.stringByDecodingHTMLEntities;
+	cell.titleLabel.text = item.title.stringByConvertingHTMLToPlainText;
+	cell.blurbLabel.text = item.summary.stringByConvertingHTMLToPlainText;
 	cell.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	__block JOMasterViewController *_self = self;
