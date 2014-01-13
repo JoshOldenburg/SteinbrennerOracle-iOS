@@ -169,12 +169,17 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 
 - (void)prepareDetailViewControllerForIndexPath:(NSIndexPath *)indexPath {
 	[self jo_stopAnalyticsTimedEvent];
-	if (indexPath.section == 0) {
+	if (indexPath.section == 0 || [self jo_indexPathIsContactLink:indexPath]) {
 		self.detailViewController.usesTextView = NO;
 		if ([self jo_indexPathIsWebsiteLink:indexPath]) {
 			self.detailViewController.newsItem = nil;
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://oraclenewspaper.com"]];
 			[JOAnalytics logEvent:@"Opened Website"];
+			[self jo_clearSelection];
+		} else if ([self jo_indexPathIsContactLink:indexPath]) {
+			self.detailViewController.newsItem = nil;
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://joshuaoldenburg.com/apps/steinbrenner-oracle/support"]];
+			[JOAnalytics logEvent:@"Opened Developer Contact Link"];
 			[self jo_clearSelection];
 		} else {
 			JONewsItem *newsItem = self.items[indexPath.row];
@@ -239,6 +244,9 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 - (BOOL)jo_indexPathIsWebsiteLink:(NSIndexPath *)indexPath {
 	return JOWebsiteLinkEnabled && indexPath && (indexPath.section == 0 && indexPath.row == (self.items.count + (NSUInteger)(self.previousLoadError != nil)) && indexPath.row != 0);
 }
+- (BOOL)jo_indexPathIsContactLink:(NSIndexPath *)indexPath {
+	return JOContactLinkEnabled && indexPath && (indexPath.section == 1 && indexPath.row == 2);
+}
 
 - (void)jo_stopAnalyticsTimedEvent {
 	[JOAnalytics endPreviousTimedEventAmong:@[
@@ -250,7 +258,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 
 #pragma mark - NSTableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || [self jo_indexPathIsWebsiteLink:indexPath]) {
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad || [self jo_indexPathIsWebsiteLink:indexPath] || [self jo_indexPathIsContactLink:indexPath]) {
 		[self prepareDetailViewControllerForIndexPath:indexPath];
 	}
 }
@@ -270,8 +278,8 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	return ((self.items.count > 0 || self.previousLoadError) && JOInfoSectionEnabled) ? 2 : 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (section == 1) return 2;
-	return self.items.count > 0 ? self.items.count + ((NSUInteger)JOWebsiteLinkEnabled) + (NSUInteger)(self.previousLoadError != nil) : 1;
+	if (section == 1) return 2 + (NSUInteger)JOContactLinkEnabled;
+	return self.items.count > 0 ? (self.items.count + ((NSUInteger)JOWebsiteLinkEnabled) + (NSUInteger)(self.previousLoadError != nil)) : 1;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	switch (section) {
@@ -288,10 +296,11 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	BOOL isWebsiteLinkCell = [self jo_indexPathIsWebsiteLink:indexPath];
+	BOOL isContactLinkCell = [self jo_indexPathIsContactLink:indexPath];
 	if (indexPath.section == 1 || isWebsiteLinkCell) {
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:isWebsiteLinkCell ? @"NoSegueCell" : @"MiscCell"];
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:isWebsiteLinkCell || isContactLinkCell ? @"NoSegueCell" : @"MiscCell"];
 		if (!cell) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:isWebsiteLinkCell ? @"NoSegueCell" : @"MiscCell"];
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:isWebsiteLinkCell || isContactLinkCell ? @"NoSegueCell" : @"MiscCell"];
 			cell.selectionStyle = UITableViewCellSelectionStyleDefault;
 		}
 		
@@ -303,6 +312,10 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 					break;
 				case 1:
 					cell.textLabel.text = @"About the App";
+					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+					break;
+				case 2:
+					cell.textLabel.text = @"Contact the Developer";
 					cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 					break;
 				default:
