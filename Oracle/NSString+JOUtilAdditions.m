@@ -231,4 +231,16 @@
 	}
 }
 
+- (NSString *)stringByStrippingLinks {
+	static NSRegularExpression *hrefRegex;
+	static NSString *replacementPattern;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		hrefRegex = [NSRegularExpression regularExpressionWithPattern:@"<a( ?[^<>]{0,}) href=\"[^\"]+\"( ?[^<>]{0,})>" options:NSRegularExpressionCaseInsensitive error:nil];
+		replacementPattern = @"<a$1$2>";
+	});
+	
+	return [hrefRegex stringByReplacingMatchesInString:self options:0 range:NSMakeRange(0, self.length) withTemplate:replacementPattern];
+}
+
 @end

@@ -79,7 +79,8 @@
 				JOLog(@"Error loading request, falling back to default: %@", error);
 			}];
 		} else {
-			[self.webView loadHTMLString:self.newsItem.content baseURL:nil];
+			if (JOEnableLinkStrippingInDetail) [self.webView loadHTMLString:self.newsItem.content.stringByStrippingLinks baseURL:nil];
+			else [self.webView loadHTMLString:self.newsItem.content baseURL:nil];
 		}
 		[self jo_updateBarButtonVisible:YES];
 		self.navigationItem.title = self.newsItem.title.stringByConvertingHTMLToPlainText;
