@@ -59,4 +59,6 @@
 //  - Adapted from http://regexlib.com/REDetails.aspx?regexp_id=96
 - (NSString *)stringByLinkifyingURLs;
 
+- (NSString *)stringByStrippingLinks;
+
 @end

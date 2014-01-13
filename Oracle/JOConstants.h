@@ -24,6 +24,7 @@
  * JOInfoSectionEnabled
  * JOWebsiteLinkEnabled
  * JOContactLinkEnabled
+ * JOEnableLinkStrippingInDetail
  * JODisableImageHeaderUniversally
  * JOEnableImageHeaderOnIOS6
  * All others as above and are not modifiable at run time
@@ -57,6 +58,7 @@ NSString *JOPreviousItemsPath(void);
 	#define JOInfoSectionEnabled YES
 	#define JOWebsiteLinkEnabled YES
 	#define JOContactLinkEnabled YES
+	#define JOEnableLinkStrippingInDetail YES
 	#define JODisableImageHeaderUniversally NO
 	#define JOEnableImageHeaderOnIOS6 NO
 #endif
