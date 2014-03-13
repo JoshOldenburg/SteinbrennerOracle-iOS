@@ -8,14 +8,14 @@ Price Tier: free
 Educational discount: yes, though not really applicable
 Available territories: US only
 
-Version: 1.0.1
-Copyright: 2013 Joshua Oldenburg, all articles by the Steinbrenner High School Oracle and its authors
+Version: 1.1.1
+Copyright: 2014 Joshua Oldenburg, all articles © Steinbrenner High School Oracle and its authors
 Primary Category: News
 Secondary Category: none
 Ratings: all none
 
 Description:
-The Steinbrenner Oracle app allows easy access to articles recently published on Steinbrenner High School's Oracle newspaper website. A complete redesign is coming soon, as well as the displaying of articles by category and showing more articles.
+The Steinbrenner Oracle app allows easy access to articles recently published on Steinbrenner High School's Oracle newspaper website. A complete redesign is coming soon, as well as displaying more articles and sorting them by category.
 
 All content is by the Steinbrenner High School Oracle and its authors, and can also be found online at http://oraclenewspaper.com. The app was created by a Steinbrenner student.
 
@@ -44,10 +44,8 @@ Version release notes:
 1.1.0: Added analytics, so we can see how many people use the app and similar statistics.
 1.1.1: Squashed a bug.
 
-Version review time history: (trailing time is Upload Received -> Invalid Binary/Processing for App Store)
+Version review time history: (trailing time is Upload Received -> Invalid Binary/Processing for App Store/Pending Developer Release)
 1.0.0: 11/26/13 (Upload Received), 11/26/13 (Invalid Binary) - 1 minute
 1.0.1: 11/27/13 (Upload Received), 12/3/13 (Processing for App Store) - 6 days, 2 hours, 30 minutes
-1.1.0: 12/6/13 (Upload Received)
-1.1.0: 12//13 ()
-1.1.1: 1//14 ()
-1.1.1: 1//14 ()
+1.1.0: 12/6/13 (Upload Received), 12/10/13 (Pending Developer Release) - 3 days, 21 hours, 53 minutes
+1.1.1: 1/13/14 (Upload Received), 1//14 (Pending Developer Release) - 
