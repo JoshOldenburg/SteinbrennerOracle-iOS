@@ -368,7 +368,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = JO;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Joshua Oldenburg";
 				TargetAttributes = {
 					033F746818034877001681AF = {
@@ -581,7 +581,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -621,7 +620,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -655,7 +653,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A0E488504504805800DA812 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -680,7 +677,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A0E488504504805800DA812 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -705,7 +701,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 94131D6CD8C7441589832183 /* Pods-OracleTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Oracle.app/Oracle";
 				CURRENT_PROJECT_VERSION = 94;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -731,7 +726,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 94131D6CD8C7441589832183 /* Pods-OracleTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Oracle.app/Oracle";
 				CURRENT_PROJECT_VERSION = 94;
 				FRAMEWORK_SEARCH_PATHS = (
