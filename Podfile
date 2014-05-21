@@ -1,6 +1,6 @@
 platform :ios, '6.0'
 
-pod 'AFNetworking', '~>2.0.3'
+pod 'AFNetworking', '~>2.2.4'
 pod 'TBXMLPivotalForks', '~>0.0.1'
 pod 'CXFeedParser/NSDate+InternetDateTime', '~>0.1.1'
 pod 'TestFlightSDK', '~>2.0.2'
