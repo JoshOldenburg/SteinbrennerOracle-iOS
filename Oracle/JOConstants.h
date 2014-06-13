@@ -7,7 +7,6 @@
 //
 
 // Modifiable. All 0 or 1 unless otherwise noted
-#define JOUsePrefPane 0
 #define JOCauseErrorForTesting 0
 #define JOUseTestingURL 0
 #define JOOracleFeedURL @"http://oraclenewspaper.com/feed/atom/"
@@ -17,6 +16,13 @@
 #define JOAlwaysAnimateImageSetting 0
 #define JOShowCachedItemsInErrorState 0
 #define JOEnablePrettificationOfDetail 0 // Whether to use the web page and its formatting or just the HTML from the feed
+
+#define JOInfoSectionEnabled YES
+#define JOWebsiteLinkEnabled YES
+#define JOContactLinkEnabled YES
+#define JOEnableLinkStrippingInDetail YES
+#define JODisableImageHeaderUniversally NO
+#define JOEnableImageHeaderOnIOS6 NO
 
 #import "JOAnalytics.h" // More defines here
 
@@ -48,21 +54,6 @@ extern NSString *const JOPreviousItemsKey;
 NSString *JOPreviousItemsPath(void);
 
 // Implementation details
-#if JOUsePrefPane
-	#define JOInfoSectionEnabled [[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowInfoSection"] // YES
-	#define JOWebsiteLinkEnabled [[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowWebsiteLink"] // YES
-	#define JODisableImageHeaderUniversally (![[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowLogoInHeader"]) // NO // This overrides the following
-	#define JOEnableImageHeaderOnIOS6 [[NSUserDefaults standardUserDefaults] boolForKey:@"JOPrefShowLogoInHeaderIn6"] // NO
-	#warning Using debug pref pane
-#else
-	#define JOInfoSectionEnabled YES
-	#define JOWebsiteLinkEnabled YES
-	#define JOContactLinkEnabled YES
-	#define JOEnableLinkStrippingInDetail YES
-	#define JODisableImageHeaderUniversally NO
-	#define JOEnableImageHeaderOnIOS6 NO
-#endif
-
 #if JOUseTestingURL
 	#undef JOOracleFeedURL
 	#define JOOracleFeedURL @"http://192.168.1.151/OracleWordpress/feed/atom/"

@@ -62,7 +62,6 @@
 		031D6B241812108300D1C2B6 /* JONewsFeedTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JONewsFeedTests.m; sourceTree = "<group>"; };
 		031D6B261812116700D1C2B6 /* ExampleAtomFeed.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ExampleAtomFeed.xml; sourceTree = "<group>"; };
 		031D6B28181215A500D1C2B6 /* OracleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OracleTests.h; sourceTree = "<group>"; };
-		031F076F181F4B74009B13D6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		033F746918034877001681AF /* Oracle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oracle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033F746C18034877001681AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		033F746E18034877001681AF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -197,7 +196,6 @@
 		033F747318034877001681AF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				031F076F181F4B74009B13D6 /* Settings.bundle */,
 				033F747418034877001681AF /* Oracle-Info.plist */,
 				033F747518034877001681AF /* InfoPlist.strings */,
 				033F747818034877001681AF /* main.m */,
@@ -664,7 +662,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/josh/Documents/coding/cocoa/Oracle,
+					$PROJECT_DIR,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -688,7 +686,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/josh/Documents/coding/cocoa/Oracle,
+					$PROJECT_DIR,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
