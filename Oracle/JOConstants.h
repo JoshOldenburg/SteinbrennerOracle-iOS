@@ -26,19 +26,6 @@
 
 #import "JOAnalytics.h" // More defines here
 
-/* Defines based on pref pane:
- * JOInfoSectionEnabled
- * JOWebsiteLinkEnabled
- * JOContactLinkEnabled
- * JOEnableLinkStrippingInDetail
- * JODisableImageHeaderUniversally
- * JOEnableImageHeaderOnIOS6
- * All others as above and are not modifiable at run time
- *
- * Defines based on others:
- * JODEBUG - 1 if DEBUG is set, 0 otherwise
- */
-
 extern NSString *const JOExceptionInvalid;
 extern NSString *const JOErrorDomain;
 extern NSString *const JOPreviousItemsKey;

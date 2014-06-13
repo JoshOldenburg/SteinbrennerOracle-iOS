@@ -89,7 +89,6 @@ void _JOAnalyticsExceptionHandler(NSException *exception) {
 	for (NSDictionary *stackObject in self.timedEventStack) {
 		if ([events containsObject:stackObject[@"name"]]) {
 			[self endTimedEvent:stackObject[@"name"] data:([stackObject[@"data"] isKindOfClass:[NSNull class]] ? nil : stackObject[@"data"])];
-//			[self.timedEventStack removeObject:stackObject]; // Already happens in +endTimedEvent:data:
 			return;
 		}
 	}

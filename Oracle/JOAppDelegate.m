@@ -14,7 +14,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	if (!NSClassFromString(@"JONewsFeedTests")) [JOUtil setUpAnalytics]; // Don't start analytics if testing
 	
-    // Override point for customization after application launch.
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 	    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
 	    UINavigationController *navigationController = splitViewController.viewControllers.lastObject;
