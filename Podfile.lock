@@ -1,0 +1,43 @@
+PODS:
+  - AFNetworking (2.2.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.2.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.2.4):
+    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (2.2.4)
+  - AFNetworking/Security (2.2.4)
+  - AFNetworking/Serialization (2.2.4)
+  - AFNetworking/UIKit (2.2.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - CTidy (0.3.1)
+  - CXFeedParser/NSDate+InternetDateTime (0.1.2)
+  - OHHTTPStubs (3.0.4)
+  - TBXMLPivotalForks (0.0.1)
+  - TestFlightSDK (2.0.2)
+
+DEPENDENCIES:
+  - AFNetworking (~> 2.2.4)
+  - CTidy (~> 0.3.1)
+  - CXFeedParser/NSDate+InternetDateTime (~> 0.1.1)
+  - OHHTTPStubs (~> 3.0.2)
+  - TBXMLPivotalForks (~> 0.0.1)
+  - TestFlightSDK (~> 2.0.2)
+
+SPEC CHECKSUMS:
+  AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
+  CTidy: b9586005d12def66cf4295256e9a2f49ee7dca66
+  CXFeedParser: 7808b59bbe2ab2883a38d03accb21bfa4b553699
+  OHHTTPStubs: 54419a01111c994e1a3b934222cca4c50cf1d771
+  TBXMLPivotalForks: ff6f6e44121a4358dcc49f577be8dcfce96232ba
+  TestFlightSDK: ea2c14b426ec4a2e4c57b74769212643a311e1a2
+
+COCOAPODS: 0.33.1
