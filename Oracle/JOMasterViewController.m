@@ -35,7 +35,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 	
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 	    if ([self respondsToSelector:@selector(setPreferredContentSize:)]) self.preferredContentSize = CGSizeMake(320.0, 600.0);
-		else self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+		else self.preferredContentSize = CGSizeMake(320.0, 600.0);
 		self.clearsSelectionOnViewWillAppear = NO;
 	}
 	
