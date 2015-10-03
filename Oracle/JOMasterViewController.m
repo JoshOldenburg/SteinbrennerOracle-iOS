@@ -233,7 +233,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 
 - (void)jo_updateTitleBarForOrientation:(UIInterfaceOrientation)orientation {
 	if ([[UIDevice currentDevice] userInterfaceIdiom] != UIUserInterfaceIdiomPhone && self.navigationItem.titleView) return;
-	if ((UIInterfaceOrientationIsLandscape(orientation) && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) || (!JOEnableImageHeaderOnIOS6 && floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) || JODisableImageHeaderUniversally) { // No NSFoundationVersionNumber_iOS_7_0 as of yet
+	if ((UIInterfaceOrientationIsLandscape(orientation) && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) || (!JOEnableImageHeaderOnIOS6 && floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_7_0) || JODisableImageHeaderUniversally) {
 		self.navigationItem.titleView = nil;
 	} else if (!self.navigationItem.titleView) {
 		self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TheORACLE"]];
