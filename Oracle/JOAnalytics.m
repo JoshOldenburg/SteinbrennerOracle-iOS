@@ -1,5 +1,5 @@
 //
-//  JOTFProxy.m
+//  JOAnalytics.m
 //  Oracle
 //
 //  Created by Joshua Oldenburg on 11/26/13.
@@ -8,18 +8,16 @@
 
 #import "JOAnalytics.h"
 #import "JOConstants.h"
-#import "TestFlight.h"
 #import "Flurry.h"
 
 void JOLog(NSString *format, ...) {
 	if (!format) return;
-	
+
 	va_list args;
 	va_start(args, format);
 	NSString *string = [[NSString alloc] initWithFormat:format arguments:args];
 	va_end(args);
-	
-	if (JOAnalyticsEnableTF) TFLogPreFormatted(format);
+
 	if (JOAnalyticsEnableFlurry) [Flurry logEvent:@"Log message" withParameters:[NSDictionary dictionaryWithObject:string forKey:@"Message"]];
 	NSLog(@"%@", string);
 }
@@ -29,22 +27,17 @@ void _JOAnalyticsExceptionHandler(NSException *exception) {
 }
 
 @interface JOAnalytics ()
-@property (nonatomic, strong) NSString *testFlightKey;
 @property (nonatomic, strong) NSString *flurryKey;
 @property (nonatomic, strong) NSMutableArray *timedEventStack;
 @end
 
 @implementation JOAnalytics
 
-+ (void)setTestFlightKey:(NSString *)key {
-	self.jo_sharedAnalytics.testFlightKey = key;
-}
 + (void)setFlurryKey:(NSString *)key {
 	self.jo_sharedAnalytics.flurryKey = key;
 }
 + (void)startSessionsWithOptions:(id)options {
 	if (JOAnalyticsEnableExceptionReporting && JOAnalyticsEnableFlurry) NSSetUncaughtExceptionHandler(&_JOAnalyticsExceptionHandler);
-	if (JOAnalyticsEnableTF && self.testFlightKey) [TestFlight takeOff:self.testFlightKey];
 	if (JOAnalyticsEnableFlurry && self.flurryKey) [Flurry startSession:self.flurryKey withOptions:options];
 }
 
@@ -62,8 +55,7 @@ void _JOAnalyticsExceptionHandler(NSException *exception) {
 		NSLog(@"Must specify event name!");
 		return;
 	}
-	
-	if (JOAnalyticsEnableTF) [TestFlight passCheckpoint:event];
+
 	if (JOAnalyticsEnableFlurry) [Flurry logEvent:event withParameters:data timed:timed];
 	
 	if (timed) {
@@ -145,7 +137,6 @@ void _JOAnalyticsExceptionHandler(NSException *exception) {
 	return singleton;
 }
 
-+ (NSString *)testFlightKey { return self.jo_sharedAnalytics.testFlightKey; }
 + (NSString *)flurryKey { return self.jo_sharedAnalytics.flurryKey; }
 + (NSMutableArray *)timedEventStack { return self.jo_sharedAnalytics.timedEventStack ?: (self.jo_sharedAnalytics.timedEventStack = [NSMutableArray array]); }
 

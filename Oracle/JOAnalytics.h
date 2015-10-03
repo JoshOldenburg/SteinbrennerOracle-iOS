@@ -8,25 +8,18 @@
 
 #import "JOConstants.h"
 
-#define JOAnalyticsEnableTF 0
 #define JOAnalyticsEnableFlurry 1
-
-#define JOAnalyticsEnableTFInRelease 0 // Must set to 1 for TestFlight builds!
-#define JOAnalyticsWarnOnTFDisabledInRelease 0
 #define JOAnalyticsEnableFlurryInDebug 1
-
-#define JOAnalyticsEnableTFCheckpoints 0
 #define JOAnalyticsEnableExceptionReporting 1
 
 void JOLog(NSString *, ...);
 
 @interface JOAnalytics : NSObject
 
-+ (void)setTestFlightKey:(NSString *)key;
 + (void)setFlurryKey:(NSString *)key;
 + (void)startSessionsWithOptions:(id)options;
 
-+ (void)logEvent:(NSString *)event; // TF checkpoint / Flurry event
++ (void)logEvent:(NSString *)event; // Flurry event
 + (void)logEvent:(NSString *)event data:(NSDictionary *)data;
 + (void)logEvent:(NSString *)event timed:(BOOL)timed;
 + (void)logEvent:(NSString *)event data:(NSDictionary *)data timed:(BOOL)timed;
@@ -46,10 +39,6 @@ void JOLog(NSString *, ...);
 @end
 
 // Private
-#if JOAnalyticsWarnOnTFDisabledInRelease && !DEBUG && JOAnalyticsEnableTFInRelease
-	#warning TestFlight not enabled in release build!
-#endif
-
 #if !JOAnalyticsEnableFlurryInDebug && DEBUG && JOAnalyticsEnableFlurry
 	#undef JOAnalyticsEnableFlurry
 	#define JOAnalyticsEnableFlurry 0
