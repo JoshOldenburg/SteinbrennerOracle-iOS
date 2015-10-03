@@ -29,8 +29,6 @@
 		033F749E18034877001681AF /* OracleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033F749D18034877001681AF /* OracleTests.m */; };
 		0367FB6A18035ABD0065A400 /* JOConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6918035ABD0065A400 /* JOConstants.m */; };
 		0367FB701803750D0065A400 /* JOImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0367FB6F1803750D0065A400 /* JOImageDetailCell.m */; };
-		03952BFD1844E9A0006E82B5 /* JOAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 03952BFC1844E9A0006E82B5 /* JOAnalytics.m */; };
-		03BED1721884B817003539B9 /* libFlurry_4.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BED1711884B817003539B9 /* libFlurry_4.3.1.a */; };
 		03C03BA0181D4986001A9CBF /* AboutApp.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 03C03B9F181D4986001A9CBF /* AboutApp.rtf */; };
 		03C892761825D825005FBFC1 /* AboutApp.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03C892741825D825005FBFC1 /* AboutApp.txt */; };
 		03C892771825D825005FBFC1 /* AboutSteinbrennerOracle.txt in Resources */ = {isa = PBXBuildFile; fileRef = 03C892751825D825005FBFC1 /* AboutSteinbrennerOracle.txt */; };
@@ -89,10 +87,6 @@
 		0367FB6918035ABD0065A400 /* JOConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOConstants.m; sourceTree = "<group>"; };
 		0367FB6E1803750D0065A400 /* JOImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOImageDetailCell.h; sourceTree = "<group>"; };
 		0367FB6F1803750D0065A400 /* JOImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOImageDetailCell.m; sourceTree = "<group>"; };
-		03952BFB1844E9A0006E82B5 /* JOAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JOAnalytics.h; sourceTree = "<group>"; };
-		03952BFC1844E9A0006E82B5 /* JOAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JOAnalytics.m; sourceTree = "<group>"; };
-		03BED1701884B817003539B9 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		03BED1711884B817003539B9 /* libFlurry_4.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.1.a; sourceTree = "<group>"; };
 		03C03B9F181D4986001A9CBF /* AboutApp.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = AboutApp.rtf; sourceTree = "<group>"; };
 		03C892741825D825005FBFC1 /* AboutApp.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AboutApp.txt; sourceTree = "<group>"; };
 		03C892751825D825005FBFC1 /* AboutSteinbrennerOracle.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AboutSteinbrennerOracle.txt; sourceTree = "<group>"; };
@@ -120,7 +114,6 @@
 				033F747118034877001681AF /* UIKit.framework in Frameworks */,
 				033F746D18034877001681AF /* Foundation.framework in Frameworks */,
 				45EB94C780D5476F98ABD04C /* libPods.a in Frameworks */,
-				03BED1721884B817003539B9 /* libFlurry_4.3.1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +174,6 @@
 				033F749118034877001681AF /* XCTest.framework */,
 				516294EDE2A54BEBBE2CBAF9 /* libPods.a */,
 				27C22E8D32FD43129ACDE4C8 /* libPods-OracleTests.a */,
-				03BED1731884B81A003539B9 /* Flurry */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -243,8 +235,6 @@
 			children = (
 				0367FB6818035ABD0065A400 /* JOConstants.h */,
 				0367FB6918035ABD0065A400 /* JOConstants.m */,
-				03952BFB1844E9A0006E82B5 /* JOAnalytics.h */,
-				03952BFC1844E9A0006E82B5 /* JOAnalytics.m */,
 				03FE5EB21814342F00A61921 /* NSString+JOUtilAdditions.h */,
 				03FE5EB31814342F00A61921 /* NSString+JOUtilAdditions.m */,
 				03FE5EB51814B4E700A61921 /* NSString+GTMNSStringHTMLAdditions.h */,
@@ -252,15 +242,6 @@
 				03006E89180AFBA50032F6B1 /* News Feed */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		03BED1731884B81A003539B9 /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				03BED1701884B817003539B9 /* Flurry.h */,
-				03BED1711884B817003539B9 /* libFlurry_4.3.1.a */,
-			);
-			name = Flurry;
 			sourceTree = "<group>";
 		};
 		03C892701825B3F5005FBFC1 /* Main Master/Detail */ = {
@@ -524,7 +505,6 @@
 				03006E8F1811FBE70032F6B1 /* JONewsFeedInfo.m in Sources */,
 				03006E8C180AFBBA0032F6B1 /* JONewsItem.m in Sources */,
 				03FE5EB71814B4E700A61921 /* NSString+GTMNSStringHTMLAdditions.m in Sources */,
-				03952BFD1844E9A0006E82B5 /* JOAnalytics.m in Sources */,
 				033F748918034877001681AF /* JODetailViewController.m in Sources */,
 				033F748618034877001681AF /* JOMasterViewController.m in Sources */,
 				03FE5EB41814342F00A61921 /* NSString+JOUtilAdditions.m in Sources */,

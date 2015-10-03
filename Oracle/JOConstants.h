@@ -24,7 +24,7 @@
 #define JODisableImageHeaderUniversally NO
 #define JOEnableImageHeaderOnIOS6 NO
 
-#import "JOAnalytics.h" // More defines here
+#define JOLog NSLog
 
 extern NSString *const JOExceptionInvalid;
 extern NSString *const JOErrorDomain;
@@ -32,7 +32,6 @@ extern NSString *const JOPreviousItemsKey;
 
 @interface JOUtil : NSObject
 
-+ (void)setUpAnalytics;
 + (NSArray *)semideepCopyOfArray:(NSArray *)array; // Only copies first level
 + (NSString *)versionString;
 
