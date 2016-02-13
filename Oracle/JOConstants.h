@@ -13,7 +13,7 @@
 
 #define JOEnableIncrementalRefresh 1 // Whether the items are removed from display while refreshing
 #define JOSavePreviousItems (JOEnableIncrementalRefresh && 1) // Whether the items are cached and immediately displayed at open while refreshing
-#define JOAlwaysAnimateImageSetting 0
+#define JOAlwaysAnimateImageSetting 1
 #define JOShowCachedItemsInErrorState 0
 #define JOEnablePrettificationOfDetail 0 // Whether to use the web page and its formatting or just the HTML from the feed
 

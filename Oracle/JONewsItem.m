@@ -73,18 +73,24 @@
 	[self.callbacks removeAllObjects];
 }
 - (void)getImageURLsWithCallback:(void (^)(NSArray *imageURLs))callback {
-	if (_imageURLs) {
-		if (callback) callback(self.imageURLs);
-		return;
-	}
-	
-	if (!self.callbacks) self.callbacks = [NSMutableArray array];
-	if (callback) [self.callbacks addObject:callback];
-	if (self.parser) return;
-	
-	self.parser = [[NSXMLParser alloc] initWithData:[[self.tidiedContent stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "] dataUsingEncoding:NSUTF8StringEncoding]];
-	self.parser.delegate = self;
-	[self.parser parse];
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		if (_imageURLs) {
+			if (callback) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					callback(self.imageURLs);
+				});
+			}
+			return;
+		}
+		
+		if (!self.callbacks) self.callbacks = [NSMutableArray array];
+		if (callback) [self.callbacks addObject:callback];
+		if (self.parser) return;
+		
+		self.parser = [[NSXMLParser alloc] initWithData:[[self.tidiedContent stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "] dataUsingEncoding:NSUTF8StringEncoding]];
+		self.parser.delegate = self;
+		[self.parser parse];
+	});
 }
 
 - (BOOL)imageURLsAreLoaded {

@@ -397,7 +397,7 @@ static const UITableViewRowAnimation JORowUpdateAnimation = UITableViewRowAnimat
 			if (!self.tableView.dragging || JOAlwaysAnimateImageSetting) [UIView transitionWithView:_cell.largeImageView duration:0.25f options:UIViewAnimationOptionTransitionCrossDissolve animations:setImageBlock completion:nil];
 			else setImageBlock(); // Don't animate setting of image when the user is dragging
 		} failure:nil]; // Caches for us
-	}];
+	}]; //*/
     return cell;
 }
 
